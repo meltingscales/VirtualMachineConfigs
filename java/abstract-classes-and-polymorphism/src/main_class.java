@@ -29,7 +29,7 @@ public class main_class
         
         Organism w1 = new Wolf(); //Again we see polymorphism in action.
         
-        w1.eat(d1); //Wolf 1 eats an Organism.
+        w1.eat(d1); //Wolf 1 eats an Organism, which happens to be a Deer.
 
     }
 }
