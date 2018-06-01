@@ -26,6 +26,8 @@ public abstract class Organism
     public abstract void die();
 
     public abstract void eat(Organism o);
+    
+    public abstract void eat();
 
     public abstract void move();
 
