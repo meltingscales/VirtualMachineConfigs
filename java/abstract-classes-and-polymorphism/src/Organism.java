@@ -25,8 +25,11 @@ public abstract class Organism
 
     public abstract void die();
 
+    // Actually, this is another form of polymorphism called 'method overloading'.
+    // Essentially, we have two methods with the SAME NAME! How's that work? How does Java know which to use?
+    // They have one way to be identified: They take different arguments!
     public abstract void eat(Organism o);
-    
+
     public abstract void eat();
 
     public abstract void move();
