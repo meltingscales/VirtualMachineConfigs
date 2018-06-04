@@ -33,11 +33,12 @@ public class Grocery
             {
                 add(new Item("Apple", 1.00, "pound"));
                 add(new Item("Cherry", 2.50, "pound"));
+                // add(new Item("Banana", 1.25, "bunch")); // And that's how easy it is... one statement!
             }
         };
 
         int c = 1;
-        
+
         System.out.println("-1 will exit.");
 
         while(c >= 0) // While the user does not enter a negative number,
