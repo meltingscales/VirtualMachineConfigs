@@ -64,7 +64,7 @@ public class Grocery
             }
             catch(IndexOutOfBoundsException e)
             {
-
+              // Hi, Carlos!
             }
 
         }
