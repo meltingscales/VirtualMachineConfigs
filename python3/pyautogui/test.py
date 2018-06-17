@@ -42,6 +42,15 @@ class Calculator(object):
         for i in range(0, 2):
             self.window.CalcFrame.TypeKeys('{ESC}')
 
+    def fib(self, n=0):
+        if n == 0:
+            return 0
+
+        if n == 1:
+            return 1
+
+        return self.add(self.fib(n - 1), self.fib(n - 2))
+
 
 calc = Calculator()
 
@@ -49,6 +58,9 @@ calc.clear()
 x = calc.add(1, 2)
 print(x)
 
+print(calc.fib(6))
+
+
 for i in range(0, 10):
-    x = calc.mult(i, i + 1)
+    x = calc.mult(i, calc.add(i, 1))
     print(x)
