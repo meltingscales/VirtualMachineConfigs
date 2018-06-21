@@ -82,5 +82,5 @@ print(x)
 print(calc.fib(6))
 
 for i in range(0, 10):
-    x = calc.mult(i, calc.add(i, 1))
+    x = calc.mult(i, i+1)
     print(x)
