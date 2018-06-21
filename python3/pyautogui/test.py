@@ -3,6 +3,7 @@ from pprint import pprint
 
 import pywinauto
 from pywinauto import *
+from pywinauto.findbestmatch import MatchError
 import pyautogui
 from win32 import win32clipboard
 
@@ -22,9 +23,20 @@ class Calculator(object):
         except ElementNotFoundError as e:
             self.window = Application().start(cmd_line='calc.exe')
 
+    def get_frame(self):
+        try:
+            return self.window.CalcFrame
+        except MatchError:
+            pass
+
+        try:
+            return self.window.ApplicationFrameInputSinkWindow
+        except MatchError:
+            pass
+    
     def binary_op(self, x, y, op='{+}'):
         self.window.CalcFrame.TypeKeys(str(x) + op + str(y) + '{ENTER}')
-        return copy(self.window.CalcFrame)
+        return copy(self.get_frame())
 
     def add(self, x, y):
         return self.binary_op(x, y, '{+}')
