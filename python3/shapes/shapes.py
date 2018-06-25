@@ -1,6 +1,7 @@
 import math
 from pprint import pprint
 
+import numpy
 import numpy as np
 from numba import jit
 from functools import lru_cache
@@ -24,7 +25,7 @@ def square(x=5, y=5, char='*', sep=' '):
 
     return s
 
-
+@lru_cache(maxsize=None, typed=False)
 def distance(p1, p2):
     return math.sqrt(math.pow((p1[0] - p2[0]), 2) +
                      math.pow((p1[1] - p2[1]), 2))
@@ -40,7 +41,7 @@ def mandelbrot(c, maxiter):
     return 0
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=None, typed=False)
 def number_to_char(number, min=-5, max=5, chars=scale2):
     """Given a number and a range, return a character that falls within that range.
 
@@ -54,9 +55,9 @@ def number_to_char(number, min=-5, max=5, chars=scale2):
             return chars[i]
     return chars[-1]
 
-
+@lru_cache(maxsize=None)
 def circle_distances(radius=5, center=(3, 3)):
-    r = radius+1
+    r = radius + 1
 
     ret = [[[] for i in range(r)] for i in range(r)]
 
@@ -67,7 +68,10 @@ def circle_distances(radius=5, center=(3, 3)):
 
 
 @jit
-def mandelbrot_set(xmin, xmax, ymin, ymax, width, height, maxiter):
+def mandelbrot_set(x=(-1.0, 1.0,), y=(-1.0, 1.0,), width=50, height=50, maxiter=100):
+    xmin, xmax = x
+    ymin, ymax = y
+
     r1 = np.linspace(xmin, xmax, width)
     r2 = np.linspace(ymin, ymax, height)
     n3 = np.empty((width, height))
@@ -76,23 +80,27 @@ def mandelbrot_set(xmin, xmax, ymin, ymax, width, height, maxiter):
             n3[i, j] = mandelbrot(r1[i] + 1j * r2[j], maxiter)
     return (r1, r2, n3)
 
-
 if __name__ == '__main__':
     print(square())
     print()
     print(square(x=3, y=3))
 
-
     for i in range(-5, 6):
         print(f"{i:2} = {number_to_char(i)}")
 
     rad = 50
-    center = (rad//2,rad//2)
+    center = (rad // 2, rad // 2)
     cd = circle_distances(rad, center)
 
     for row in cd:
         for i in row:
-            print(number_to_char(i,0,rad//2),end='')
+            print(number_to_char(i, 0, rad // 2), end='')
         print()
 
-    # print(mandelbrot_set(-1, 1, -1, 1, 100, 100, 1000))
+    ms = mandelbrot_set()[2]
+
+    for row in list(ms):
+        for i in list(row):
+            # print(i)
+            print(number_to_char(float(i)), end='')
+        print()
