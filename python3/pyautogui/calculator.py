@@ -11,9 +11,9 @@ from packaging.version import Version, parse
 
 
 def copy(w: WindowSpecification, k='^c'):
-    w.TypeKeys(k)
-    win32clipboard.OpenClipboard()
-    return win32clipboard.GetClipboardData()
+    w.TypeKeys(k) # Mimics CTRL-C
+    win32clipboard.OpenClipboard() # Open clipboard
+    return win32clipboard.GetClipboardData() # Return clipboard contents as string
 
 
 class Calculator(object):
@@ -29,10 +29,12 @@ class Calculator(object):
 
         self.frame = None
         self.version = parse(Dispatch('Scripting.FileSystemObject').GetFileVersion(path))
+        print(self.version)
 
     def get_frame(self):
-        if self.frame is not None:
-            return self.frame
+	
+        if self.frame is not None: # If we haven't asked for our frame yet
+            return self.frame # Return what we found previously, and bypass version check
 
         print('first time asked for frame!!')
 
@@ -44,7 +46,9 @@ class Calculator(object):
             return self.frame
 
     def binary_op(self, x, y, op='{+}'):
-        self.get_frame().TypeKeys(str(x) + op + str(y) + '{ENTER}')
+        s = str(x) + op + str(y) + '{ENTER}'
+        print(s)
+        self.get_frame().TypeKeys(s)
         return copy(self.get_frame())
 
     def add(self, x, y):
