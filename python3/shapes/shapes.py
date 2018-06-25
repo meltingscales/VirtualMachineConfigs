@@ -1,7 +1,6 @@
 import math
 from pprint import pprint
 
-import numpy
 import numpy as np
 from numba import jit
 from functools import lru_cache
@@ -24,6 +23,7 @@ def square(x=5, y=5, char='*', sep=' '):
     s += x * char
 
     return s
+
 
 @lru_cache(maxsize=None, typed=False)
 def distance(p1, p2):
@@ -55,6 +55,7 @@ def number_to_char(number, min=-5, max=5, chars=scale2):
             return chars[i]
     return chars[-1]
 
+
 @lru_cache(maxsize=None)
 def circle_distances(radius=5, center=(3, 3)):
     r = radius + 1
@@ -79,6 +80,7 @@ def mandelbrot_set(x=(-1.0, 1.0,), y=(-1.0, 1.0,), width=50, height=50, maxiter=
         for j in range(height):
             n3[i, j] = mandelbrot(r1[i] + 1j * r2[j], maxiter)
     return (r1, r2, n3)
+
 
 if __name__ == '__main__':
     print(square())

@@ -10,6 +10,7 @@ pywinauto = "*"
 packaging = "*"
 numpy = "*"
 numba = "*"
+asciimatics = "*"
 
 [dev-packages]
 
