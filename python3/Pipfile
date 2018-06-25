@@ -8,6 +8,8 @@ pyautogui = "*"
 pywinauto = "*"
 "pywin32" = "*"
 packaging = "*"
+numpy = "*"
+numba = "*"
 
 [dev-packages]
 
