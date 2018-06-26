@@ -14,6 +14,9 @@ KEY_LEFT = -203
 KEY_RIGHT = -205
 ARROW_KEYS = [KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT]
 
+class MandelDisplay(TextBox):
+    def append(self, text):
+        return None
 
 class Mandel(Frame):
     def __init__(self, screen: Screen):
@@ -26,7 +29,9 @@ class Mandel(Frame):
         self.add_layout(layout)
         # self.root.add_widget(Button('OK', self._ok))
         layout.add_widget(Text('hi','there'))
-        layout.add_widget(Label('i am LABEL\nHEAR ME LABEL-ROAR',height=2))
+        layout.add_widget(MandelDisplay(10,
+                                        label='mandel',
+                                        as_string=True))
         self.fix()
 
     def process_event(self, event):
