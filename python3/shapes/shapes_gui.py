@@ -30,7 +30,12 @@ class Mandel(Frame):
         # self.root.add_widget(Button('OK', self._ok))
         layout.add_widget(Text('hi','there'))
         layout.add_widget(Divider())
-        layout.add_widget(MandelDisplay('I AM FRACTAL'))
+
+        self.mandelbrot = MandelDisplay('I AM FRACTAL',
+                                        screen.width,
+                                        )
+        layout.add_widget(self.mandelbrot)
+
         self.fix()
 
     def process_event(self, event):
