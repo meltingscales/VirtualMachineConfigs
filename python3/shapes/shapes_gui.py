@@ -1,9 +1,9 @@
 import sys
 
 from asciimatics.effects import Cycle, Stars
-from asciimatics.event import KeyboardEvent
+from asciimatics.event import Event, KeyboardEvent, MouseEvent
 from asciimatics.renderers import FigletText
-from asciimatics.widgets import Frame, ListBox, Layout, Divider, Text, Label, Button, TextBox, Widget
+from asciimatics.widgets import Frame, ListBox, Layout, Divider, Text, Label, Button, TextBox, Widget, Canvas
 from asciimatics.scene import Scene
 from asciimatics.screen import Screen
 from asciimatics.exceptions import ResizeScreenError, NextScene, StopApplication
@@ -14,24 +14,23 @@ KEY_LEFT = -203
 KEY_RIGHT = -205
 ARROW_KEYS = [KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT]
 
-class MandelDisplay(TextBox):
+class MandelDisplay(Label):
     def append(self, text):
         return None
 
 class Mandel(Frame):
     def __init__(self, screen: Screen):
         super(Mandel, self).__init__(
-            screen, screen.height, screen.width, has_border=False, name="My Form"
+            screen, screen.height, screen.width, has_border=True, name="Mandelbrot_viewer"
         )
 
         # Create the (very simple) form layout...
-        layout = Layout([1, 1, 1, 1], fill_frame=True)
+        layout = Layout([screen.width], fill_frame=True)
         self.add_layout(layout)
         # self.root.add_widget(Button('OK', self._ok))
         layout.add_widget(Text('hi','there'))
-        layout.add_widget(MandelDisplay(10,
-                                        label='mandel',
-                                        as_string=True))
+        layout.add_widget(Divider())
+        layout.add_widget(MandelDisplay('I AM FRACTAL'))
         self.fix()
 
     def process_event(self, event):
@@ -53,6 +52,9 @@ class Mandel(Frame):
                     pass
                 if event.key_code == KEY_RIGHT:
                     pass
+        elif isinstance(event, MouseEvent):
+            pass
+        
         # Now pass on to lower levels for normal handling of the event.
         return super(Mandel, self).process_event(event)
 
