@@ -3,7 +3,7 @@ import sys
 from asciimatics.effects import Cycle, Stars
 from asciimatics.event import KeyboardEvent
 from asciimatics.renderers import FigletText
-from asciimatics.widgets import Frame, ListBox, Layout, Divider, Text, Button, TextBox, Widget
+from asciimatics.widgets import Frame, ListBox, Layout, Divider, Text, Label, Button, TextBox, Widget
 from asciimatics.scene import Scene
 from asciimatics.screen import Screen
 from asciimatics.exceptions import ResizeScreenError, NextScene, StopApplication
@@ -26,9 +26,10 @@ class Mandel(Frame):
         self.add_layout(layout)
         # self.root.add_widget(Button('OK', self._ok))
         layout.add_widget(Text('hi','there'))
+        layout.add_widget(Label('i am LABEL\nHEAR ME LABEL-ROAR',height=2))
         self.fix()
 
-    def process_event(self, event: KeyboardEvent):
+    def process_event(self, event):
         # Do the key handling for this Frame.
         if isinstance(event, KeyboardEvent):
 
