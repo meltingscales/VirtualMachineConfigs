@@ -1,5 +1,6 @@
 import math
 from pprint import pprint
+import time
 
 import numpy as np
 from numba import jit
@@ -98,6 +99,8 @@ if __name__ == '__main__':
         for i in row:
             print(number_to_char(i, 0, rad // 2), end='')
         print()
+
+    time.sleep(1)
 
     ms = mandelbrot_set()[2]
 

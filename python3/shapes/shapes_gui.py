@@ -16,16 +16,20 @@ ARROW_KEYS = [KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT]
 
 
 class BetterLabel(Label):
+    update_by_default = True
 
-    def set_text(self, text, update=False):
+    def set_text(self, text, update=update_by_default):
         self._text = text
 
         if update:
             self.update(0)
 
-    def append(self, text, update=False):
+    def append(self, text, update=update_by_default):
         # print(self.__dict__)
         self.set_text(self._text + text, update)
+
+    def new_line(self, text, newl='\n', update=update_by_default):
+        self.append(text + newl, update)
 
 
 class MandelDisplay(BetterLabel):
@@ -68,17 +72,17 @@ class Mandel(Frame):
 
             if event.key_code in ARROW_KEYS:
                 if event.key_code == KEY_UP:
-                    self.mandelbrot.append('UP')
+                    self.mandelbrot.new_line('UP')
 
                 if event.key_code == KEY_DOWN:
-                    self.mandelbrot.append('DOWN')
+                    self.mandelbrot.new_line('DOWN')
 
                 if event.key_code == KEY_LEFT:
-                    self.mandelbrot.append('LEFT')
+                    self.mandelbrot.new_line('LEFT')
 
                 if event.key_code == KEY_RIGHT:
-                    self.mandelbrot.append('RIGHT')
-                    
+                    self.mandelbrot.new_line('RIGHT')
+
         elif isinstance(event, MouseEvent):
             pass
 
