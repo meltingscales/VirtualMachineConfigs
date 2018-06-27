@@ -35,28 +35,30 @@ def distance(p1, p2):
 
 
 @jit
-def mandelbrot(c, maxiter):
+def mandelbrot(c, maxiter, pow=2):
     z = c
     for n in range(maxiter):
         if abs(z) > 2:
             return n
-        z = z * z + c
+        z = (z ** pow) + c
     return 0
 
 
 @lru_cache(maxsize=None, typed=False)
-def number_to_char(number, min=-5, max=5, chars=scale2):
+def number_to_char(number: float, shading=(-5, 5), shaders=scale2):
     """Given a number and a range, return a character that falls within that range.
 
     If you don't know what that means, just try giving it a range."""
-    ns = np.linspace(max, min, len(chars))
+    min, max = shading
 
-    for i in range(0, len(chars)):
+    ns = np.linspace(max, min, len(shaders))
+
+    for i in range(0, len(shaders)):
         # print(f"comparing {number} to {ns[i]} @ index {i}")
         if number >= ns[i]:
             # print("!!!")
-            return chars[i]
-    return chars[-1]
+            return shaders[i]
+    return shaders[-1]
 
 
 @lru_cache(maxsize=None)
@@ -72,7 +74,7 @@ def circle_distances(radius=5, center=(3, 3)):
 
 
 @jit
-def mandelbrot_set(x=(-1.0, 1.0,), y=(-1.0, 1.0,), dim=(50,50), maxiter=100):
+def mandelbrot_set(x=(-1.0, 1.0,), y=(-1.0, 1.0,), dim=(50, 50), maxiter=100):
     xmin, xmax = x
     ymin, ymax = y
     width, height = dim
@@ -82,8 +84,23 @@ def mandelbrot_set(x=(-1.0, 1.0,), y=(-1.0, 1.0,), dim=(50,50), maxiter=100):
     n3 = np.empty((width, height))
     for i in range(width):
         for j in range(height):
-            n3[i, j] = mandelbrot(r1[i] + 1j * r2[j], maxiter)
+            n3[j, i] = mandelbrot(r1[i] + 1j * r2[j], maxiter)
     return (r1, r2, n3)
+
+
+@jit
+def mandel_to_text(set, shading, shaders, conversion=lambda x: float(x)):
+    ret = []
+
+    for row in set:
+        tr = ""
+
+        for x in row:
+            tr += number_to_char(conversion(x), shading, shaders)
+
+        ret.append(tr)
+
+    return ret
 
 
 if __name__ == '__main__':
