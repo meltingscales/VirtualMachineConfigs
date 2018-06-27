@@ -6,8 +6,8 @@ import numpy as np
 from numba import jit
 from functools import lru_cache
 
-scale1 = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,\" ^`'. "
-scale2 = " .:-=+*#%@"
+scale1 = open('scale1.txt').readlines()[0]
+scale2 = open('scale2.txt').readlines()[0]
 
 
 def square(x=5, y=5, char='*', sep=' '):
