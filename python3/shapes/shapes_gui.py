@@ -14,9 +14,27 @@ KEY_LEFT = -203
 KEY_RIGHT = -205
 ARROW_KEYS = [KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT]
 
-class MandelDisplay(Label):
-    def append(self, text):
-        return None
+
+class BetterLabel(Label):
+
+    def set_text(self, text, update=False):
+        self._text = text
+
+        if update:
+            self.update(0)
+
+    def append(self, text, update=False):
+        # print(self.__dict__)
+        self.set_text(self._text + text, update)
+
+
+class MandelDisplay(BetterLabel):
+    pass
+
+
+class MandelControls(Widget):
+    pass
+
 
 class Mandel(Frame):
     def __init__(self, screen: Screen):
@@ -28,7 +46,7 @@ class Mandel(Frame):
         layout = Layout([screen.width], fill_frame=True)
         self.add_layout(layout)
         # self.root.add_widget(Button('OK', self._ok))
-        layout.add_widget(Text('hi','there'))
+        layout.add_widget(Text('hi', 'there'))
         layout.add_widget(Divider())
 
         self.mandelbrot = MandelDisplay('I AM FRACTAL',
@@ -50,16 +68,20 @@ class Mandel(Frame):
 
             if event.key_code in ARROW_KEYS:
                 if event.key_code == KEY_UP:
-                    pass
+                    self.mandelbrot.append('UP')
+
                 if event.key_code == KEY_DOWN:
-                    pass
+                    self.mandelbrot.append('DOWN')
+
                 if event.key_code == KEY_LEFT:
-                    pass
+                    self.mandelbrot.append('LEFT')
+
                 if event.key_code == KEY_RIGHT:
-                    pass
+                    self.mandelbrot.append('RIGHT')
+                    
         elif isinstance(event, MouseEvent):
             pass
-        
+
         # Now pass on to lower levels for normal handling of the event.
         return super(Mandel, self).process_event(event)
 
