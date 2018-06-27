@@ -17,7 +17,19 @@ KEY_DOWN = -206
 KEY_LEFT = -203
 KEY_RIGHT = -205
 ARROW_KEYS = [KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT]
+KEY_PLUS = 61
+KEY_MINUS = 45
+KEY_C = 99
 
+"""
+
+Arrow keys to move,
+
+Plus/minus to zoom.
+
+'C' to center.
+
+"""
 
 class BetterLabel(Label):
 
@@ -45,7 +57,7 @@ class MandelDisplay(BetterLabel):
         self.y = [-1, 1]
         """The y coords to plot."""
 
-        self.dim = (30, 30)
+        self.dim = (100, 100)
         """ How many units is big our graph?"""
 
         self.shading = (-1, 10)
@@ -72,7 +84,7 @@ class MandelDisplay(BetterLabel):
 
         self.set_text_from_list(mandel_text)
 
-    def direction(self, dim: list, mult: float = 0.1):
+    def direction(self, dim: list,):
         """Move graph's boundaries by `dim`.
 
         Example:
@@ -83,11 +95,30 @@ class MandelDisplay(BetterLabel):
             """
         x, y = dim
 
+        mult = abs(self.x[0] - self.x[1]) / 10 #a tenth of screen width
+
         self.x[0] += (x * mult)
         self.x[1] += (x * mult)
 
         self.y[0] += -(y * mult)
         self.y[1] += -(y * mult)
+
+    def zoom(self, factor: float):
+
+        if factor > 0:
+            self.x[0] *= factor
+            self.x[1] *= factor
+
+            self.y[0] *= factor
+            self.y[1] *= factor
+        else:
+            factor = -factor
+
+            self.x[0] /= factor
+            self.x[1] /= factor
+
+            self.y[0] /= factor
+            self.y[1] /= factor
 
 
 class MandelControls(Widget):
@@ -118,26 +149,31 @@ class Mandel(Frame):
         # Do the key handling for this Frame.
         if isinstance(event, KeyboardEvent):
 
-            # print(event)
-            # print(event.key_code)
+            print(event.key_code, Screen.ctrl(event.key_code))
 
             if event.key_code in [Screen.ctrl("c")]:
                 raise StopApplication("User quit")
 
+            if event.key_code == KEY_MINUS:
+                self.mandelbrot.zoom(1.5)
+
+            if event.key_code == KEY_PLUS:
+                self.mandelbrot.zoom(-1.5)
+
             if event.key_code in ARROW_KEYS:
                 if event.key_code == KEY_UP:
-                    self.mandelbrot.direction([0, 1, ])
+                    self.mandelbrot.direction([0.0, 1.0, ])
 
                 if event.key_code == KEY_DOWN:
-                    self.mandelbrot.direction([0, -1, ])
+                    self.mandelbrot.direction([0.0, -1.0, ])
 
                 if event.key_code == KEY_LEFT:
-                    self.mandelbrot.direction([-1, 0, ])
+                    self.mandelbrot.direction([-1.0, 0.0, ])
 
                 if event.key_code == KEY_RIGHT:
-                    self.mandelbrot.direction([1, 0, ])
+                    self.mandelbrot.direction([1.0, 0.0, ])
 
-                self.mandelbrot.generate_mandelbrot()
+            self.mandelbrot.generate_mandelbrot()
 
         elif isinstance(event, MouseEvent):
             pass
