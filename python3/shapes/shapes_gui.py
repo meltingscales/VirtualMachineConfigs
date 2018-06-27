@@ -8,6 +8,10 @@ from asciimatics.scene import Scene
 from asciimatics.screen import Screen
 from asciimatics.exceptions import ResizeScreenError, NextScene, StopApplication
 
+from lib import read_file_cached
+
+from shapes import mandelbrot_set
+
 KEY_UP = -204
 KEY_DOWN = -206
 KEY_LEFT = -203
@@ -18,26 +22,46 @@ ARROW_KEYS = [KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT]
 class BetterLabel(Label):
     update_by_default = True
 
-    def set_text(self, text, update=update_by_default):
-        self.text = text
+    def set_text_from_list(self, l: list):
+        for item in list:
+            self.new_line(item)
 
-        if update:
-            self.update(0)
-
-    def append(self, text, update=update_by_default):
+    def append(self, text):
         # print(self.__dict__)
-        self.set_text(self.text + text, update)
+        self.text = self.text + text
 
-    def new_line(self, text, newl='\n', update=update_by_default):
-        self.append(text + newl, update)
+    def new_line(self, text, newl='\n'):
+        self.append(text + newl)
 
 
 class MandelDisplay(BetterLabel):
+
+    def __init__(self, *args, **kwargs):
+        super(BetterLabel, self).__init__(*args, **kwargs)
+
     x = (-1, 1)
+    """The x coords to plot."""
+
     y = (-1, 1)
+    """The y coords to plot."""
+
+    dim = (50, 50)
+    """ How many units is big our graph?"""
+
     shading = (-1, 10)
-    shaders = open('scale1.txt').readlines()[0]
+    """How far low and high shall we shade?"""
+
+    shaders = read_file_cached('scale1.txt')[0]
+    """What chars to use for shading?"""
+
     iters = 100
+    """How many mandelbrot iterations?"""
+
+    def generate_mandelbrot(self, x=x, y=y, shading=shading, shaders=shaders, iters=iters):
+        """Given some parameters, update my view with a pretty fractal!"""
+
+        mandel_set = mandelbrot_set()
+        pass
 
 
 class MandelControls(Widget):
@@ -86,6 +110,8 @@ class Mandel(Frame):
 
                 if event.key_code == KEY_RIGHT:
                     self.mandelbrot.new_line('RIGHT')
+
+                self.update(0)
 
         elif isinstance(event, MouseEvent):
             pass

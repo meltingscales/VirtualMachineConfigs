@@ -6,8 +6,10 @@ import numpy as np
 from numba import jit
 from functools import lru_cache
 
-scale1 = open('scale1.txt').readlines()[0]
-scale2 = open('scale2.txt').readlines()[0]
+from lib import read_file_cached
+
+scale1 = read_file_cached('scale1.txt')[0]
+scale2 = read_file_cached('scale2.txt')[0]
 
 
 def square(x=5, y=5, char='*', sep=' '):
@@ -70,9 +72,10 @@ def circle_distances(radius=5, center=(3, 3)):
 
 
 @jit
-def mandelbrot_set(x=(-1.0, 1.0,), y=(-1.0, 1.0,), width=50, height=50, maxiter=100):
+def mandelbrot_set(x=(-1.0, 1.0,), y=(-1.0, 1.0,), dim=(50,50), maxiter=100):
     xmin, xmax = x
     ymin, ymax = y
+    width, height = dim
 
     r1 = np.linspace(xmin, xmax, width)
     r2 = np.linspace(ymin, ymax, height)
