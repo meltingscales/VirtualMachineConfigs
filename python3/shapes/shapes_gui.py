@@ -31,6 +31,7 @@ Plus/minus to zoom.
 
 """
 
+
 class BetterLabel(Label):
 
     def set_text_from_list(self, l: list):
@@ -49,12 +50,11 @@ class BetterLabel(Label):
 
 class MandelDisplay(BetterLabel):
 
-    def __init__(self, *args, **kwargs):
-        super(BetterLabel, self).__init__(*args, **kwargs)
-        self.x = [-1, 1]
+    def reset_coords(self):
+        self.x = [-1.0, 1.0]
         """The x coords to plot."""
 
-        self.y = [-1, 1]
+        self.y = [-1.0, 1.0]
         """The y coords to plot."""
 
         self.dim = (100, 100)
@@ -68,6 +68,19 @@ class MandelDisplay(BetterLabel):
 
         self.maxiter = 100
         """How many mandelbrot iterations?"""
+
+    def __init__(self, *args, **kwargs):
+        super(BetterLabel, self).__init__(*args, **kwargs)
+        self.reset_coords()
+
+    def generate_status(self) -> str:
+        """Generate a status bar with coords, zoom, etc."""
+        return "{} by {} from x={},y={}".format(
+            self.dim[0],
+            self.dim[1],
+            self.x,
+            self.y
+        )
 
     def generate_mandelbrot(self, x=None, y=None, dim=None, shading=None, shaders=None, maxiter=None):
         """Given some parameters, update my view with a pretty fractal!"""
@@ -84,7 +97,7 @@ class MandelDisplay(BetterLabel):
 
         self.set_text_from_list(mandel_text)
 
-    def direction(self, dim: list,):
+    def direction(self, dim: list, ):
         """Move graph's boundaries by `dim`.
 
         Example:
@@ -95,7 +108,7 @@ class MandelDisplay(BetterLabel):
             """
         x, y = dim
 
-        mult = abs(self.x[0] - self.x[1]) / 10 #a tenth of screen width
+        mult = abs(self.x[0] - self.x[1]) / 10  # a tenth of screen width
 
         self.x[0] += (x * mult)
         self.x[1] += (x * mult)
@@ -104,15 +117,17 @@ class MandelDisplay(BetterLabel):
         self.y[1] += -(y * mult)
 
     def zoom(self, factor: float):
+        if factor == 0.0:
+            factor = 1.0
 
-        if factor > 0:
+        if factor > 0.0:
             self.x[0] *= factor
             self.x[1] *= factor
 
             self.y[0] *= factor
             self.y[1] *= factor
         else:
-            factor = -factor
+            factor = -factor  # Don't want to flip our coords around!
 
             self.x[0] /= factor
             self.x[1] /= factor
@@ -135,15 +150,20 @@ class Mandel(Frame):
         layout = Layout([screen.width], fill_frame=True)
         self.add_layout(layout)
         # self.root.add_widget(Button('OK', self._ok))
-        layout.add_widget(Text('hi', 'there'))
-        layout.add_widget(Divider())
+        self.status = BetterLabel('')
 
         self.mandelbrot = MandelDisplay('I AM FRACTAL',
-                                        screen.width,
-                                        )
+                                        screen.width)
+
+        layout.add_widget(self.status)
+        layout.add_widget(Divider())
         layout.add_widget(self.mandelbrot)
 
         self.fix()
+
+    def update_status(self):
+        self.status.text = self.mandelbrot.generate_status()
+        self.status.update(0)
 
     def process_event(self, event):
         # Do the key handling for this Frame.
@@ -153,6 +173,9 @@ class Mandel(Frame):
 
             if event.key_code in [Screen.ctrl("c")]:
                 raise StopApplication("User quit")
+
+            if event.key_code == KEY_C:
+                self.mandelbrot.reset_coords()
 
             if event.key_code == KEY_MINUS:
                 self.mandelbrot.zoom(1.5)
@@ -174,6 +197,7 @@ class Mandel(Frame):
                     self.mandelbrot.direction([1.0, 0.0, ])
 
             self.mandelbrot.generate_mandelbrot()
+            self.update_status()
 
         elif isinstance(event, MouseEvent):
             pass
