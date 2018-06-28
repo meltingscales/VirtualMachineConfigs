@@ -45,13 +45,13 @@ def mandelbrot(c, maxiter, pow=2):
 
 
 @lru_cache(maxsize=None, typed=False)
-def number_to_char(number: float, shading=(-5, 5), shaders=scale2):
+def number_to_char(number: float, shading=(-5.0, 5.0), shaders=scale1):
     """Given a number and a range, return a character that falls within that range.
 
     If you don't know what that means, just try giving it a range."""
-    min, max = shading
+    minimum, maximum = shading
 
-    ns = np.linspace(max, min, len(shaders))
+    ns = np.linspace(minimum, maximum, len(shaders))
 
     for i in range(0, len(shaders)):
         # print(f"comparing {number} to {ns[i]} @ index {i}")
@@ -115,10 +115,14 @@ if __name__ == '__main__':
     center = (rad // 2, rad // 2)
     cd = circle_distances(rad, center)
 
+
+#    print(cd)
+    
     for row in cd:
         for i in row:
-            print(number_to_char(i, 0, rad // 2), end='')
+            print(number_to_char(i, (27.0, 30.0)), end='')
         print()
+    
 
     time.sleep(1)
 
