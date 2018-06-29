@@ -18,7 +18,13 @@ KEY_UP = -204
 KEY_DOWN = -206
 KEY_LEFT = -203
 KEY_RIGHT = -205
-ARROW_KEYS = [KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT]
+KEY_VECTORS = {
+    KEY_UP: [0.0, 1.0, ],
+    KEY_DOWN: [0.0, -1.0, ],
+    KEY_LEFT: [-1.0, 0.0, ],
+    KEY_RIGHT: [1.0, 0.0, ]
+}
+
 KEY_PLUS = 61
 KEY_MINUS = 45
 KEY_C = 99
@@ -194,18 +200,8 @@ class Mandel(Frame):
             if event.key_code == KEY_PLUS:
                 self.mandelbrot.zoom(-1.5)
 
-            if event.key_code in ARROW_KEYS:
-                if event.key_code == KEY_UP:
-                    self.mandelbrot.direction([0.0, 1.0, ])
-
-                if event.key_code == KEY_DOWN:
-                    self.mandelbrot.direction([0.0, -1.0, ])
-
-                if event.key_code == KEY_LEFT:
-                    self.mandelbrot.direction([-1.0, 0.0, ])
-
-                if event.key_code == KEY_RIGHT:
-                    self.mandelbrot.direction([1.0, 0.0, ])
+            if event.key_code in KEY_VECTORS.keys():
+                self.mandelbrot.direction(KEY_VECTORS[event.key_code])
 
             self.mandelbrot.set_dim_from_termsize()
             self.mandelbrot.generate_mandelbrot()
