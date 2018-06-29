@@ -1,16 +1,12 @@
 import sys
-import shutil
-
-from pprint import pprint
 
 from asciimatics.effects import Cycle, Stars
-from asciimatics.event import Event, KeyboardEvent, MouseEvent
+from asciimatics.event import KeyboardEvent, MouseEvent
+from asciimatics.exceptions import ResizeScreenError, StopApplication
 from asciimatics.renderers import FigletText
-from asciimatics.widgets import Frame, ListBox, Layout, Divider, Text, Label, Button, TextBox, Widget, Canvas
 from asciimatics.scene import Scene
 from asciimatics.screen import Screen
-from asciimatics.exceptions import ResizeScreenError, NextScene, StopApplication
-
+from asciimatics.widgets import Frame, Layout, Divider, Label, Widget
 from lib import read_file_cached
 from shapes import mandelbrot_set, mandel_to_text
 
@@ -58,7 +54,7 @@ class BetterLabel(Label):
 
 class MandelDisplay(BetterLabel):
 
-    def set_dim_from_termsize(self, pad=10):
+    def set_dim_from_termsize(self, pad=5):
         self.dim = (self.screen.width - pad,
                     self.screen.height - pad)
         """ How many units is big our graph?"""
@@ -83,7 +79,7 @@ class MandelDisplay(BetterLabel):
         """How many mandelbrot iterations?"""
 
     def __init__(self, *args, **kwargs):
-        self.screen = kwargs.pop('screen') # For referring to the width and height later
+        self.screen = kwargs.pop('screen')  # For referring to the width and height later
 
         super(BetterLabel, self).__init__(*args, **kwargs)
 

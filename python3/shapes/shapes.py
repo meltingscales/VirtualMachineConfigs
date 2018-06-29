@@ -1,12 +1,10 @@
 import math
-from pprint import pprint
 import time
-
-import numpy as np
-from numba import jit
 from functools import lru_cache
 
+import numpy as np
 from lib import read_file_cached
+from numba import jit
 
 scale1 = read_file_cached('scale1.txt')[0]
 scale2 = read_file_cached('scale2.txt')[0]
@@ -34,14 +32,14 @@ def distance(p1, p2):
                      math.pow((p1[1] - p2[1]), 2))
 
 
-@jit
-def mandelbrot(c, maxiter, pow=2):
+@lru_cache(maxsize=2 ** 10)
+def mandelbrot(c, maxiter, pow=2.0, f=lambda z, c, pow: (z ** pow) + c):
     z = c
     for n in range(maxiter):
-        if abs(z) > 2:
+        if abs(z) > 2.0:
             return n
-        z = (z ** pow) + c
-    return 0
+        z = f(z, c, pow)
+    return 0.0
 
 
 @lru_cache(maxsize=None, typed=False)
@@ -86,7 +84,6 @@ def mandelbrot_set(x=(-1.0, 1.0,), y=(-1.0, 1.0,), dim=(50, 50), maxiter=100):
         for j in range(height):
             n3[j, i] = mandelbrot(r1[i] + 1j * r2[j], maxiter)
     return (r1, r2, n3)
-
 
 @jit
 def mandel_to_text(set, shading, shaders, conversion=lambda x: float(x)):
