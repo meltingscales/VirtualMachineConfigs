@@ -1,4 +1,6 @@
 import sys
+import shutil
+
 from pprint import pprint
 
 from asciimatics.effects import Cycle, Stars
@@ -31,6 +33,7 @@ Plus/minus to zoom.
 
 """
 
+
 class BetterLabel(Label):
 
     def set_text_from_list(self, l: list):
@@ -49,15 +52,20 @@ class BetterLabel(Label):
 
 class MandelDisplay(BetterLabel):
 
+    def set_dim_from_termsize(self, pad=10):
+        self.dim = (self.screen.width - pad,
+                    self.screen.height - pad)
+        """ How many units is big our graph?"""
+
     def reset_coords(self):
+
         self.x = [-1.0, 1.0]
         """The x coords to plot."""
 
         self.y = [-1.0, 1.0]
         """The y coords to plot."""
 
-        self.dim = (100, 100)
-        """ How many units is big our graph?"""
+        self.set_dim_from_termsize()
 
         self.shading = (-1, 10)
         """How far low and high shall we shade?"""
@@ -69,14 +77,17 @@ class MandelDisplay(BetterLabel):
         """How many mandelbrot iterations?"""
 
     def __init__(self, *args, **kwargs):
+        self.screen = kwargs.pop('screen') # For referring to the width and height later
+
         super(BetterLabel, self).__init__(*args, **kwargs)
+
         self.reset_coords()
 
     def generate_status(self) -> str:
         """Generate a status bar with coords, zoom, etc."""
         return "{} by {} from x={},y={}".format(
-            self.dim[0],
             self.dim[1],
+            self.dim[0],
             self.x,
             self.y
         )
@@ -152,7 +163,8 @@ class Mandel(Frame):
         self.status = BetterLabel('')
 
         self.mandelbrot = MandelDisplay('I AM FRACTAL',
-                                        screen.width)
+                                        screen.width,
+                                        screen=screen)
 
         layout.add_widget(self.status)
         layout.add_widget(Divider())
@@ -195,6 +207,7 @@ class Mandel(Frame):
                 if event.key_code == KEY_RIGHT:
                     self.mandelbrot.direction([1.0, 0.0, ])
 
+            self.mandelbrot.set_dim_from_termsize()
             self.mandelbrot.generate_mandelbrot()
             self.update_status()
 
