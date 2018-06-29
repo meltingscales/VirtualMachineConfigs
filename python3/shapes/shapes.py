@@ -32,7 +32,7 @@ def distance(p1, p2):
                      math.pow((p1[1] - p2[1]), 2))
 
 
-@lru_cache(maxsize=2 ** 10)
+@lru_cache(maxsize=None)
 def mandelbrot(c, maxiter, pow=2.0, f=lambda z, c, pow: (z ** pow) + c):
     z = c
     for n in range(maxiter):
@@ -119,8 +119,12 @@ if __name__ == '__main__':
 
     time.sleep(1)
 
-    ms = mandelbrot_set(dim=(100, 30))[2]
+    a, b, ms = mandelbrot_set(dim=(10, 10))
 
+    print(ms)
+    print(a)
+    print(b)
+	
     for row in list(ms):
         for i in list(row):
             # print(i)
