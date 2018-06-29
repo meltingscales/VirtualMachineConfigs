@@ -1,0 +1,2 @@
+setx TEST_ENVIRONMENT_VARIABLE "o_hai_there_im_a_value"
+PAUSE
