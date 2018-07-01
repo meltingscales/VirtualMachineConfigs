@@ -35,10 +35,11 @@ def distance(p1, p2):
 def mandelbrot(c, maxiter, pow=2.0, f=lambda z, c, pow: (z ** pow) + c):
     z = c
     for n in range(maxiter):
-        if abs(z) > 2.0:
-            return n
-        z = f(z, c, pow)
-    return 0.0
+        if abs(z) > 2.0: # We check if this is 2 because we KNOW it will diverge to infinity.
+            return n # Stop applying mandelbrot function.
+        z = f(z, c, pow) # Apply mandelbrot function.
+		
+    return 0.0 # It is inside the mandelbrot set because it has not yet diverged to infinity.
 
 
 @lru_cache(maxsize=None, typed=False)
