@@ -4,7 +4,6 @@ from functools import lru_cache
 
 import numpy as np
 from lib import read_file_cached
-from numba import jit
 
 scale1 = read_file_cached('scale1.txt')[0]
 scale2 = read_file_cached('scale2.txt')[0]
@@ -71,7 +70,7 @@ def circle_distances(radius=5, center=(3, 3)):
     return ret
 
 
-@jit
+
 def mandelbrot_set(x=(-1.0, 1.0,), y=(-1.0, 1.0,), dim=(50, 50), maxiter=100):
     xmin, xmax = x
     ymin, ymax = y
@@ -85,7 +84,7 @@ def mandelbrot_set(x=(-1.0, 1.0,), y=(-1.0, 1.0,), dim=(50, 50), maxiter=100):
             n3[j, i] = mandelbrot(r1[i] + 1j * r2[j], maxiter)
     return (r1, r2, n3)
 
-@jit
+
 def mandel_to_text(set, shading, shaders, conversion=lambda x: float(x)):
     ret = []
 
