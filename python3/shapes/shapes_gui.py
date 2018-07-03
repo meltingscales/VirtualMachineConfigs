@@ -129,6 +129,10 @@ class MandelDisplay(BetterLabel):
         self.y[1] += -(y * mult)
 
     def zoom(self, factor: float):
+        """Flawed zoom.
+        Biased towards [0,0].
+        A result of my laziness ;) """
+ 
         if factor == 0.0:
             factor = 1.0
 
@@ -146,6 +150,22 @@ class MandelDisplay(BetterLabel):
 
             self.y[0] /= factor
             self.y[1] /= factor
+
+    def zoom2(self, factor: float):
+
+        
+        m = [(self.x[0] + self.x[1])/2,
+             (self.y[0] + self.y[1])/2]  # Get midpoint
+        """ x-----x <-- A corner of the current view.
+            |\   /|
+            | \ / |
+            |  m  |
+            | / \ |
+            |/   \|
+            x-----x """
+
+        #Dist between current points, 'x', and m. The slashes.
+        dist = 666.69
 
 
 class MandelControls(Widget):
