@@ -1,5 +1,8 @@
-from tkinter import Tk, Canvas, PhotoImage,NW,mainloop 
+from tkinter import * 
 from time import clock
+
+def up_key(event):
+  print("WHO PRESSED UP?")
 
 def mandel(kx,ky):
   """ calculates the pixel color of the point of mandelbrot plane
@@ -40,11 +43,21 @@ prepare_mdb(xa,xb,ya,yb)
 #Tk 
 window = Tk()
 canvas = Canvas(window, width = x, height = y, bg = "#000000")
+
 t1=clock()
+
 img = PhotoImage(width = x, height = y)
+
 canvas.create_image((0, 0), image = img, state = "normal", anchor = NW)
+
 pixels=" ".join(("{"+" ".join(('#%02x%02x%02x' % mandel(i,j) for i in xm))+"}" for j in ym))
+
 img.put(pixels)
+
+window.bind('<Up>',up_key)
+
 canvas.pack()
+
 print(clock()-t1)
+
 mainloop()
