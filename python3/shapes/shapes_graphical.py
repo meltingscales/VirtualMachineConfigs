@@ -18,35 +18,38 @@ def mandel(kx,ky):
          return (255-clr[i],0,0)
   return(0,0,0)
 
-def prepare_mdb(xa,xb,ya,yb):
+def prepare_mdb(x,y,dim):
     """ pre-calculates coordinates of the mandelbrot plane required for each
       pixel in the screen"""
+    xa, xb = x
+    ya, yb = y
+    w, h = dim
 
-    global x,y,xm,ym
-    xm.clear
-    ym.clear
-    xm=[xa + (xb - xa) * kx /x  for kx in range(x)]
-    ym=[ya + (yb - ya) * ky /y  for ky in range(y)]
+    xm=[xa + (xb - xa) * kx / w for kx in range(w)]
+    ym=[ya + (yb - ya) * ky / h for ky in range(h)]
 
+    return xm, ym
 
-x=640
-y=480
+def display_mandelbrot():
+    pass
+
+w, h = [640, 480]
+
 #corners of  the mandelbrot plan to display  
-xa = -2.0; xb = 1.0
-ya = -1.5; yb = 1.5
+x = [-2.0, 1.0]
+y = [-1.5, 1.5]
+
 #precalculated color table
 clr=[ int(255*((i/255)**12)) for i in range(255,-1,-1)]
-xm=[]
-ym=[]
-prepare_mdb(xa,xb,ya,yb)
+xm, ym = prepare_mdb(x, y, (w, h))
 
 #Tk 
 window = Tk()
-canvas = Canvas(window, width = x, height = y, bg = "#000000")
+canvas = Canvas(window, width = w, height = h, bg = "#000000")
 
 t1=clock()
 
-img = PhotoImage(width = x, height = y)
+img = PhotoImage(width = w, height = h)
 
 canvas.create_image((0, 0), image = img, state = "normal", anchor = NW)
 
