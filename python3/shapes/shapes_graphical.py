@@ -38,8 +38,31 @@ def display_mandelbrot(canvas, color, dim=[640, 480], x=[-2.0, 1.0], y=[-1.5, 1.
 
     xm, ym = prepare_mdb(x, y, dim) # Make all possible x,y coords.
 
-    img = PhotoImage(width = w, height = h)
+    image = PhotoImage(width = w, height = h)
 
+    canvas.create_image((0, 0), image = image, state = "normal", anchor = NW)
+
+    pixels=" ".join(("{"+" ".join(('#%02x%02x%02x' % mandel(i, j, color) for i in xm))+"}" for j in ym))
+
+    image.put(pixels)
+
+if __name__ == '__main__':
+    dim = [640, 480]
+    w, h = dim
+
+    #corners of  the mandelbrot plan to display  
+    x = [-2.0, 1.0]
+    y = [-1.5, 1.5]
+
+    #precalculated color table
+    color=[ int(255*(i/255)**12) for i in range(255,-1,-1)]
+    xm, ym = prepare_mdb(x, y, dim)
+
+    #first method, w/o function...
+    window = Tk()
+    canvas = Canvas(window, width=w, height=h, bg="#000000")
+
+    img = PhotoImage(width = w, height = h)
     canvas.create_image((0, 0), image = img, state = "normal", anchor = NW)
 
     pixels=" ".join(("{"+" ".join(('#%02x%02x%02x' % mandel(i, j, color) for i in xm))+"}" for j in ym))
@@ -48,39 +71,16 @@ def display_mandelbrot(canvas, color, dim=[640, 480], x=[-2.0, 1.0], y=[-1.5, 1.
 
     canvas.pack()
 
+    # Second method, with a function...
+    window2 = Tk()
+    canvas2 = Canvas(window2, width=w, height=h, bg='#000000')
+    
+    display_mandelbrot(canvas2, color, dim, x, y)
+    
+    canvas2.pack()
 
-dim = [640, 480]
-w, h = dim
+    # Callbacks
+    window.bind('<Up>', up_key)
 
-#corners of  the mandelbrot plan to display  
-x = [-2.0, 1.0]
-y = [-1.5, 1.5]
-
-#precalculated color table
-color=[ int(255*(i/255)**12) for i in range(255,-1,-1)]
-xm, ym = prepare_mdb(x, y, dim)
-
-#Tk 
-window = Tk()
-canvas = Canvas(window, width = w, height = h, bg = "#000000")
-
-t1=clock()
-
-#display_mandelbrot(canvas, color, dim, x, y)
-
-img = PhotoImage(width = w, height = h)
-
-canvas.create_image((0, 0), image = img, state = "normal", anchor = NW)
-
-pixels=" ".join(("{"+" ".join(('#%02x%02x%02x' % mandel(i, j, color) for i in xm))+"}" for j in ym))
-
-img.put(pixels)
-
-canvas.pack()
-
-window.bind('<Up>', up_key)
-
-
-print(f"{clock()-t1:.2f} seconds for that image.")
-
-mainloop()
+    #Mainloop
+    mainloop()
