@@ -1,5 +1,5 @@
-from tkinter import * 
-from time import clock
+from tkinter import *
+
 
 class MandelImage(PhotoImage):
     pass
@@ -47,6 +47,8 @@ def display_mandelbrot(canvas, color, dim=[640, 480], x=[-2.0, 1.0], y=[-1.5, 1.
     image.put(pixels)
 
 if __name__ == '__main__':
+    root = Tk()
+
     dim = [640, 480]
     w, h = dim
 
@@ -59,7 +61,7 @@ if __name__ == '__main__':
     xm, ym = prepare_mdb(x, y, dim)
 
     #first method, w/o function...
-    window = Tk()
+    window = Toplevel(master=root)
     canvas = Canvas(window, width=w, height=h, bg="#000000")
 
     img = PhotoImage(width = w, height = h)
@@ -72,9 +74,9 @@ if __name__ == '__main__':
     canvas.pack()
 
     # Second method, with a function...
-    window2 = Tk()
+    window2 = Toplevel(master=root)
     canvas2 = Canvas(window2, width=w, height=h, bg='#000000')
-    
+
     display_mandelbrot(canvas2, color, dim, x, y)
     
     canvas2.pack()
