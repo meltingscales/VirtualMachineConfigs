@@ -44,6 +44,7 @@ def display_mandelbrot(canvas, color, dim=[640, 480], x=[-2.0, 1.0], y=[-1.5, 1.
     image = PhotoImage(width=w, height=h)
 
     canvas.create_image((0, 0), image=image, state="normal", anchor=NW)
+    canvas.image = image
 
     pixels = " ".join(("{" + " ".join(('#%02x%02x%02x' % mandel(i, j, color) for i in xm)) + "}" for j in ym))
 
@@ -53,7 +54,7 @@ def display_mandelbrot(canvas, color, dim=[640, 480], x=[-2.0, 1.0], y=[-1.5, 1.
 if __name__ == '__main__':
     root = Tk()
 
-    dim = [640, 480]
+    dim = [50, 50]
     w, h = dim
 
     # corners of  the mandelbrot plan to display
@@ -64,26 +65,13 @@ if __name__ == '__main__':
     color = [int(255 * (i / 255) ** 12) for i in range(255, -1, -1)]
     xm, ym = prepare_mdb(x, y, dim)
 
-    # first method, w/o function...
+    # Second method, with a function...
     window = Toplevel(master=root)
-    canvas = Canvas(window, width=w, height=h, bg="#000000")
+    canvas = Canvas(window, width=w, height=h, bg='#000000')
 
-    img = PhotoImage(width=w, height=h)
-    canvas.create_image((0, 0), image=img, state="normal", anchor=NW)
-
-    pixels = " ".join(("{" + " ".join(('#%02x%02x%02x' % mandel(i, j, color) for i in xm)) + "}" for j in ym))
-
-    img.put(pixels)
+    display_mandelbrot(canvas, color, dim, x, y)
 
     canvas.pack()
-
-    # Second method, with a function...
-    window2 = Toplevel(master=root)
-    canvas2 = Canvas(window2, width=w, height=h, bg='#000000')
-
-    display_mandelbrot(canvas2, color, dim, x, y)
-
-    canvas2.pack()
 
     # Callbacks
     window.bind('<Up>', up_key)
