@@ -2,11 +2,36 @@ from tkinter import *
 
 
 class MandelImage(PhotoImage):
-    pass
+    x = [-2.0, 1.0]
+    y = [-1.5, 1.5]
+    dim = [640, 480]
+    palette = tuple([int(255 * (i / 255) ** 12) for i in range(255, -1, -1)])
 
+    def __init__(self, *args, **kwargs):
+        if 'width' in kwargs and 'height' in kwargs:
+            self.dim = [kwargs['width'], kwargs['height']]
 
-def up_key(event):
-    print("WHO PRESSED UP?")
+        if 'palette' in kwargs:
+            self.palette = kwargs.pop('palette')
+
+        super().__init__(*args, **kwargs)
+
+    def display_mandelbrot(self):
+        xm, ym = prepare_mdb(self.x, self.y, self.dim)  # Make all possible x,y coords.
+
+        pixels = " ".join(
+            ("{" + " ".join(('#%02x%02x%02x' % mandel(i, j, self.palette) for i in xm)) + "}" for j in ym))
+
+        self.put(pixels)
+
+    def offset(self, vector):
+        x, y = vector
+
+        self.x[0] += x
+        self.x[1] += x
+
+        self.y[0] += y
+        self.y[1] += y
 
 
 def mandel(kx, ky, color):
@@ -36,45 +61,28 @@ def prepare_mdb(x, y, dim):
     return [xm, ym]
 
 
-def display_mandelbrot(canvas, color, dim=[640, 480], x=[-2.0, 1.0], y=[-1.5, 1.5]):
-    w, h = dim
-
-    xm, ym = prepare_mdb(x, y, dim)  # Make all possible x,y coords.
-
-    image = PhotoImage(width=w, height=h)
-
-    canvas.create_image((0, 0), image=image, state="normal", anchor=NW)
-    canvas.image = image
-
-    pixels = " ".join(("{" + " ".join(('#%02x%02x%02x' % mandel(i, j, color) for i in xm)) + "}" for j in ym))
-
-    image.put(pixels)
-
-
 if __name__ == '__main__':
     root = Tk()
 
-    dim = [50, 50]
+    dim = [500, 500]
     w, h = dim
-
-    # corners of  the mandelbrot plan to display
-    x = [-2.0, 1.0]
-    y = [-1.5, 1.5]
-
-    # precalculated color table
-    color = [int(255 * (i / 255) ** 12) for i in range(255, -1, -1)]
-    xm, ym = prepare_mdb(x, y, dim)
 
     # Second method, with a function...
     window = Toplevel(master=root)
     canvas = Canvas(window, width=w, height=h, bg='#000000')
+    image = MandelImage(width=w, height=h)
+    canvas.create_image((0, 0), image=image, state="normal", anchor=NW)
+    canvas.image = image
 
-    display_mandelbrot(canvas, color, dim, x, y)
+    canvas.image.display_mandelbrot()
 
     canvas.pack()
 
     # Callbacks
-    window.bind('<Up>', up_key)
+    window.bind('<Up>', lambda event: (canvas.image.offset([0, -1]), canvas.image.display_mandelbrot()))
+    window.bind('<Down>', lambda event: (canvas.image.offset([0, 1]), canvas.image.display_mandelbrot()))
+    window.bind('<Left>', lambda event: (canvas.image.offset([-1, 0]), canvas.image.display_mandelbrot()))
+    window.bind('<Right>', lambda event: (canvas.image.offset([1, 0]), canvas.image.display_mandelbrot()))
 
     # Mainloop
     mainloop()
