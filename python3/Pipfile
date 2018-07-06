@@ -10,6 +10,7 @@ pywinauto = "*"
 packaging = "*"
 numpy = "*"
 asciimatics = "*"
+joblib = "*"
 
 [dev-packages]
 

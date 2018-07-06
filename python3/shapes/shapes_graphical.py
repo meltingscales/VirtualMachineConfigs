@@ -1,6 +1,12 @@
-from tkinter import *
-from functools import lru_cache
+import os
 from lib import *
+from functools import lru_cache
+from joblib import Memory
+from tkinter import *
+
+memory = Memory(cachedir=
+                os.path.join(os.path.dirname(__file__),'__pycache__'),
+                verbose=0)
 
 @lru_cache(maxsize=None)
 def mandel(kx, ky, color):
@@ -29,7 +35,7 @@ def prepare_mdb(x, y, dim):
 
     return [xm, ym]
 
-@lru_cache(maxsize=None)
+@memory.cache
 def mandel_pixels(dim, x, y, palette):
     xm, ym = prepare_mdb(tuple(x), tuple(y), dim)  # Make all possible x,y coords.
 
