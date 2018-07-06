@@ -168,7 +168,7 @@ class MandelDisplay(BetterLabel):
             self.x[0], self.y[0] = list(mid1)
             self.x[1], self.y[1] = list(mid2)
         else:
-            self.x[0], self.y[0] = addpoint(mid1, p1)
+            self.x[0], self.y[0] = addpoint(mid1, p1) # TODO the zoom-out is biased AGAINST 0,0 now... :'(
             self.x[1], self.y[1] = addpoint(mid2, p2)
 
 
