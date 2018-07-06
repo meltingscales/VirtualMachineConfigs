@@ -1,6 +1,14 @@
 from tkinter import *
 from functools import lru_cache
 
+def midpoint(p1, p2):
+    return ((p1[0] + p2[0])/2.0,
+            (p1[1] + p2[1])/2.0)
+
+def addpoint(p1, p2):
+    return ((p1[0] + p2[0]),
+            (p1[1] + p2[1]))
+
 @lru_cache(maxsize=None)
 def mandel(kx, ky, color):
     """ calculates the pixel color of the point of mandelbrot plane
@@ -98,8 +106,24 @@ class MandelImage(PhotoImage):
 
 
     def zoomy(self, factor):
-        pass
+        mid = midpoint((self.x[0],self.y[0]), (self.x[1],self.y[1]))
 
+        p1, p2 = ((self.x[0], self.y[0]), (self.x[1], self.y[1]))
+        
+        print(f'midpoint of {p1} and {p2} is {mid}.')
+
+        mid1 = midpoint(p1, mid)
+        mid2 = midpoint(p2, mid)
+
+        print(mid1)
+        print(mid2)
+
+        if(factor <= 1): # TODO fix this and have factor var scale the actual zooming factor
+            self.x[0], self.y[0] = list(mid1)
+            self.x[1], self.y[1] = list(mid2)
+        else:
+            self.x[0], self.y[0] = addpoint(mid1, p1)
+            self.x[1], self.y[1] = addpoint(mid2, p2)
 
 if __name__ == '__main__':
     root = Tk()
@@ -119,15 +143,18 @@ if __name__ == '__main__':
     canvas.pack()
 
     # Callbacks
-    window.bind('<Up>', lambda event: (canvas.image.offset([0, 1]), canvas.image.display_mandelbrot()))
-    window.bind('<Down>', lambda event: (canvas.image.offset([0, -1]), canvas.image.display_mandelbrot()))
-    window.bind('<Left>', lambda event: (canvas.image.offset([-1, 0]), canvas.image.display_mandelbrot()))
-    window.bind('<Right>', lambda event: (canvas.image.offset([1, 0]), canvas.image.display_mandelbrot()))
+    window.bind('<Up>', lambda event: (canvas.image.offset([0.0, 1.0]), canvas.image.display_mandelbrot()))
+    window.bind('<Down>', lambda event: (canvas.image.offset([0.0, -1.0]), canvas.image.display_mandelbrot()))
+    window.bind('<Left>', lambda event: (canvas.image.offset([-1.0, 0.0]), canvas.image.display_mandelbrot()))
+    window.bind('<Right>', lambda event: (canvas.image.offset([1.0, 0.0]), canvas.image.display_mandelbrot()))
 
-    window.bind('<=>', lambda event: (canvas.image.zoomybad(0.5), canvas.image.display_mandelbrot()))
-    window.bind('<Key-minus>', lambda event: (canvas.image.zoomybad(2.0), canvas.image.display_mandelbrot()))
+    window.bind('<=>', lambda event: (canvas.image.zoomy(0.5), canvas.image.display_mandelbrot()))
+    window.bind('<Key-minus>', lambda event: (canvas.image.zoomy(2.0), canvas.image.display_mandelbrot()))
 
-    window.bind('r', lambda event: (print("RESET"), canvas.image.reset_coords(), canvas.image.display_mandelbrot()))
-
+    window.bind('r', lambda event: (canvas.image.reset_coords(), canvas.image.display_mandelbrot()))
+    window.bind('q', lambda event: (exit(0)))
+    
+    canvas.image.zoomy(1.5)
+    
     # Mainloop
     mainloop()
