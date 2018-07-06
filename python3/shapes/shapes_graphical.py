@@ -28,7 +28,7 @@ def prepare_mdb(x, y, dim):
 
     return [xm, ym]
 
-@lru_cache(maxsize=None)
+#@lru_cache(maxsize=None)
 def mandel_pixels(dim, x, y, palette):
     xm, ym = prepare_mdb(x, y, dim)  # Make all possible x,y coords.
 
@@ -38,12 +38,16 @@ def mandel_pixels(dim, x, y, palette):
     return pixels
 
 class MandelImage(PhotoImage):
-    x = [-2.0, 1.0]
-    y = [-1.5, 1.5]
-    dim = [640, 480]
-    palette = tuple([int(255 * (i / 255) ** 12) for i in range(255, -1, -1)])
+
+    def reset_coords(self):
+        self.x = [-2.0, 1.0]
+        self.y = [-1.5, 1.5]
+        self.dim = [200, 200]
+        self.palette = tuple([int(255 * (i / 255) ** 12) for i in range(255, -1, -1)])
 
     def __init__(self, *args, **kwargs):
+        self.reset_coords()
+        
         if 'width' in kwargs and 'height' in kwargs:
             self.dim = [kwargs['width'], kwargs['height']]
 
@@ -61,17 +65,46 @@ class MandelImage(PhotoImage):
     def offset(self, vector):
         x, y = vector
 
-        self.x[0] += x
-        self.x[1] += x
+        mult = abs(self.x[0] - self.x[1]) / 10  # a tenth of screen width
 
-        self.y[0] += y
-        self.y[1] += y
+        self.x[0] += (x * mult)
+        self.x[1] += (x * mult)
+
+        self.y[0] += -(y * mult)
+        self.y[1] += -(y * mult)
+
+    def zoomybad(self, factor: float):
+        """Flawed zoom.
+        Biased towards [0,0].
+        A result of my laziness ;) """
+ 
+        if factor == 0.0:
+            factor = 1.0
+
+        if factor > 0.0:
+            self.x[0] *= factor
+            self.x[1] *= factor
+
+            self.y[0] *= factor
+            self.y[1] *= factor
+        else:
+            factor = -factor  # Don't want to flip our coords around!
+
+            self.x[0] /= factor
+            self.x[1] /= factor
+
+            self.y[0] /= factor
+            self.y[1] /= factor
+
+
+    def zoomy(self, factor):
+        pass
 
 
 if __name__ == '__main__':
     root = Tk()
 
-    dim = [500, 500]
+    dim = [200, 200]
     w, h = dim
 
     # Second method, with a function...
@@ -86,10 +119,15 @@ if __name__ == '__main__':
     canvas.pack()
 
     # Callbacks
-    window.bind('<Up>', lambda event: (canvas.image.offset([0, -1]), canvas.image.display_mandelbrot()))
-    window.bind('<Down>', lambda event: (canvas.image.offset([0, 1]), canvas.image.display_mandelbrot()))
+    window.bind('<Up>', lambda event: (canvas.image.offset([0, 1]), canvas.image.display_mandelbrot()))
+    window.bind('<Down>', lambda event: (canvas.image.offset([0, -1]), canvas.image.display_mandelbrot()))
     window.bind('<Left>', lambda event: (canvas.image.offset([-1, 0]), canvas.image.display_mandelbrot()))
     window.bind('<Right>', lambda event: (canvas.image.offset([1, 0]), canvas.image.display_mandelbrot()))
+
+    window.bind('<=>', lambda event: (canvas.image.zoomybad(0.5), canvas.image.display_mandelbrot()))
+    window.bind('<Key-minus>', lambda event: (canvas.image.zoomybad(2.0), canvas.image.display_mandelbrot()))
+
+    window.bind('r', lambda event: (print("RESET"), canvas.image.reset_coords(), canvas.image.display_mandelbrot()))
 
     # Mainloop
     mainloop()
