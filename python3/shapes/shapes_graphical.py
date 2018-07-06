@@ -1,39 +1,7 @@
 from tkinter import *
+from functools import lru_cache
 
-
-class MandelImage(PhotoImage):
-    x = [-2.0, 1.0]
-    y = [-1.5, 1.5]
-    dim = [640, 480]
-    palette = tuple([int(255 * (i / 255) ** 12) for i in range(255, -1, -1)])
-
-    def __init__(self, *args, **kwargs):
-        if 'width' in kwargs and 'height' in kwargs:
-            self.dim = [kwargs['width'], kwargs['height']]
-
-        if 'palette' in kwargs:
-            self.palette = kwargs.pop('palette')
-
-        super().__init__(*args, **kwargs)
-
-    def display_mandelbrot(self):
-        xm, ym = prepare_mdb(self.x, self.y, self.dim)  # Make all possible x,y coords.
-
-        pixels = " ".join(
-            ("{" + " ".join(('#%02x%02x%02x' % mandel(i, j, self.palette) for i in xm)) + "}" for j in ym))
-
-        self.put(pixels)
-
-    def offset(self, vector):
-        x, y = vector
-
-        self.x[0] += x
-        self.x[1] += x
-
-        self.y[0] += y
-        self.y[1] += y
-
-
+@lru_cache(maxsize=None)
 def mandel(kx, ky, color):
     """ calculates the pixel color of the point of mandelbrot plane
         passed in the arguments """
@@ -59,6 +27,45 @@ def prepare_mdb(x, y, dim):
     ym = [ya + (yb - ya) * ky / h for ky in range(h)]
 
     return [xm, ym]
+
+@lru_cache(maxsize=None)
+def mandel_pixels(dim, x, y, palette):
+    xm, ym = prepare_mdb(x, y, dim)  # Make all possible x,y coords.
+
+    pixels = " ".join(
+        ("{" + " ".join(('#%02x%02x%02x' % mandel(i, j, palette) for i in xm)) + "}" for j in ym))
+
+    return pixels
+
+class MandelImage(PhotoImage):
+    x = [-2.0, 1.0]
+    y = [-1.5, 1.5]
+    dim = [640, 480]
+    palette = tuple([int(255 * (i / 255) ** 12) for i in range(255, -1, -1)])
+
+    def __init__(self, *args, **kwargs):
+        if 'width' in kwargs and 'height' in kwargs:
+            self.dim = [kwargs['width'], kwargs['height']]
+
+        if 'palette' in kwargs:
+            self.palette = kwargs.pop('palette')
+
+        super().__init__(*args, **kwargs)
+
+    def display_mandelbrot(self):
+        
+        pixels = mandel_pixels(tuple(self.dim), tuple(self.x), tuple(self.y), self.palette)
+        
+        self.put(pixels)
+
+    def offset(self, vector):
+        x, y = vector
+
+        self.x[0] += x
+        self.x[1] += x
+
+        self.y[0] += y
+        self.y[1] += y
 
 
 if __name__ == '__main__':
