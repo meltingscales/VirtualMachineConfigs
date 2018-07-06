@@ -1,13 +1,6 @@
 from tkinter import *
 from functools import lru_cache
-
-def midpoint(p1, p2):
-    return ((p1[0] + p2[0])/2.0,
-            (p1[1] + p2[1])/2.0)
-
-def addpoint(p1, p2):
-    return ((p1[0] + p2[0]),
-            (p1[1] + p2[1]))
+from lib import *
 
 @lru_cache(maxsize=None)
 def mandel(kx, ky, color):

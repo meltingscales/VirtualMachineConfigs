@@ -15,3 +15,11 @@ def log_to_file(path, s):
         elif isinstance(s, list) or isinstance(s, tuple):
             for item in s:
                 f.write(item + '\n')
+
+def midpoint(p1, p2):
+    return ((p1[0] + p2[0])/2.0,
+            (p1[1] + p2[1])/2.0)
+
+def addpoint(p1, p2):
+    return ((p1[0] + p2[0]),
+            (p1[1] + p2[1]))

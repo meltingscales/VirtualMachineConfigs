@@ -7,7 +7,7 @@ from asciimatics.renderers import FigletText
 from asciimatics.scene import Scene
 from asciimatics.screen import Screen
 from asciimatics.widgets import Frame, Layout, Divider, Label, Widget
-from lib import read_file_cached
+from lib import *
 from shapes import mandelbrot_set, mandel_to_text
 
 KEY_UP = -204
@@ -128,7 +128,7 @@ class MandelDisplay(BetterLabel):
         self.y[0] += -(y * mult)
         self.y[1] += -(y * mult)
 
-    def zoom(self, factor: float):
+    def zoombad(self, factor: float):
         """Flawed zoom.
         Biased towards [0,0].
         A result of my laziness ;) """
@@ -151,21 +151,25 @@ class MandelDisplay(BetterLabel):
             self.y[0] /= factor
             self.y[1] /= factor
 
-    def zoom2(self, factor: float):
+    def zoom(self, factor: float):
+        mid = midpoint((self.x[0],self.y[0]), (self.x[1],self.y[1]))
 
+        p1, p2 = ((self.x[0], self.y[0]), (self.x[1], self.y[1]))
         
-        m = [(self.x[0] + self.x[1])/2,
-             (self.y[0] + self.y[1])/2]  # Get midpoint
-        """ x-----x <-- A corner of the current view.
-            |\   /|
-            | \ / |
-            |  m  |
-            | / \ |
-            |/   \|
-            x-----x """
+        print(f'midpoint of {p1} and {p2} is {mid}.')
 
-        #Dist between current points, 'x', and m. The slashes.
-        dist = 666.69
+        mid1 = midpoint(p1, mid)
+        mid2 = midpoint(p2, mid)
+
+        print(mid1)
+        print(mid2)
+
+        if(factor <= 1): # TODO fix this and have factor var scale the actual zooming factor
+            self.x[0], self.y[0] = list(mid1)
+            self.x[1], self.y[1] = list(mid2)
+        else:
+            self.x[0], self.y[0] = addpoint(mid1, p1)
+            self.x[1], self.y[1] = addpoint(mid2, p2)
 
 
 class MandelControls(Widget):
