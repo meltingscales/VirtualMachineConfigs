@@ -49,7 +49,7 @@ class MandelImage(PhotoImage):
     def reset_coords(self):
         self.x = [-2.0, 1.0]
         self.y = [-1.5, 1.5]
-        self.dim = [200, 200]
+        self.dim = [500, 500]
         self.palette = tuple([int(255 * (i / 255) ** 12) for i in range(255, -1, -1)])
 
     def __init__(self, *args, **kwargs):
@@ -127,7 +127,7 @@ class MandelImage(PhotoImage):
 if __name__ == '__main__':
     root = Tk()
 
-    dim = [200, 200]
+    dim = MandelImage().dim
     w, h = dim
 
     # Second method, with a function...
@@ -152,8 +152,6 @@ if __name__ == '__main__':
 
     window.bind('r', lambda event: (canvas.image.reset_coords(), canvas.image.display_mandelbrot()))
     window.bind('q', lambda event: (exit(0)))
-    
-    canvas.image.zoomy(1.5)
-    
+        
     # Mainloop
     mainloop()
