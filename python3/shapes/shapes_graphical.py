@@ -15,7 +15,7 @@ def mandel(kx, ky, color):
             return (255 - color[i], 0, 0)
     return (0, 0, 0)
 
-
+@lru_cache(maxsize=None)
 def prepare_mdb(x, y, dim):
     """ pre-calculates coordinates of the mandelbrot plane required for each
       pixel in the screen"""
@@ -28,9 +28,9 @@ def prepare_mdb(x, y, dim):
 
     return [xm, ym]
 
-#@lru_cache(maxsize=None)
+@lru_cache(maxsize=None)
 def mandel_pixels(dim, x, y, palette):
-    xm, ym = prepare_mdb(x, y, dim)  # Make all possible x,y coords.
+    xm, ym = prepare_mdb(tuple(x), tuple(y), dim)  # Make all possible x,y coords.
 
     pixels = " ".join(
         ("{" + " ".join(('#%02x%02x%02x' % mandel(i, j, palette) for i in xm)) + "}" for j in ym))
