@@ -49,7 +49,7 @@ class MandelImage(PhotoImage):
     def reset_coords(self):
         self.x = [-2.0, 1.0]
         self.y = [-1.5, 1.5]
-        self.dim = [500, 500]
+        self.dim = [200, 200]
         self.palette = tuple([int(255 * (i / 255) ** 12) for i in range(255, -1, -1)])
 
     def __init__(self, *args, **kwargs):
