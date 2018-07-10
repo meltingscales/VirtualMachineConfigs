@@ -9,8 +9,19 @@ def nidx(idx, lst):
         return nidx(idx - len(lst), lst)
     return idx
 
-class CellularAutomaton(object):
+def gen_rules(n=30, colors=2, width=3):
+    d = {}
 
+    for i in range(colors ** width):
+        print(i)
+
+    return d
+
+print(gen_rules())
+
+exit()
+
+class CellularAutomaton(object):
 
     grid = [ #2d list
         deque(['0' for i in range(25)]),
@@ -78,6 +89,6 @@ class CellularAutomaton(object):
 
 ca = CellularAutomaton()
 
-ca.cycle()
+ca.cycle(2)
 
 print(ca)
