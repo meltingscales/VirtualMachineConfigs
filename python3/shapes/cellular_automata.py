@@ -1,6 +1,9 @@
 import copy
 from collections import deque
 from pprint import pprint
+from PIL import Image
+import numpy as np
+
 
 def baseN(num, b, numerals="0123456789abcdefghijklmnopqrstuvwxyz"):
     """https://stackoverflow.com/questions/2267362/how-to-convert-an-integer-in-any-base-to-a-string"""
@@ -42,9 +45,31 @@ def pretty_deque_grid(dqg):
             [''.join(row) for row in dqg]
             )
 
+def grid_to_image(grid: []) -> Image:
+    image = Image.new(mode='RGB', size=(len(grid[0]), len(grid)))
+
+    data = [list(item) for item in map_dql(grid, {'0': -1, '1': 0})]
+    data = np.array(data)
+    print(data)
+
+    image.putdata(data.flatten())
+    
+    return image
+
+def map_dql(dq: [deque], d={}) -> []:
+    """Maps objects in a list of deques."""
+    dq = copy.deepcopy(dq)
+    for row in dq:
+        for i in range(0, len(row)):
+            row[i] = d[row[i]]
+    return dq
+
 class CellularAutomaton(object):
 
-    def cycle(self, times=1, verbose=False):
+    def to_image(self) -> Image:
+        return grid_to_image(self.grid)
+    
+    def cycle(self, times=30, verbose=False):
         
         if(times <= 0):
             return
@@ -57,7 +82,7 @@ class CellularAutomaton(object):
 
         for i in range(len(row)): # loop though all cells
 
-            lb = -((self.width//2))
+            lb = -(self.width//2)
             ub = -lb
             
             lb += i
@@ -104,16 +129,15 @@ class CellularAutomaton(object):
 
     def map(self, d={}) -> deque:
         """Maps chars to make output more printable."""
-        for row in self.grid:
-            for i in range(0, len(row)):
-                row[i] = d[row[i]]
-        return self.grid
+        return map_dql(self.grid, d)
 
 
 ca = CellularAutomaton(30, colors=2, pwidth=3, gwidth=30)
 
 pprint(ca.rules)
 
-ca.cycle(20)
+ca.cycle(4)
 
 print(pretty_deque_grid(ca.map({'0': ' ', '1': '#'})))
+
+ca.to_image().show()
