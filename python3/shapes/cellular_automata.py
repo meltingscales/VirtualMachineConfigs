@@ -45,16 +45,33 @@ def pretty_deque_grid(dqg):
             [''.join(row) for row in dqg]
             )
 
-def grid_to_image(grid: []) -> Image:
+def grid_to_image(grid: [], d={'0': (255,255,255), '1': (0,0,0)}) -> Image:
     image = Image.new(mode='RGB', size=(len(grid[0]), len(grid)))
 
-    data = [list(item) for item in map_dql(grid, {'0': -1, '1': 0})]
-    data = np.array(data)
-    #print(data)
+    data = []
+    
+    for row in grid:
+        rgbrow = row_to_rgb(row, d)
+        for item in rgbrow:        
+            data.append(item)
 
-    image.putdata(data.flatten())
+    print(data)
+
+    image.putdata(data=tuple(data))
     
     return image
+
+def row_to_rgb(row: deque, d: dict) -> (int):
+
+    tups = []
+    
+    for item in row:
+        tups.append(d[item])
+
+    return tuple(tups)
+
+def cell_to_rgb(cell: object, d: dict) -> (int,):
+    return d[cell]
 
 def map_dql(dq: [deque], d={}) -> []:
     """Maps objects in a list of deques."""
@@ -131,19 +148,32 @@ class CellularAutomaton(object):
         """Maps chars to make output more printable."""
         return map_dql(self.grid, d)
 
-for i in range(0, 255):
-    ca = CellularAutomaton(i, colors=2, pwidth=3, gwidth=30)
+def demo():
+
+    for i in range(0, 255):
+        ca = CellularAutomaton(i, colors=2, pwidth=3, gwidth=30)
+        
+        pprint(ca.rules)
+
+        ca.cycle(15)
+
+        print(i)
+
+        print(pretty_deque_grid(ca.map({'0': ' ', '1': '#'})))
+
+        x = input('next?')
+
+
+if __name__ == '__main__':
+
+    #demo()
     
+    ca = CellularAutomaton(30, colors=2, pwidth=3, gwidth=60)
+
     pprint(ca.rules)
 
-    ca.cycle(15)
-
-    print(i)
+    ca.cycle(30)
 
     print(pretty_deque_grid(ca.map({'0': ' ', '1': '#'})))
 
-    x = input('next?')
-    
-
-
-#    ca.to_image().show()
+    ca.to_image().show()
