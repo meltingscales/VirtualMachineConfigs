@@ -50,7 +50,7 @@ def grid_to_image(grid: []) -> Image:
 
     data = [list(item) for item in map_dql(grid, {'0': -1, '1': 0})]
     data = np.array(data)
-    print(data)
+    #print(data)
 
     image.putdata(data.flatten())
     
@@ -131,13 +131,19 @@ class CellularAutomaton(object):
         """Maps chars to make output more printable."""
         return map_dql(self.grid, d)
 
+for i in range(0, 255):
+    ca = CellularAutomaton(i, colors=2, pwidth=3, gwidth=30)
+    
+    pprint(ca.rules)
 
-ca = CellularAutomaton(30, colors=2, pwidth=3, gwidth=30)
+    ca.cycle(15)
 
-pprint(ca.rules)
+    print(i)
 
-ca.cycle(4)
+    print(pretty_deque_grid(ca.map({'0': ' ', '1': '#'})))
 
-print(pretty_deque_grid(ca.map({'0': ' ', '1': '#'})))
+    x = input('next?')
+    
 
-ca.to_image().show()
+
+#    ca.to_image().show()
