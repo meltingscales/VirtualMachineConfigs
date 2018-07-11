@@ -40,6 +40,19 @@ def gen_rules(n=30, colors=2, width=3):
     
     return d
 
+def generate_colormap(n=2) -> {int: int}:
+    d = {}
+
+    for i in range(n):
+        c = 255.0 * (float(i) / float(n))
+
+        k = str(i)
+        v = (c,c,c,)
+
+        d[k] = v
+
+    return d
+
 def pretty_deque_grid(dqg):
     return '\n'.join(
             [''.join(row) for row in dqg]
@@ -174,6 +187,6 @@ if __name__ == '__main__':
 
     ca.cycle(30)
 
-    print(pretty_deque_grid(ca.map({'0': ' ', '1': '#'})))
+    print(pretty_deque_grid(ca.map({'0': ' ', '1': '.', '2': '#'})))
 
     ca.to_image().show()
