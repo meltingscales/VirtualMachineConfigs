@@ -143,6 +143,16 @@ class CellularAutomaton(object):
         self.rules = gen_rules(n=self.rule,
                                colors=self.colors,
                                width=self.width)
+    def demo(self):
+        
+        pprint(self.rules)
+
+        self.cycle(len(self.grid[0])//2)
+
+        print(pretty_deque_grid(self.map({'0': ' ', '1': '.', '2': '#'})))
+
+        self.to_image().show()
+
 
     def __init__(self, n=30, colors=2, pwidth=3, gwidth=25):
 
@@ -169,9 +179,9 @@ class CellularAutomaton(object):
         return map_dql(self.grid, d)
 
 
-def demo():
+def demo(colors=2):
     for i in range(0, 255):
-        ca = CellularAutomaton(i, colors=2, pwidth=3, gwidth=30)
+        ca = CellularAutomaton(i, colors=colors, pwidth=3, gwidth=30)
 
         pprint(ca.rules)
 
@@ -185,14 +195,10 @@ def demo():
 
 
 if __name__ == '__main__':
-    # demo()
+    demo(colors=2)
 
-    ca = CellularAutomaton(30, colors=2, pwidth=3, gwidth=60)
+    ca1 = CellularAutomaton(30, colors=2, gwidth=60)
+    ca1.demo()
 
-    pprint(ca.rules)
-
-    ca.cycle(30)
-
-    print(pretty_deque_grid(ca.map({'0': ' ', '1': '.', '2': '#'})))
-
-    ca.to_image().show()
+    ca2 = CellularAutomaton(30, colors=3, gwidth=60)
+    ca2.demo()
