@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "2a8adec581193ee8dbe4e974d2fda650ee089a819afa095db1766ebe7fe3389f"
+            "sha256": "e1ceb151deef9179c8bdd44ff4e2fcd0a5786b0895c3a215d89d816b77d1bed9"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -23,9 +23,9 @@
         },
         "comtypes": {
             "hashes": [
-                "sha256:dbab15fba45e20bd696deac0e1aff7f0a721c4a10c9d65b16407834fd295c021"
+                "sha256:de689b90d2f1d26b17a552b53301f07f207e58e6230f45c08ef0360e61557a38"
             ],
-            "version": "==1.1.5"
+            "version": "==1.1.6"
         },
         "future": {
             "hashes": [
@@ -136,6 +136,7 @@
                 "sha256:f8582e1ab155302ea9ef1235441a0214919f4f79c4c7c21833ce9eec58181781",
                 "sha256:f8b3d413c5a8f84b12cd4c5df1d8e211777c9852c6be3ee9c094b626644d3eab"
             ],
+            "index": "pypi",
             "version": "==5.2.0"
         },
         "pyautogui": {
@@ -216,6 +217,14 @@
                 "sha256:832dc0e10feb1aa2c68dcc57dbb658f1c7e65b9b61af69048abc87a2db00a0eb"
             ],
             "version": "==1.11.0"
+        },
+        "utilspie": {
+            "hashes": [
+                "sha256:0f70a13bc47effbc6777766e3d21295027b3893d356a7f71086987cd2ffe63c5",
+                "sha256:835a62e59bcbac4f6e5c5470bc4e59d5941e36e2563d53e37a1d0d36ff967ba6"
+            ],
+            "index": "pypi",
+            "version": "==0.1.0"
         },
         "wcwidth": {
             "hashes": [

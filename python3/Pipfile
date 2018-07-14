@@ -11,6 +11,8 @@ packaging = "*"
 numpy = "*"
 asciimatics = "*"
 joblib = "*"
+pillow = "*"
+utilspie = "*"
 
 [dev-packages]
 

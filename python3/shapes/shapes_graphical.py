@@ -17,7 +17,7 @@ def mandel(kx, ky, color):
     c = complex(kx, ky)
     z = complex(0.0, 0.0)
     for i in range(maxIt):
-        z = z * z + c
+        z = (z ** 2.0) + c
         if abs(z) >= 2.0:
             return (255 - color[i], 0, 0)
     return (0, 0, 0)

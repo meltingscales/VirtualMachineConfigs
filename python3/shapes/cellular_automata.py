@@ -1,8 +1,18 @@
 import copy
 from collections import deque
 from pprint import pprint
+from utilspie.collectionsutils import frozendict
 
 from PIL import Image
+
+
+class CircularRow(deque):
+    pass
+
+
+class Grid(list):
+    def __init__(self):
+        pass
 
 
 def baseN(num, b, numerals="0123456789abcdefghijklmnopqrstuvwxyz"):
@@ -46,7 +56,7 @@ def generate_colormap(n=2) -> {int: int}:
     d = {}
 
     for i in range(n):
-        c = int(255.0 * (float(i) / float(n)))
+        c = 255.0 * (float(i) / float(n))
 
         k = str(i)
         v = (c, c, c,)
@@ -55,10 +65,6 @@ def generate_colormap(n=2) -> {int: int}:
 
     return d
 
-for i in range(2, 10, 1):
-    print(i)
-    pprint(generate_colormap(i))
-
 
 def pretty_deque_grid(dqg):
     return '\n'.join(
@@ -66,7 +72,7 @@ def pretty_deque_grid(dqg):
     )
 
 
-def grid_to_image(grid: [], d=generate_colormap(), verbose=False) -> Image:
+def grid_to_image(grid: list, d=frozendict({'0': (255, 255, 255), '1': (0, 0, 0)})) -> Image:
     image = Image.new(mode='RGB', size=(len(grid[0]), len(grid)))
 
     data = []
@@ -76,7 +82,7 @@ def grid_to_image(grid: [], d=generate_colormap(), verbose=False) -> Image:
         for item in rgbrow:
             data.append(item)
 
-    if verbose: print(data)
+    print(data)
 
     image.putdata(data=tuple(data))
 
@@ -96,7 +102,7 @@ def cell_to_rgb(cell: object, d: dict) -> (int,):
     return d[cell]
 
 
-def map_dql(dq: [deque], d={object:str}) -> []:
+def map_dql(dq: [CircularRow], d={}) -> []:
     """Maps objects in a list of deques."""
     dq = copy.deepcopy(dq)
     for row in dq:
@@ -112,47 +118,42 @@ class CellularAutomaton(object):
 
     def cycle(self, times=30, verbose=False):
 
-        for i in range(times):
+        if (times <= 0):
+            return
 
-            row = self.grid[-1]  # get last row
-            newrow = deque()  # blank row
+        row = self.grid[-1]  # get last row
+        newrow = deque()  # blank row
 
-            if verbose: print(f"ROW {len(self.grid)}:")
-            if verbose: print(''.join(row))
+        if verbose:
+            print(f"ROW {len(self.grid)}:")
+            print(''.join(row))
 
-            for i in range(len(row)):  # loop though all cells
+        for i in range(len(row)):  # loop though all cells
 
-                lb = -(self.width // 2)
-                ub = -lb
+            lb = -(self.width // 2)
+            ub = -lb
 
-                lb += i
-                ub += i
-                # Upper and lower bounds. the 'key' for rules.
+            lb += i
+            ub += i
+            # Upper and lower bounds. the 'key' for rules.
 
-                rule = ''
-                for i in range(lb, ub + 1, 1):
-                    rule += row[nidx(i, row)]
+            rule = ''
+            for i in range(lb, ub + 1, 1):
+                rule += row[nidx(i, row)]
 
-                newrow.append(self.rules[rule])
+            newrow.append(self.rules[rule])
 
-            if verbose: print(f"{nidx(lb, row):2d} - {nidx(ub, row):2d}: {rule} -> {self.rules[rule]}")
+        if verbose:
+            print(f"{nidx(lb, row):2d} - {nidx(ub, row):2d}: {rule} -> {self.rules[rule]}")
 
-            self.grid.append(newrow)
+        self.grid.append(newrow)
+
+        self.cycle(times - 1)
 
     def gen_rules(self):
         self.rules = gen_rules(n=self.rule,
                                colors=self.colors,
                                width=self.width)
-    def demo(self):
-        
-        pprint(self.rules)
-
-        self.cycle(len(self.grid[0])//2)
-
-        print(pretty_deque_grid(self.map({'0': ' ', '1': '.', '2': '#'})))
-
-        self.to_image().show()
-
 
     def __init__(self, n=30, colors=2, pwidth=3, gwidth=25):
 
@@ -161,7 +162,7 @@ class CellularAutomaton(object):
         self.width = pwidth
 
         self.grid = [  # 2d list
-            deque(['0' for i in range(gwidth)]),
+            CircularRow(['0' for i in range(gwidth)]),
         ]
 
         self.grid[0][len(self.grid[0]) // 2] = '1'  # first row has a single black in middle.
@@ -179,9 +180,9 @@ class CellularAutomaton(object):
         return map_dql(self.grid, d)
 
 
-def demo(colors=2):
+def demo():
     for i in range(0, 255):
-        ca = CellularAutomaton(i, colors=colors, pwidth=3, gwidth=30)
+        ca = CellularAutomaton(i, colors=2, pwidth=3, gwidth=30)
 
         pprint(ca.rules)
 
@@ -195,10 +196,14 @@ def demo(colors=2):
 
 
 if __name__ == '__main__':
-    demo(colors=2)
+    # demo()
 
-    ca1 = CellularAutomaton(30, colors=2, gwidth=60)
-    ca1.demo()
+    ca = CellularAutomaton(30, colors=2, pwidth=3, gwidth=60)
 
-    ca2 = CellularAutomaton(30, colors=3, gwidth=60)
-    ca2.demo()
+    pprint(ca.rules)
+
+    ca.cycle(30)
+
+    print(pretty_deque_grid(ca.map({'0': ' ', '1': '.', '2': '#'})))
+
+    ca.to_image().show()
