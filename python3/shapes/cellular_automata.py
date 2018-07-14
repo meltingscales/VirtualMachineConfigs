@@ -46,7 +46,7 @@ def generate_colormap(n=2) -> {int: int}:
     d = {}
 
     for i in range(n):
-        c = 255.0 * (float(i) / float(n))
+        c = int(255.0 * (float(i) / float(n)))
 
         k = str(i)
         v = (c, c, c,)
@@ -55,6 +55,10 @@ def generate_colormap(n=2) -> {int: int}:
 
     return d
 
+for i in range(2, 10, 1):
+    print(i)
+    pprint(generate_colormap(i))
+
 
 def pretty_deque_grid(dqg):
     return '\n'.join(
@@ -62,7 +66,7 @@ def pretty_deque_grid(dqg):
     )
 
 
-def grid_to_image(grid: [], d={'0': (255, 255, 255), '1': (0, 0, 0)}) -> Image:
+def grid_to_image(grid: [], d=generate_colormap(), verbose=False) -> Image:
     image = Image.new(mode='RGB', size=(len(grid[0]), len(grid)))
 
     data = []
@@ -72,7 +76,7 @@ def grid_to_image(grid: [], d={'0': (255, 255, 255), '1': (0, 0, 0)}) -> Image:
         for item in rgbrow:
             data.append(item)
 
-    print(data)
+    if verbose: print(data)
 
     image.putdata(data=tuple(data))
 
@@ -92,7 +96,7 @@ def cell_to_rgb(cell: object, d: dict) -> (int,):
     return d[cell]
 
 
-def map_dql(dq: [deque], d={}) -> []:
+def map_dql(dq: [deque], d={object:str}) -> []:
     """Maps objects in a list of deques."""
     dq = copy.deepcopy(dq)
     for row in dq:
@@ -108,40 +112,47 @@ class CellularAutomaton(object):
 
     def cycle(self, times=30, verbose=False):
 
-        if (times <= 0):
-            return
+        for i in range(times):
 
-        row = self.grid[-1]  # get last row
-        newrow = deque()  # blank row
+            row = self.grid[-1]  # get last row
+            newrow = deque()  # blank row
 
-        if verbose: print(f"ROW {len(self.grid)}:")
-        if verbose: print(''.join(row))
+            if verbose: print(f"ROW {len(self.grid)}:")
+            if verbose: print(''.join(row))
 
-        for i in range(len(row)):  # loop though all cells
+            for i in range(len(row)):  # loop though all cells
 
-            lb = -(self.width // 2)
-            ub = -lb
+                lb = -(self.width // 2)
+                ub = -lb
 
-            lb += i
-            ub += i
-            # Upper and lower bounds. the 'key' for rules.
+                lb += i
+                ub += i
+                # Upper and lower bounds. the 'key' for rules.
 
-            rule = ''
-            for i in range(lb, ub + 1, 1):
-                rule += row[nidx(i, row)]
+                rule = ''
+                for i in range(lb, ub + 1, 1):
+                    rule += row[nidx(i, row)]
 
-            newrow.append(self.rules[rule])
+                newrow.append(self.rules[rule])
 
-        if verbose: print(f"{nidx(lb, row):2d} - {nidx(ub, row):2d}: {rule} -> {self.rules[rule]}")
+            if verbose: print(f"{nidx(lb, row):2d} - {nidx(ub, row):2d}: {rule} -> {self.rules[rule]}")
 
-        self.grid.append(newrow)
-
-        self.cycle(times - 1)
+            self.grid.append(newrow)
 
     def gen_rules(self):
         self.rules = gen_rules(n=self.rule,
                                colors=self.colors,
                                width=self.width)
+    def demo(self):
+        
+        pprint(self.rules)
+
+        self.cycle(len(self.grid[0])//2)
+
+        print(pretty_deque_grid(self.map({'0': ' ', '1': '.', '2': '#'})))
+
+        self.to_image().show()
+
 
     def __init__(self, n=30, colors=2, pwidth=3, gwidth=25):
 
@@ -168,9 +179,9 @@ class CellularAutomaton(object):
         return map_dql(self.grid, d)
 
 
-def demo():
+def demo(colors=2):
     for i in range(0, 255):
-        ca = CellularAutomaton(i, colors=2, pwidth=3, gwidth=30)
+        ca = CellularAutomaton(i, colors=colors, pwidth=3, gwidth=30)
 
         pprint(ca.rules)
 
@@ -184,14 +195,10 @@ def demo():
 
 
 if __name__ == '__main__':
-    # demo()
+    demo(colors=2)
 
-    ca = CellularAutomaton(30, colors=2, pwidth=3, gwidth=60)
+    ca1 = CellularAutomaton(30, colors=2, gwidth=60)
+    ca1.demo()
 
-    pprint(ca.rules)
-
-    ca.cycle(30)
-
-    print(pretty_deque_grid(ca.map({'0': ' ', '1': '.', '2': '#'})))
-
-    ca.to_image().show()
+    ca2 = CellularAutomaton(30, colors=3, gwidth=60)
+    ca2.demo()
