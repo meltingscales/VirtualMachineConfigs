@@ -13,6 +13,8 @@ asciimatics = "*"
 joblib = "*"
 pillow = "*"
 utilspie = "*"
+twilio = "*"
+"bs4" = "*"
 
 [dev-packages]
 
