@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "express": "^4.16.3",
-    "phaser": "^3.11.0"
+    "phaser": "^2.6.2"
   },
   "author": "HenryFBP",
   "license": "ISC"

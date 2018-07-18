@@ -1,5 +1,5 @@
 var game = new Phaser.Game(
-    200, 200,
+    500, 500,
     Phaser.AUTO,
     'phaser-example',
     '',
