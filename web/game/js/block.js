@@ -1,0 +1,5 @@
+let Block = class {
+    constructor() {
+	
+    }
+}
