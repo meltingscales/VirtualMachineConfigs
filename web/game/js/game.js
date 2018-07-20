@@ -18,6 +18,7 @@ var jumpButton;
 
 function preload() {
     game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+    game.load.image('block', 'assets/block.png');
 }
 
 function create() {
@@ -30,6 +31,13 @@ function create() {
 
     player = game.add.sprite(32, 32, 'dude');
     game.physics.enable(player, Phaser.Physics.ARCADE);
+
+    block = game.add.sprite(40, 400, 'block');
+
+    game.physics.enable(block, Phaser.Physics.ARCADE);
+    block.body.allowGravity = false;
+    block.body.immovable = true;
+    block.body.allowDrag = false;
 
     player.body.bounce.y = 0.2;
     player.body.collideWorldBounds = true;
@@ -44,9 +52,21 @@ function create() {
 
 }
 
+function collisionHandler(obj1, obj2) {
+
+	game.stage.backgroundColor = '#FF0000';
+
+	console.log(obj1);
+	console.log(" collided with ");
+	console.log(obj1);
+}
+
 function update() {
 
     // game.physics.arcade.collide(player, layer);
+
+    game.physics.arcade.collide(player, block, collisionHandler, null, this);
+
 
     player.body.velocity.x = 0;
 
