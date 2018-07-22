@@ -1,5 +1,6 @@
 *.class
 *.db
+*.log
 secret.json
 
 .classpath
