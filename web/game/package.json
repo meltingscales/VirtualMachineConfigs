@@ -2,10 +2,10 @@
   "name": "henryfbp-game",
   "version": "1.0.0",
   "description": "a simple game",
-  "main": "server.js",
+  "main": "index.html",
   "scripts": {
-    "test": "node server.js",
-    "start": "node server.js"
+    "test": "nw ./",
+    "start": "nw ./"
   },
   "dependencies": {
     "express": "^4.16.3",

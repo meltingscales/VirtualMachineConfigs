@@ -1,3 +1,6 @@
+var fs = require('fs')
+var path = require('path')
+
 var game = new Phaser.Game(
     500, 500,
     Phaser.AUTO,

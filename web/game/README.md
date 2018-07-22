@@ -1,7 +1,6 @@
 # How do I setup this project?
 
-1. Install `node` and `npm`.
-2. Run `npm install` in this directory.
-3. Run `npm server.js`.
-4. Connect to `localhost:8081`.
-5. Enjoj ur new gam!
+1. Install `nw.js` from [here](https://nwjs.io/).
+2. Add `nw.exe` or the `nw` binary to your system `PATH`.
+3. Run `nw ./` in this directory.
+4. Enjoj ur new gam!
