@@ -5,7 +5,7 @@
     // "declaration": true,
     // "sourceMap": true,
     "outDir": "./js/",
-    "rootDir": "./js/",
+    "rootDir": "./src/",
     "esModuleInterop": true
   },
   "exclude": [
