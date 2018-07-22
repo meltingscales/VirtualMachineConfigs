@@ -1,5 +1,5 @@
-let Block = class {
-    constructor() {
-	
+var Block = /** @class */ (function () {
+    function Block() {
     }
-}
+    return Block;
+}());

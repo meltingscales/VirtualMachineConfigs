@@ -17,10 +17,13 @@ var game = new Phaser.Game(
 );
 
 var player;
+var block;
 var facing = 'left';
-var jumpTimer = 0;
-var cursors;
 var BUTTON_JUMP;
+var BUTTON_LEFT;
+var BUTTON_RIGHT;
+var BUTTON_UP;
+var BUTTON_DOWN;
 
 function preload() {
     game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
@@ -29,16 +32,16 @@ function preload() {
 
 function create() {
 
+    game.world.setBounds(0, 0, 500, 500)
     game.physics.startSystem(Phaser.Physics.ARCADE);
-
     game.time.desiredFps = 60;
-
     game.physics.arcade.gravity.y = 250;
 
-    player = game.add.sprite(32, 32, 'dude');
+    player = game.add.sprite(game.world.bounds.width - 100, game.world.bounds.height - 200, 'dude');
     game.physics.enable(player, Phaser.Physics.ARCADE);
+    game.camera.follow(player);
 
-    block = game.add.sprite(40, 400, 'stone');
+    block = game.add.sprite(game.world.bounds.width - 100, game.world.bounds.height - 75, 'stone');
 
     game.physics.enable(block, Phaser.Physics.ARCADE);
     block.body.allowGravity = false;
@@ -52,8 +55,6 @@ function create() {
     player.animations.add('left', [0, 1, 2, 3], 10, true);
     player.animations.add('turn', [4], 20, true);
     player.animations.add('right', [5, 6, 7, 8], 10, true);
-
-    cursors = game.input.keyboard.createCursorKeys();
 
     BUTTON_JUMP = game.input.keyboard.addKey(Phaser.Keyboard[controls['JUMP']]);
 
@@ -112,7 +113,7 @@ function update() {
 
     if (BUTTON_JUMP.isDown &&
         (player.body.onFloor() || player.body.touching.down)) {
-        
+
         player.body.velocity.y = -250;
     }
 

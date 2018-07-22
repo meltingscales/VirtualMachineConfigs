@@ -1,0 +1,5 @@
+class Block {
+    constructor() {
+	
+    }
+}
