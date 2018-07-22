@@ -17,8 +17,8 @@ var cursors;
 var jumpButton;
 
 function preload() {
-    game.load.spritesheet(  'dude',     'assets/dude.png', 32, 48);
-    game.load.image(        'stone',    'assets/stone.png');
+    game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+    game.load.image('stone', 'assets/stone.png');
 }
 
 function create() {
@@ -54,12 +54,8 @@ function create() {
 
 function collisionHandler(obj1, obj2) {
 
-	game.stage.backgroundColor = '#FF0000';
+    game.debug.text("collision!", 32, 48);
 
-	console.log(obj1);
-	console.log(" collided with ");
-    console.log(obj1);
-    
 }
 
 function update() {
