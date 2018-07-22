@@ -4,12 +4,19 @@
   "description": "a simple game",
   "main": "index.html",
   "scripts": {
-    "test": "nw ./",
     "start": "nw ./"
+  },
+    "window": {
+    "title": "node-webkit demo",
+    "icon": "icon.png",
+    "toolbar": false,
+    "frame": true,
+    "fullscreen": true
   },
   "dependencies": {
     "express": "^4.16.3",
-    "phaser": "^2.6.2"
+    "phaser": "^2.6.2",
+	"js-yaml": "*"
   },
   "author": "HenryFBP",
   "license": "ISC"

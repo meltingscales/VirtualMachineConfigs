@@ -1,0 +1,9 @@
+# Alteratives would be "LEFT" for arrow keys, etc.
+# See Phaser.js or https://github.com/photonstorm/phaser/blob/c9c85330ab60547b39ba4c9400c258ed7fb2a317/src/input/Keyboard.js#L586
+
+UP: "W"
+LEFT: "A" 
+DOWN: "S" 
+RIGHT: "D"
+
+JUMP: "SPACEBAR"

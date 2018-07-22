@@ -1,5 +1,8 @@
 var fs = require('fs')
 var path = require('path')
+var yaml = require('js-yaml');
+
+var controls = yaml.safeLoad(fs.readFileSync('data/controls.yml', 'utf8'));
 
 var game = new Phaser.Game(
     500, 500,
@@ -17,7 +20,7 @@ var player;
 var facing = 'left';
 var jumpTimer = 0;
 var cursors;
-var jumpButton;
+var BUTTON_JUMP;
 
 function preload() {
     game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
@@ -25,7 +28,7 @@ function preload() {
 }
 
 function create() {
-    
+
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
     game.time.desiredFps = 60;
@@ -51,7 +54,13 @@ function create() {
     player.animations.add('right', [5, 6, 7, 8], 10, true);
 
     cursors = game.input.keyboard.createCursorKeys();
-    jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+    BUTTON_JUMP = game.input.keyboard.addKey(Phaser.Keyboard[controls['JUMP']]);
+
+    BUTTON_LEFT = game.input.keyboard.addKey(Phaser.Keyboard[controls['LEFT']]);
+    BUTTON_RIGHT = game.input.keyboard.addKey(Phaser.Keyboard[controls['RIGHT']]);
+    BUTTON_UP = game.input.keyboard.addKey(Phaser.Keyboard[controls['UP']]);
+    BUTTON_DOWN = game.input.keyboard.addKey(Phaser.Keyboard[controls['DOWN']]);
 
 }
 
@@ -70,7 +79,7 @@ function update() {
 
     player.body.velocity.x = 0;
 
-    if (cursors.left.isDown) {
+    if (BUTTON_LEFT.isDown) {
         player.body.velocity.x = -150;
 
         if (facing != 'left') {
@@ -78,7 +87,7 @@ function update() {
             facing = 'left';
         }
     }
-    else if (cursors.right.isDown) {
+    else if (BUTTON_RIGHT.isDown) {
         player.body.velocity.x = 150;
 
         if (facing != 'right') {
@@ -101,12 +110,10 @@ function update() {
         }
     }
 
-    if (jumpButton.isDown &&
-        player.body.onFloor()
-        && game.time.now > jumpTimer) {
-
+    if (BUTTON_JUMP.isDown &&
+        (player.body.onFloor() || player.body.touching.down)) {
+        
         player.body.velocity.y = -250;
-        jumpTimer = game.time.now + 750;
     }
 
 }
