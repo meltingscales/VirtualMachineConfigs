@@ -17,12 +17,12 @@ var cursors;
 var jumpButton;
 
 function preload() {
-    game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
-    game.load.image('block', 'assets/block.png');
+    game.load.spritesheet(  'dude',     'assets/dude.png', 32, 48);
+    game.load.image(        'stone',    'assets/stone.png');
 }
 
 function create() {
-
+    
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
     game.time.desiredFps = 60;
@@ -32,7 +32,7 @@ function create() {
     player = game.add.sprite(32, 32, 'dude');
     game.physics.enable(player, Phaser.Physics.ARCADE);
 
-    block = game.add.sprite(40, 400, 'block');
+    block = game.add.sprite(40, 400, 'stone');
 
     game.physics.enable(block, Phaser.Physics.ARCADE);
     block.body.allowGravity = false;
@@ -58,7 +58,8 @@ function collisionHandler(obj1, obj2) {
 
 	console.log(obj1);
 	console.log(" collided with ");
-	console.log(obj1);
+    console.log(obj1);
+    
 }
 
 function update() {
