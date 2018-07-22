@@ -4,7 +4,8 @@
   "description": "a simple game",
   "main": "index.html",
   "scripts": {
-    "start": "nw ./"
+    "start": "nw ./",
+	"build": "tsc js/"
   },
     "window": {
     "title": "node-webkit demo",
