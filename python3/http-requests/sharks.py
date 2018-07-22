@@ -6,6 +6,7 @@ from twilio.rest import Client
 import json
 import bs4
 import requests
+from pprint import pprint
 
 data = json.loads(open('secret.json', 'r').read())
 
@@ -19,6 +20,13 @@ data = json.loads(open('secret.json', 'r').read())
 }
 """
 
+res = requests.get('http://www.sharkresearchcommittee.com/pacific_coast_shark_news.htm')
+res.raise_for_status()
+soup = bs4.BeautifulSoup(res.text, 'html.parser')
+elems = soup.select('body > div > div > center > table > tr > td:nth-of-type(2) > p:nth-of-type(8) > strong > font')
+v = elems[0].text
+pprint(elems)
+
 accountSID = data['sid']
 authToken = data['authToken']
 twilioCli = Client(accountSID, authToken)
@@ -29,8 +37,4 @@ myCellPhone = data['myNumber']
 message = twilioCli.messages.create(body = 'Warning: Shark sighting off the coast of ' + v + 'Beach !', from_=myTwilioNumber, to=myCellPhone)
 
 
-res = requests.get('http://www.sharkresearchcommittee.com/pacific_coast_shark_news.htm')
-res.raise_for_status()
-soup = bs4.BeautifulSoup(res.text, 'html.parser')
-elems = soup.select('body > div > div > center > table > tr > td:nth-of-type(2) > p:nth-of-type(8) > strong > font')
-v = elems[0].text
+
