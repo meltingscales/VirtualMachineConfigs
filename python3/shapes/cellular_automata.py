@@ -182,11 +182,11 @@ class CellularAutomaton(object):
 
 def demo():
     for i in range(0, 255):
-        ca = CellularAutomaton(i, colors=2, pwidth=3, gwidth=30)
+        ca = CellularAutomaton(i, colors=2, pwidth=3, gwidth=60)
 
         pprint(ca.rules)
 
-        ca.cycle(15)
+        ca.cycle(30)
 
         print(i)
 
@@ -196,7 +196,7 @@ def demo():
 
 
 if __name__ == '__main__':
-    # demo()
+    demo()
 
     ca = CellularAutomaton(30, colors=2, pwidth=3, gwidth=60)
 
