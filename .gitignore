@@ -10,5 +10,7 @@ secret.json
 .settings/
 bin/
 lib/
+dist/
+build/
 node_modules/
 __pycache__/
