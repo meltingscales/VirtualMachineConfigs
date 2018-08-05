@@ -16,6 +16,8 @@ utilspie = "*"
 twilio = "*"
 "bs4" = "*"
 pyinstaller = "*"
+matplotlib = "*"
+pandas = "*"
 
 [dev-packages]
 

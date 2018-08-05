@@ -1,4 +1,4 @@
 # BUILDING
 
-- Run `pyinstaller --onefile file_maker.py`.
+- Run `pyinstaller --onefile FILE_NAME.py`.
 - Your executable will be inside the `dist` folder.
