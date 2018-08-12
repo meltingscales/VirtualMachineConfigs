@@ -18,6 +18,7 @@ twilio = "*"
 pyinstaller = "*"
 matplotlib = "*"
 pandas = "*"
+noaa-sdk = "*"
 
 [dev-packages]
 
