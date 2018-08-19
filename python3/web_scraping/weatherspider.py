@@ -8,5 +8,8 @@ class WeatherSpider(scrapy.Spider):
     def parse(self, response):
         for row in response.css('tbody tr'):
             yield {
-                'description': row.css('td.description span::text').extract_first()
+                'description': row.css('td.description span::text').extract_first(),
+                'temperature': row.css('td.temp span::text').extract(),
+                'precipitation': row.css('td.precip span span::text').extract_first(),
+                'wind': row.css('td.wind span::text').extract(),
             }
