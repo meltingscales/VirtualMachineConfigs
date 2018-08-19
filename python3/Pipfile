@@ -19,6 +19,7 @@ pyinstaller = "*"
 matplotlib = "*"
 pandas = "*"
 noaa-sdk = "*"
+scrapy = "*"
 
 [dev-packages]
 
