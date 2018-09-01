@@ -20,6 +20,8 @@ matplotlib = "*"
 pandas = "*"
 noaa-sdk = "*"
 scrapy = "*"
+flask = "*"
+ipaddress = "*"
 
 [dev-packages]
 
