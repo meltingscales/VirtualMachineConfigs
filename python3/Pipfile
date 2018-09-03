@@ -22,6 +22,7 @@ noaa-sdk = "*"
 scrapy = "*"
 flask = "*"
 ipaddress = "*"
+django = "*"
 
 [dev-packages]
 
