@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 pyautogui = "*"
 pywinauto = "*"
-"pywin32" = "*"
+#"pywin32" = "*"
 packaging = "*"
 numpy = "*"
 asciimatics = "*"
@@ -23,6 +23,8 @@ scrapy = "*"
 flask = "*"
 ipaddress = "*"
 django = "*"
+xlrd = "*"
+openpyxl = "*"
 
 [dev-packages]
 
