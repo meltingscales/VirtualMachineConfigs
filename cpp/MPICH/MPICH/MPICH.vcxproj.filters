@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MPICH.c">
+    <ClCompile Include="mpich.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
