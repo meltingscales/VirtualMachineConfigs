@@ -25,6 +25,7 @@ ipaddress = "*"
 django = "*"
 xlrd = "*"
 openpyxl = "*"
+readchar = "*"
 
 [dev-packages]
 
