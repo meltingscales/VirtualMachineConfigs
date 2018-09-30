@@ -26,11 +26,11 @@ Example:
 Example:
 
 |   c   |   d   | ignored |
-| -----:| -----:| ------:|
-|  ab   |   1   |  YES   |
-|  zx   |   2   |        |
-|  zx   |   2   |        |
---------------------------
+| -----:| -----:| -------:|
+|  ab   |   1   |  YES    |
+|  zx   |   2   |         |
+|  zx   |   2   |         |
+---------------------------
 
 4.  Delete all rows where `F` is `CANCELLED` and `D` is NOT `1`.
 

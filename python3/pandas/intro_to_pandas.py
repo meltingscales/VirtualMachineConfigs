@@ -13,8 +13,8 @@ df['over_number'] = df['over_number'].astype('bool')
 df_deleted = df.copy(deep=True)
 df_deleted.drop(df.index, inplace=True)
 
-
-THRESHOLD = 99
+UPPER_THRESHOLD = 99
+LOWER_THRESHOLD = 16
 
 print("1.  Combine `A` and `B` into `C` by concatenation.")
 for i, row in df.iterrows():
@@ -34,12 +34,12 @@ seen = {}
 for i, row in df.iterrows():  # Count 'em up
     c = row['c']
 
-    if c not in seen: # Haven't seen letter before
+    if c not in seen:  # Haven't seen letter before
         seen[c] = 0
 
-    seen[c] += 1 # Seen letter `c` once, add one.
+    seen[c] += 1  # Seen letter `c` once, add one.
 
-for i, row in df.iterrows(): # Put the recorded numbers in
+for i, row in df.iterrows():  # Put the recorded numbers in
     c = row['c']
 
     times_seen = seen[c]
@@ -59,7 +59,7 @@ for i, row in df.iterrows():
 
 print(df)
 
-print("4. Delete all rows where `F` is `CANCELLED` and `D` is NOT `1`.")
+print("4. Move all rows to a different place where `F` is `CANCELLED` and `D` is NOT `1`.")
 delete_these = []
 for i, row in df.iterrows():
     f = row['f']
@@ -67,7 +67,7 @@ for i, row in df.iterrows():
 
     if str(f) == 'CANCELLED' and d != 1.0:
         delete_these.append(i)
-        df_deleted.append(row) # TODO this doesn't actually add it to the dataframe.
+        df_deleted = df_deleted.append(row)
         # We need to save the Series, `row`, into `df_deleted`.
 
 df.drop(delete_these, axis=0, inplace=True)
@@ -75,17 +75,19 @@ df.drop(delete_these, axis=0, inplace=True)
 print(df)
 print(df_deleted)
 
-over_numbers = {}
-for i, row in df.iterrows(): # Determine if it's over a number
+print("""5.  If any value in `G` is over `100`, and any other row with 
+the same `C`'s `G` is less than `16`, then delete the row with the value less than `16`.""")
+over_numbers = {} # Create a dictionary to store which rows are over a number
+for i, row in df.iterrows():  # Determine if it's over a number
     c = row['c']
     g = row['g']
 
-    if g > THRESHOLD:
+    if g > UPPER_THRESHOLD:
         over_numbers[c] = True
 
 print(over_numbers)
 
-for i, row in df.iterrows(): # Store whether or not it's over a number
+for i, row in df.iterrows():  # Store whether or not it's over a number in the DataFrame
     c = row['c']
 
     if c in over_numbers:
@@ -95,6 +97,24 @@ for i, row in df.iterrows(): # Store whether or not it's over a number
 
 print(df)
 
+delete_these = []
+for i, row in df.iterrows(): # Remove all rows that have over_number=True and 'g'<100
+    g = row['g']
+    over_number = row['over_number']
+
+    if g <= LOWER_THRESHOLD and over_number is True: # If g <= 16 and over_number=True
+        delete_these.append(i) # Write down the row number to drop later
+        df_deleted = df_deleted.append(row) # Add the row to our other DataFrame
+
+df.drop(delete_these, axis=0, inplace=True)
+print(delete_these)
+print(df)
+print(df_deleted)
+
 writer = pd.ExcelWriter('cool_output.xlsx')
 df.to_excel(excel_writer=writer)
+writer.save()
+
+writer = pd.ExcelWriter('cool_output_deleted.xlsx')
+df_deleted.to_excel(excel_writer=writer)
 writer.save()
