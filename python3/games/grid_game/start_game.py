@@ -1,6 +1,7 @@
 from os import system, name
 from pprint import pprint
 
+from control import inputs
 from game import Game
 from getch import *
 from item import Item
@@ -30,8 +31,6 @@ if __name__ == '__main__':
 
     coolbeantile.add_item(Item(sprite='*', name="Asterisk of Power"))
 
-    print(coolbeantile.ground)
-
     world[2, 1] = coolbeantile
 
     while True:
@@ -40,24 +39,24 @@ if __name__ == '__main__':
 
         buf = game.render_grid()
 
-        if inp == b'w':
+        clear()
+
+        if inp == inputs['UP'].key:
             game.move_player(Location(0, -1))
 
-        if inp == b'a':
+        elif inp == inputs['LEFT'].key:
             game.move_player(Location(-1, 0))
 
-        if inp == b's':
+        elif inp == inputs['DOWN'].key:
             game.move_player(Location(0, 1))
 
-        if inp == b'd':
+        elif inp == inputs['RIGHT'].key:
             game.move_player(Location(1, 0))
 
-        if inp == b'q':
+        elif inp == inputs['QUIT'].key:
             exit(0)
 
         buf[game.player.location.y - 1][game.player.location.x - 1] = game.player.sprite
-
-        clear()
 
         for row in buf:
             if isinstance(row, list):
