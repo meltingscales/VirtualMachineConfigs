@@ -22,10 +22,11 @@ noaa-sdk = "*"
 scrapy = "*"
 flask = "*"
 ipaddress = "*"
-django = "*"
+django = ">=2.1.2"
 xlrd = "*"
 openpyxl = "*"
 readchar = "*"
+windows-curses = "*"
 
 [dev-packages]
 
