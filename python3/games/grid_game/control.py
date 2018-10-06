@@ -6,7 +6,7 @@ class Control(object):
         self.desc = desc
 
     def __str__(self):
-        return f"<{self.name}>: {self.desc}"
+        return f"<{self.key.decode('utf-8')}: {self.name:15s} >: {self.desc}"
 
 
 inputs = {
@@ -17,5 +17,11 @@ inputs = {
 
     "PICKUP ITEM": Control(b'p', "PICKUP ITEM", "Picks up item at player's feet."),
 
+    "HELP": Control(b'?', "HELP", "Display help."),
     "QUIT": Control(b'q', "QUIT", "Quits the game."),
 }
+
+
+def print_controls():
+    for key, control in inputs.items():
+        print(control)

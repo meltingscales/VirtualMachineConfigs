@@ -1,7 +1,7 @@
 from os import system, name
 from pprint import pprint
 
-from control import inputs
+from control import inputs, print_controls
 from game import Game
 from getch import *
 from item import Item
@@ -26,6 +26,8 @@ if __name__ == '__main__':
     player = Player(sprite="@")
     world = World()
     game = Game(player=player, world=world)
+
+    print_controls()
 
     coolbeantile = Tile(name="cool bean", sprite=',')
 
@@ -55,6 +57,9 @@ if __name__ == '__main__':
 
         elif inp == inputs['QUIT'].key:
             exit(0)
+
+        elif inp == inputs['HELP'].key:
+            print_controls()
 
         buf[game.player.location.y - 1][game.player.location.x - 1] = game.player.sprite
 
