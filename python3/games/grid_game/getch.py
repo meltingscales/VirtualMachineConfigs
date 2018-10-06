@@ -27,14 +27,15 @@ class _GetchUnix:
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
         return ch
 
+try:
+	class _GetchWindows:
+		def __init__(self):
+			pass
 
-class _GetchWindows:
-    def __init__(self):
-        pass
-
-    def __call__(self):
-        import msvcrt
-        return msvcrt.getch()
-
+		def __call__(self):
+			import msvcrt
+			return msvcrt.getch()
+except ImportError as e:
+	pass
 
 getch = _Getch()
