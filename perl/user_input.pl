@@ -18,4 +18,4 @@ until (looks_like_number($y)) {
     chomp $y;
 }
 
-printf "%d + %d = %d", $x, $y, ($x + $y)
+printf("%d + %d = %d", $x, $y, ($x + $y))
