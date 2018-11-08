@@ -5,12 +5,9 @@ use strict;
 my $in = 'Y';
 my $x = 0;
 
-my $pat = m/[yY]/;
-
-while($in =~ $pat) { # While they enter 'Y' or 'y'...
+while($in =~ /^[yY]/) { # While they enter 'Y' or 'y'...
   
   printf("Whee! We've looped %d times!\n", $x);
-  
   $x++;
   
   printf("Continue? (Y/N)\n > ");
@@ -18,3 +15,5 @@ while($in =~ $pat) { # While they enter 'Y' or 'y'...
   $in = <STDIN>;
   chomp $in;
 }
+
+printf("Bye!\n");
