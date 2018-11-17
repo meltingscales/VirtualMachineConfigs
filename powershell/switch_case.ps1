@@ -1,4 +1,10 @@
-﻿
+﻿function One(){
+    "One! Oh my god! One!";
+}
+
+function Two() {
+    "Two! TWOOOOOO!";
+}
 
 $in = "-1";
 
@@ -14,17 +20,17 @@ while(!($in -eq "0")) { # While it is not zero,
         "0" {break;}
 
         "1" {
-            Write-Host -NoNewLine "One!`n";
+            Write-Host (One);
             break;
         }
     
         "2" {
-            Write-Host -NoNewLine "Two!`n";
+            Write-Host (Two);
             break;
         }
 
         default {
-            "Invalid choice.`n"
+            "Invalid choice '$in'`n";
             break;
         }
     }
