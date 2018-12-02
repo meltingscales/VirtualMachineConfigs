@@ -1,10 +1,10 @@
 import sqlite3
 
 # Connect to sqlite file. This will create a blank '*.db' file if it does not exist.
-connection = sqlite3.connect('my_cool_db.db')
+connection = sqlite3.connect('csv_to_sqlite3.db')
 
 # Where's our data file?
-data_file_path = 'my_cool_file.csv'
+data_file_path = 'csv_to_sqlite3.csv'
 
 # Execute a CREATE TABLE statement. Note the 'IF NOT EXISTS'.
 # This avoids an OperationError if it DOES exist.
