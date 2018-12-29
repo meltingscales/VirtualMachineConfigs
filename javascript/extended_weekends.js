@@ -22,19 +22,32 @@ function count_days(year, month, whichday) {
 
     var day, counter, date;
 
+    // Start at the first day,
     day = 1;
-    counter = 0;
-    date = new Date(year, month, day);
     
+    // How many matches.
+    counter = 0;
+    
+    // Make a new Date object.
+    date = new Date(year, month, day);
+
+    // While we're within the month we want to check
     while (date.getMonth() === month) {
     
-        if (date.getDay() === whichday) { // Sun=0, Mon=1, Tue=2, etc.
+        // If the date object has the day we wish to check for,
+        if (date.getDay() === whichday) {
+            // Write it down!
             counter += 1;
         }
         
+        // Go to the next day.
         day += 1;
+        
+        // Create a new Date from that day.
         date = new Date(year, month, day);
     }
+    
+    // Return how many matches.
     return counter;
 }
 
@@ -77,7 +90,6 @@ function solve(a, b) {
             // The last month we check.
             last_month = month;
             
-            
             //print(`${month} ${year} has an extended weekend.`)
           }
           
@@ -86,6 +98,6 @@ function solve(a, b) {
     
     return [
       monthNames[first_month].slice(0, 3), // The first month name
-      monthNames[last_month].slice(0, 3),
-      total_months]
+      monthNames[last_month].slice(0, 3), // The last month name
+      total_months] // The amount of months we found
 }
