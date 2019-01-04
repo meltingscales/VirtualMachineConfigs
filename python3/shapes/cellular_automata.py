@@ -5,6 +5,11 @@ from utilspie.collectionsutils import frozendict
 
 from PIL import Image
 
+CHARMAP = {'0': ' ',
+        '1': '.',
+        '2': '-',
+        '3': '+',
+        '4': '#'}
 
 class CircularRow(deque):
     pass
@@ -181,8 +186,14 @@ class CellularAutomaton(object):
 
 
 def demo():
-    for i in range(0, 255):
-        ca = CellularAutomaton(i, colors=2, pwidth=3, gwidth=60)
+    
+    colors = 3
+
+    maxiters = pow(colors, pow(2, colors))
+    
+    for i in range(0, maxiters):
+        
+        ca = CellularAutomaton(i, colors=colors, pwidth=3, gwidth=60)
 
         pprint(ca.rules)
 
@@ -190,9 +201,14 @@ def demo():
 
         print(i)
 
-        print(pretty_deque_grid(ca.map({'0': ' ', '1': '#'})))
+        print(pretty_deque_grid(ca.map(CHARMAP)))
 
-        x = input('next?')
+        print(f"{i}/{maxiters}")
+
+        x = input('next? (N exits, any other key to quit)')
+        
+        if 'n' in x.lower():
+            break
 
 
 if __name__ == '__main__':
@@ -204,6 +220,6 @@ if __name__ == '__main__':
 
     ca.cycle(30)
 
-    print(pretty_deque_grid(ca.map({'0': ' ', '1': '.', '2': '#'})))
+    print(pretty_deque_grid(ca.map(CHARMAP)))
 
     ca.to_image().show()
