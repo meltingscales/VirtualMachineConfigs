@@ -3,7 +3,7 @@ public class ForLoopAsWhileLoopExamples {
 
         // READ ME!
         // This file is all of the for loops, but as while loops to really demonstrate how you can use while OR for
-        // loops in either situation.
+        // loops in any situation.
 
         int[] numbers = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
         int i;
