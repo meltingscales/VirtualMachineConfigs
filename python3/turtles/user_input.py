@@ -5,11 +5,8 @@ from turtle import *
 # A black outline.
 color('black')
 
-# Start filling.
-begin_fill()
+size = int(textinput("Side lengths","How big should our circle be? (200 is medium)"))
 
-size = input("How big should our circle be? (200 is medium)")
-
-for i in range(0, 4): # Since we use a loop, we can save code and perhaps generalize some aspects of the code.
-    forward(size)
+for i in range(0, 4):
+    forward(size/4) # We define our algorithm in terms of user input here.
     left(90)
