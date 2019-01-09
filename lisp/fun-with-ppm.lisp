@@ -44,19 +44,30 @@ i.e. a black pixel's 'data' is '0 0 0'."
 
 (defclass PPM ()
   (
-    (magic-number :initarg magic-number :initform magic-number    :type string)
-    (width        :initarg width        :initform 3               :type integer)
-    (height       :initarg height       :initform 3               :type integer)
-    (depth        :initarg depth        :initform 16              :type integer)
-    (pixels       :initarg pixels       :initform 
+    (magic-number :initarg :magic-number  :initform magic-number    :type string)
+    (width        :initarg :width         :initform 3               :type integer)
+    (height       :initarg :height        :initform 3               :type integer)
+    (depth        :initarg :depth         :initform 16              :type integer)
+    (pixels       :initarg :pixels        :initform 
       ; A 3x3 grid of black pixels.
-      (loop for y from 1 to 3 collect (loop for x from 1 to 3 collect (make-instance 'Pixel :red 0 :green 0 :blue 0)))
-                                                                  :type list)
+      (loop for y from 1 to 3 collect
+        (loop for x from 1 to 3 collect
+          (make-instance 'Pixel :red 0 :green 0 :blue 0)))
+                                                                    :type list)
   )
   
   (:documentation
     "A class representing a PPM image.
     It has a width, a height, and a 2d array of pixels, among other things."
+  )
+)
+
+(defun pixel-grid-generate-rectangle (width height) 
+"Generate a grid of Pixel objects that looks like a rectangle."
+  (loop for y from 1 to height collect 
+    (loop for x from 1 to width collect 
+      (format nil " ~D,~D potato :)" x y)
+    )
   )
 )
 
@@ -126,3 +137,13 @@ This should be a 3x3 of black pixels with a pink one in the middle:~%~%")
   (s "3x3black.PPM" :direction :output :if-exists :supersede) ; 's' is the filestream.
   (format s "~$" (ppm-data cool-ppm)) ; Here, instead of printing to stdout, we print to 's'.
 )
+(format t "Done!~%~%")
+
+(format t "Now, let's make a 3x5 rectangle.~%")
+(defvar rect-ppm (make-instance 'PPM 
+  :width 3
+  :height 5
+  :pixels (pixel-grid-generate-rectangle 3 5))
+)
+(format t "Let's see how that grid looks.")
+(describe (slot-value rect-ppm 'pixels))
