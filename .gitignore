@@ -4,6 +4,8 @@
 *.log
 secret.json
 
+/java/**/out/
+
 .classpath
 .project
 
