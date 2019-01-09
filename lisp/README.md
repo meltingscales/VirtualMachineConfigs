@@ -2,7 +2,7 @@
 
 A good old Common LISP REPL!
     
-I use [Steel Bank Common Lisp](http://www.sbcl.org/) for Windows, although it is multiplatform.:
+I use [Steel Bank Common Lisp](http://www.sbcl.org/) for Windows, although it is multiplatform.
 
 1. In terminal, run `sbcl --script my_lisp_file_name.lisp`.
 
@@ -14,4 +14,4 @@ Or,
 
 You can also use an IDE like [LispWorks](lispworks.com) or [Portacle](https://portacle.github.io/) if you like.
 
-[Atom](https://atom.io) text editor with "Script" plugin works nicely!
+The [Atom](https://atom.io) text editor with "Script" plugin works nicely!
