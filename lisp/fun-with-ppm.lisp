@@ -116,10 +116,13 @@ Generally looks like this:
 (describe (slot-value cool-ppm 'pixels))
 (setf
   (nth 1 (nth 1 (slot-value cool-ppm 'pixels))) ; At 1,1 aka the middle
-  (make-instance 'Pixel :red 7 :blue 7 :green 3)) ; New pink pixel
+  (make-instance 'Pixel :red 15 :blue 15 :green 3)) ; New pink pixel
 
 (format t "Here's the data that our default PPM object has.
 This should be a 3x3 of black pixels with a pink one in the middle:~%~%")
 (format t "~$~%~%" (ppm-data cool-ppm))
 (format t "Let's write this to a PPM file called '3x3black.PPM'.~%")
-;TODO write de file
+(with-open-file 
+  (s "3x3black.PPM" :direction :output :if-exists :supersede) ; 's' is the filestream.
+  (format s "~$" (ppm-data cool-ppm)) ; Here, instead of printing to stdout, we print to 's'.
+)
