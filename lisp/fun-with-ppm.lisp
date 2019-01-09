@@ -27,13 +27,22 @@
     (red    :initarg :red     :initform 0   :type integer)
     (green  :initarg :green   :initform 0   :type integer)
     (blue   :initarg :blue    :initform 0   :type integer)
-    (depth  :initarg :depth   :initform 16  :type integer)
+  )
+)
+
+(defmethod pixel-data ((thing Pixel))
+"Get the data from a Pixel object.
+This is generally just three ASCII numbers,
+i.e. a black pixel's 'data' is '0 0 0'."
+
+  (format nil "~D ~D ~D"
+    (slot-value thing 'red)
+    (slot-value thing 'green)
+    (slot-value thing 'blue)
   )
 )
 
 (defclass PPM ()
-; A class representing a PPM image.
-; It has a width, a height, and a 2d array of pixels, among other things.
   (
     (magic-number :initarg magic-number :initform magic-number    :type string)
     (width        :initarg width        :initform 3               :type integer)
@@ -41,17 +50,76 @@
     (depth        :initarg depth        :initform 16              :type integer)
     (pixels       :initarg pixels       :initform 
       ; A 3x3 grid of black pixels.
-      (loop for y from 1 to 3 collect (loop for x from 1 to 3 collect (make-instance 'Pixel)))
+      (loop for y from 1 to 3 collect (loop for x from 1 to 3 collect (make-instance 'Pixel :red 0 :green 0 :blue 0)))
                                                                   :type list)
+  )
+  
+  (:documentation
+    "A class representing a PPM image.
+    It has a width, a height, and a 2d array of pixels, among other things."
   )
 )
 
-(format t "Below, we can see a simple Pixel object.") (newline)
-(defvar cool-pixel (make-instance 'Pixel :red 1 :green 1 :blue 1))
+(defun pixel-grid-data (grid)
+"Get the data from a 2d pixel grid.
+Generally looks like this:
+
+0  0  0   15 15 15
+15 15 15  0  0  0 "
+  (format nil "~{~a~^~%~}" ; Separate each row of pixels by a newline.
+    (loop for col in grid collect ; For all columns,
+      (format nil "~{~a~^ ~}" ; Separate each pixel-data in our row by spaces. 
+        (loop for pixel in col collect ; For all pixels,
+          (pixel-data pixel) ; Get the pixel's RGB separated by spaces.
+        )
+      )
+    )
+  )
+)
+
+(defmethod ppm-data ((thing PPM))
+  "Get the data from a PPM object.
+  This can be written to a file and viewed by IrfanView or some other PPM viewer."
+  (format nil 
+"~$
+~D ~D
+~D
+~$"
+    (slot-value thing 'magic-number)
+    (slot-value thing 'width) (slot-value thing 'height)
+    (slot-value thing 'depth)
+    (pixel-grid-data (slot-value thing 'pixels))
+  )
+)
+
+(format t "Below, we can see a simple Pixel object.~%")
+(defvar cool-pixel (make-instance 'Pixel :green 4 :blue 5))
 (describe cool-pixel)
+(format t "Notice that 'red' is 0 because I set an :initform for it in the Pixel constructor.~%")
 (newline 2)
 
-(format t "We can access a specific property by TODOing below:~%")
+(format t "Hm... I wonder if green is still 4...~%")
+(format t "We can access a specific property by using slot-value below:~%")
+(format t "Green of cool-pixel is '~S'" (slot-value cool-pixel 'green))
+(newline 2)
 
+(format t "What would our pixel look like if it were in a PPM file?~%")
+(princ (pixel-data cool-pixel))
+(newline 2)
 
 (format t "Now, let's try making a default PPM object...")
+(defvar cool-ppm (make-instance 'PPM))
+(describe cool-ppm)
+(newline 2)
+
+(format t "To mix things up, let's make the middle pixel a pink one!~%")
+(describe (slot-value cool-ppm 'pixels))
+(setf
+  (nth 1 (nth 1 (slot-value cool-ppm 'pixels))) ; At 1,1 aka the middle
+  (make-instance 'Pixel :red 7 :blue 7 :green 3)) ; New pink pixel
+
+(format t "Here's the data that our default PPM object has.
+This should be a 3x3 of black pixels with a pink one in the middle:~%~%")
+(format t "~$~%~%" (ppm-data cool-ppm))
+(format t "Let's write this to a PPM file called '3x3black.PPM'.~%")
+;TODO write de file
