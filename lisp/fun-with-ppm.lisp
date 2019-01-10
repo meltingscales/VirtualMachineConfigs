@@ -103,17 +103,20 @@ i.e. a black pixel's 'data' is '0 0 0'."
 
 (defun pixel-grid-generate-circle (radius) 
 "Generate a grid of Pixel objects that looks like a circle."
-  (loop for y from (- radius) to radius collect 
-    (loop for x from (- radius) to radius collect 
+  (loop for y from (- (- radius 1)) to radius collect 
+    (loop for x from (- (- radius 1)) to radius collect 
       
       (cond
-        
-       ;TODO check if pixel is inside circle.
        
-          ; All other conditions,
-         (t 
-           ; Give 'em an outside pixel.
-           (PIXEL-BLACK))
+       ; If (x,y) distance from center is less than radius,
+       ((< (distance2d x y 0 0) radius )
+       ; Give 'em an inside pixel.
+       (PIXEL-BLUE))
+
+        ; All other conditions,
+        (t 
+        ; Give 'em an outside pixel.
+        (PIXEL-RED))
       )
     )
   )
@@ -205,3 +208,14 @@ This should be a 3x3 of black pixels with a pink one in the middle:~%~%")
 (describe rect-ppm)
 (format t "Let's see how that grid looks. It'll be at 'rectangle.ppm'.")
 (write-ppm-to-file rect-ppm "rectangle.ppm")
+
+
+(format t "Finally, let's make a 20x20 circle.~%")
+(defvar circ-ppm (make-instance 'PPM 
+  :width 50
+  :height 50
+  :pixels (pixel-grid-generate-circle 25)) ; Note how we pass a radius of 25 but our circle is 50x50.
+)
+(describe circ-ppm)
+(format t "Let's see how that circle looks. It'll be at 'circle.ppm'.")
+(write-ppm-to-file circ-ppm "circle.ppm")
