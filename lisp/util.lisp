@@ -14,3 +14,8 @@
     )
   )
 )
+
+(defun square (x)
+"Square ya number!"
+  (expt x 2)
+)

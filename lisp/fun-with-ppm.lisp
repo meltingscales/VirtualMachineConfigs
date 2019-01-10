@@ -30,12 +30,24 @@
   )
 )
 
+(defun PIXEL-BLACK  () (make-instance 'Pixel :red 0  :green 0  :blue 0 ))
+(defun PIXEL-WHITE  () (make-instance 'Pixel :red 15 :green 15 :blue 15))
+(defun PIXEL-RED    () (make-instance 'Pixel :red 15 :green 0  :blue 0 ))
+(defun PIXEL-GREEN  () (make-instance 'Pixel :red 0  :green 15 :blue 0 ))
+(defun PIXEL-BLUE   () (make-instance 'Pixel :red 0  :green 0  :blue 15))
+
+(defun distance2d (x1 y1 x2 y2) (sqrt (+ (square (- x2 x1)) 
+                                         (square (- y2 y1)))))
+;; Sanity check for distance2d.
+(if (not (= (distance2d 0 0 3 0) 3))        (error "0,0 and 0,3 should be 3 away from eachother!") )
+(if (not (= (distance2d 0 0 1 1) (sqrt 2))) (error "0,0 and 1,1 should be sqrt(2) away from eachother!") )
+
 (defmethod pixel-data ((thing Pixel))
 "Get the data from a Pixel object.
 This is generally just three ASCII numbers,
 i.e. a black pixel's 'data' is '0 0 0'."
 
-  (format nil "~D ~D ~D"
+  (format nil "~3,'0@<~d~> ~3,'0@<~d~> ~3,'0@<~d~>  " ; Left-aligned, three long digits.
     (slot-value thing 'red)
     (slot-value thing 'green)
     (slot-value thing 'blue)
@@ -52,23 +64,58 @@ i.e. a black pixel's 'data' is '0 0 0'."
       ; A 3x3 grid of black pixels.
       (loop for y from 1 to 3 collect
         (loop for x from 1 to 3 collect
-          (make-instance 'Pixel :red 0 :green 0 :blue 0)))
+          (PIXEL-BLACK)))
                                                                     :type list)
   )
   
   (:documentation
     "A class representing a PPM image.
     It has a width, a height, and a 2d array of pixels, among other things."
+    )
   )
-)
 
 (defun pixel-grid-generate-rectangle (width height) 
 "Generate a grid of Pixel objects that looks like a rectangle."
   (loop for y from 1 to height collect 
     (loop for x from 1 to width collect 
-      (format nil " ~D,~D potato :)" x y)
+      
+      (cond 
+          ; If y or x are on the edges,
+          ((or
+            (= y 1) (= y height) 
+            (= x 1) (= x width))
+            ; Give 'em an edge pixel.
+            (PIXEL-BLUE)) 
+         
+          ; All other conditions,
+         (t 
+           ; Give 'em an inside pixel.
+           (PIXEL-RED))
+      )
     )
   )
+)
+
+(defun pixel-grid-generate-circle (radius) 
+"Generate a grid of Pixel objects that looks like a circle."
+  (loop for y from (- radius) to radius collect 
+    (loop for x from (- radius) to radius collect 
+      
+      (cond
+        
+       ;TODO check if pixel is inside circle.
+       
+          ; All other conditions,
+         (t 
+           ; Give 'em an outside pixel.
+           (PIXEL-BLACK))
+      )
+    )
+  )
+)
+
+(defun random-pixel (&optional (depth 16))
+  (make-instance 'Pixel :red (random depth) :green (random depth) :blue (random depth) )
 )
 
 (defun pixel-grid-data (grid)
@@ -103,6 +150,14 @@ Generally looks like this:
   )
 )
 
+(defmethod write-ppm-to-file ((thing PPM) (filename string))
+"Write a PPM object to a file."
+  (with-open-file 
+    (s filename :direction :output :if-exists :supersede) ; 's' is the filestream.
+    (format s "~$" (ppm-data thing)) ; Here, instead of printing to stdout, we print to 's'.
+  )
+)
+
 (format t "Below, we can see a simple Pixel object.~%")
 (defvar cool-pixel (make-instance 'Pixel :green 4 :blue 5))
 (describe cool-pixel)
@@ -133,17 +188,15 @@ Generally looks like this:
 This should be a 3x3 of black pixels with a pink one in the middle:~%~%")
 (format t "~$~%~%" (ppm-data cool-ppm))
 (format t "Let's write this to a PPM file called '3x3black.PPM'.~%")
-(with-open-file 
-  (s "3x3black.PPM" :direction :output :if-exists :supersede) ; 's' is the filestream.
-  (format s "~$" (ppm-data cool-ppm)) ; Here, instead of printing to stdout, we print to 's'.
-)
+(write-ppm-to-file cool-ppm "3x3black.PPM")
 (format t "Done!~%~%")
 
-(format t "Now, let's make a 3x5 rectangle.~%")
+(format t "Now, let's make a 12x5 rectangle.~%")
 (defvar rect-ppm (make-instance 'PPM 
-  :width 3
+  :width 12
   :height 5
-  :pixels (pixel-grid-generate-rectangle 3 5))
+  :pixels (pixel-grid-generate-rectangle 12 5))
 )
-(format t "Let's see how that grid looks.")
-(describe (slot-value rect-ppm 'pixels))
+(describe rect-ppm)
+(format t "Let's see how that grid looks. It'll be at 'rectangle.ppm'.")
+(write-ppm-to-file rect-ppm "rectangle.ppm")
