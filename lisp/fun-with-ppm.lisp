@@ -47,11 +47,16 @@
 This is generally just three ASCII numbers,
 i.e. a black pixel's 'data' is '0 0 0'."
 
-  (format nil "~3,'0@<~d~> ~3,'0@<~d~> ~3,'0@<~d~>  " ; Left-aligned, three long digits.
-    (slot-value thing 'red)
-    (slot-value thing 'green)
-    (slot-value thing 'blue)
+  (concatenate 'string
+    (pixel-value-to-string (slot-value thing 'red))
+    (pixel-value-to-string (slot-value thing 'green))
+    (pixel-value-to-string (slot-value thing 'blue))
   )
+)
+
+(defun pixel-value-to-string (pixel-value) 
+  (format nil "~3,'0@<~d~>" pixel-value) 
+  ; Left-aligned, three long digits.
 )
 
 (defclass PPM ()
