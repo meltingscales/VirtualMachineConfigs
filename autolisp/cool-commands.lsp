@@ -43,6 +43,19 @@ Examples:
 (assert-equal (offset '(1 1 1) '(0 0 0))    '(1 1 1))
 (assert-equal (offset '(1 1 1) '(2 2.5 2))  '(-1 -1.5 -1))
 
+(defun move-point (p1 p2 dist)
+"Returns a new point, p3, which is p1 moved towards p2 by 'dist'.
+Can move p1 beyond p2.
+
+Example:
+
+(move-point '(0 0 0) '(1 1 0) 1) = '(0.4142 0.4142 0)       ; This is moving one unit to the NE, hence the (sqrt(2) - 1)
+(move-point '(0 0 0) '(0.7071 0.7071 0) 1) = '(0.5 0.5 0)   ; This is moving (sqrt(0.5)) units to the NE, which moves you to (0.5,0.5)
+
+"
+  nil ;TODO math things
+)
+
 (defun add-em (x y)
 "Given an 'x' and a 'y', add them together."
   (+ x y)
@@ -50,7 +63,7 @@ Examples:
 
 ; TODO actually make circles instead of printing 'po ta to'
 (defun c:circle_line (/ startp endp number)
-"Makes a pretty circle pattern."
+"Makes a line of circles."
 
   (setq number (getint "How many circles:"))
   (setq startp (getpoint "Start point:"))
