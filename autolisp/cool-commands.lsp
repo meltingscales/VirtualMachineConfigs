@@ -12,6 +12,16 @@ Uses 'equal'."
 t ; Return t as we've passed
 )
 
+(defun slope (p1 p2)
+"Given two points, return a vector that points at p2 from p1's perspective.
+
+Examples:
+
+(slope '(4 4 4) '(7 7 7)) = '(1 1 1)
+(slope '(0 0 0) '(1 2 0)) = '(1 2 0)
+"
+)
+
 (defun offset (p1 p2)
 "Given two points, return a new point that represents the offset from P1 to the other.
 
