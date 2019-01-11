@@ -352,3 +352,7 @@ ASALocalRun/
 .localhistory/
 
 /c/**/*.exe
+
+# AutoLISP crust
+*._ls
+*.bak
