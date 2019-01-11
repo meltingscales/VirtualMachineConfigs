@@ -1,3 +1,17 @@
+(defun assert-equal (actual expected)
+"Assert that two objects are the same.
+Uses 'equal'."
+ 
+  (if (not (equal actual expected)) 
+    (progn 
+      (princ (strcat (vl-princ-to-string actual ) " does not equal " (vl-princ-to-string expected) ))
+      (princ (strcat "Got " (vl-princ-to-string actual) " instead!"))
+      nil ;Return nil as we've failed
+    )
+  )
+t ; Return t as we've passed
+)
+
 (defun offset (p1 p2)
 "Given two points, return a new point that represents the offset from P1 to the other.
 
@@ -24,34 +38,10 @@ Examples:
 )
 
 ; Test our offset function.
-(if (not (equal (setq temp (offset '(0 0 0) '(0 0 0))) '(0 0 0) ))
-  (progn 
-   (princ "(0, 0, 0) and (0, 0, 0) should be offset (0, 0, 0) from eachother!") (terpri)
-   (princ (strcat "Got " (vl-princ-to-string temp) " instead!")) (terpri)
-  )
-)
-
-(if (not (equal (setq temp (offset '(0 0 0) '(1 1 1))) '(-1 -1 -1) ))
-  (progn 
-   (princ "(0, 0, 0) and (1, 1, 1) should be offset (-1, -1, -1) from eachother!") (terpri)
-   (princ (strcat "Got " (vl-princ-to-string temp) " instead!")) (terpri)
-  )
-)
-
-(if (not (equal (setq temp (offset '(1 1 1) '(0 0 0))) '(1 1 1) ))
-  (progn 
-   (princ "(1, 1, 1) and (0, 0, 0) should be offset (1, 1, 1) from eachother!") (terpri)
-   (princ (strcat "Got " (vl-princ-to-string temp) " instead!")) (terpri)
-  )
-)
-
-(if (not (equal (setq temp (offset '(1 1 1) '(2 2.5 2))) '(-1 -1.5 -1) ))
-  (progn 
-   (princ "(1, 1, 1) and (2, 2.5, 2) should be offset (-1, -1.5, -1) from eachother!") (terpri)
-   (princ (strcat "Got " (vl-princ-to-string temp) " instead!")) (terpri)
-  )
-)
-
+(assert-equal (offset '(0 0 0) '(0 0 0))    '(0 0 0))
+(assert-equal (offset '(0 0 0) '(1 1 1))    '(-1 -1 -1))
+(assert-equal (offset '(1 1 1) '(0 0 0))    '(1 1 1))
+(assert-equal (offset '(1 1 1) '(2 2.5 2))  '(-1 -1.5 -1))
 
 (defun add-em (x y)
 "Given an 'x' and a 'y', add them together."
