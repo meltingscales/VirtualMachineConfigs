@@ -103,8 +103,8 @@ i.e. a black pixel's 'data' is '0 0 0'."
 
 (defun pixel-grid-generate-circle (radius) 
 "Generate a grid of Pixel objects that looks like a circle."
-  (loop for y from (- (- radius 1)) to radius collect 
-    (loop for x from (- (- radius 1)) to radius collect 
+  (loop for y from (- (- radius 1)) to radius collect ; y ∈ [-radius, radius]
+    (loop for x from (- (- radius 1)) to radius collect ; x ∈ [-radius, radius]
       
       (cond
        
