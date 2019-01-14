@@ -210,7 +210,7 @@ This should be a 3x3 of black pixels with a pink one in the middle:~%~%")
 (write-ppm-to-file rect-ppm "rectangle.ppm")
 
 
-(format t "Finally, let's make a 20x20 circle.~%")
+(format t "Finally, let's make a 50x50 circle.~%")
 (defvar circ-ppm (make-instance 'PPM 
   :width 50
   :height 50
