@@ -34,10 +34,8 @@ environment variable having `C:\Program Files\Java\jdk-9.0.1\bin\` inside of it:
 `javac hello_world.java`
 
 As others have done it better than me (and I don't want to reinvent the wheel),
-[here is a tutorial](https://stackoverflow.com/a/42897591/4262535) on how to set your PATH variable to include your Java
+[here is a tutorial](https://stackoverflow.com/a/36306623/4262535) on how to set your PATH variable to include your Java
 Development Kit's folder.
-
-Make sure to look at the `B. Permanent` section in their tutorial.
 
 ## Troubleshooting
 
