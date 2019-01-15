@@ -356,3 +356,6 @@ ASALocalRun/
 # AutoLISP crust
 *._ls
 *.bak
+
+# Vagrant crust
+.vagrant/
