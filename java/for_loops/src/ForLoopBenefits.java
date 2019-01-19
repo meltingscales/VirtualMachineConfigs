@@ -65,6 +65,15 @@ public class ForLoopBenefits {
 
 
         // And here is a for loop that works no matter the size of the input array, which prints out all elements:
-        //TODO asdfasdf asdf asdf
+        
+        for(int i = 0; i < names.length; i++) {
+            
+            String singleName = names[i];
+            
+            System.out.println(singleName);
+        }
+        
+        // You can see that instead of going from 0 to 3, we go from 0 to `names.length`.
+        // Our algorithm is defined directly in terms of properties of the data we give it!
     }
 }
