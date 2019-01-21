@@ -110,13 +110,47 @@ That's just a convention in Java.
         char    'x'         A single character.
         int     20          A whole number.
         long    99999999L   A large whole number.
-        byte    (byte)255   A small whole number. (between 0 and 255)
+        byte    (byte)255   A small whole number. (between 0 and 255) We use the (byte) in parens here because there' no "literal" form of a byte, only typecasting or autoboxing can give you a primitive byte.
         float   20.34f      A floating-point number, aka a fraction.
         double  20.34d      A 'doubly-precise' floating-point number.
         String  "asdfd"     A piece of text, like "beesechurger" or "nunget".
 
          */
 
-        int x = 20; //TODO explain statements vs expressions :::DDD
+
+        int x;
+        /*
+        This is a *declaration* of x. Right now, x holds a special value called `null` in Java.
+
+        I use this to simplify my below explanation of a *statement*.
+
+        I could use `int x = 20;` to save space, but I wanted to keep it simple and avoid explaining this below, so I
+        moved it here.
+         */
+
+        x = 20;
+        /*
+        Here we have a little piece of code that does something that is one of the most fundamental concepts you will
+        learn in imperative programming languages:
+
+        The assignment of a value to a variable, or a little piece of data that can mutate and change throughout your program.
+
+        This can be likened to the concept of variables in algebra.
+
+        This specific piece of *syntax* is a special thing in some languages, and it is called a STATEMENT.
+
+        Below is the general form of a statement.
+
+        <VARIABLE-NAME> = <EXPRESSION>.
+
+        It's as simple as that.
+
+        The part here that allows for complex-looking statements is the definition of an expression, which I will cover next.
+         */
+
+
+        System.out.println(
+                ((x * 20) / 3) //TODO explain expressions :::DDD
+        );
     }
 }
