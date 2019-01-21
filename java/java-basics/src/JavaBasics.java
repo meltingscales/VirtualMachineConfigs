@@ -74,13 +74,8 @@ That's just a convention in Java.
 
         When you *call* the function, meaning that you perform all of the operations that the function describes
         (which is printing "Hello, World!"), this is what the function call will be evaluated to (replaced with).
-
-
-            public static void main(String[] args) {
-                          XXXX
-
-        When you *call* the function, meaning that you perform all of the operations that the function describes
-        (which is printing "Hello, World!"), this is what the function call will be evaluated to (replaced with).
+        
+        `void` means we return nothing, compared to a number or list of items.
 
 
             public static void main(String[] args) {
