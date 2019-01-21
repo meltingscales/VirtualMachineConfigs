@@ -4,35 +4,38 @@
 import java.io.Serializable;
 
 public class JavaBasics {
+    /*
+    This is a class.
+
+    Defining a class begins with an 'access modifier' which can be either:
+    public,
+    private,
+    or nothing.
+
+    Now you can choose if your class is 'static' or not. If it is, you can only ever have ONE instance of your class around.
+
+    Now you choose if your class is 'abstract' or not (means it does nothing.)
+    Don't worry about it, as it's probably not really super useful to you at this point.
+
+    The next part is the word 'class'.
+
+    After that goes the name of the class, in our case, 'JavaBasics'.
+
+    Finally, you can choose to extend the functionality of one class, and/or implement methods described by one or many
+    interfaces!
+
+    Our final 'list' of potential class constructions can look like any combination of the below:
+*/
+// @formatter:off
+    public  static              class   MyCoolThing                                                                 {};
+    private                     class   ThingyMaBob     extends     Throwable                                       {};
+                    abstract    class   UltraClass                              implements Cloneable                {};
+                                class   WoopityDoo      extends     Throwable   implements Cloneable, Serializable  {};
+    public  static  abstract    class   IDoNothing                                                                  {};
+// @formatter:on
+
+
 /*
-This is a class.
-
-Defining a class begins with an 'access modifier' which can be either:
-public,
-private,
-or nothing.
-
-Now you can choose if your class is 'static' or not. If it is, you can only ever have ONE instance of your class around.
-
-Now you choose if your class is 'abstract' or not (means it does nothing.)
-Don't worry about it, as it's probably not really super useful to you at this point.
-
-The next part is the word 'class'.
-
-After that goes the name of the class, in our case, 'JavaBasics'.
-
-Finally, you can choose to extend the functionality of one class, and/or implement methods described by one or many
-interfaces!
-
-Our final 'list' of potential class constructions can look like any combination of the below:
-
-public  static              class   MyCoolThing                                                                 {};
-private                     class   ThingyMaBob     extends     Throwable                                       {};
-                abstract    class   UltraClass                              implements Cloneable                {};
-                            class   WoopityDoo      extends     Throwable   implements Cloneable, Serializable  {};
-public  static  abstract    class   IDoNothing                                                                  {};
-
-
 A note on general code markup around the world: [BRACKETED] things are optional, and <ANGLE BRACED> things are required!
 Things in (PARENS PARENS2 ...) with dots like that can be one or many values.)
 
