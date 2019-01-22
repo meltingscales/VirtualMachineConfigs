@@ -150,7 +150,44 @@ That's just a convention in Java.
 
 
         System.out.println(
-                ((x * 20) / 3) //TODO explain expressions :::DDD
+                ((x * 20) / (2 + 1))
         );
+        /*
+        The next concept to learn is the idea of an *expression*, which is defined as:
+
+        "Any valid unit of code that results in a single value".
+
+        The act of reducing an expression to a single value is called "evaluating".
+
+        You do this when calculating mathematical expressions, like ((20 * 20) / (2 + 1)).
+
+        Here is an example of evaluating a Java expression ((20 * 20) / (2 + 1)) by hand:
+
+        First, you find a sub-expression with ATOMIC values (indivisible) like (20 * 20) and calculate its value, 400.
+
+        Then, you replace that sub-expression you just calculated with the value you got:
+
+        (400 / (2 + 1))
+
+        Now we rinse and repeat with all of the other expressions that are just in terms of operations upon atomic
+        expressions (i.e. (1))
+
+        (2 + 1) = 3
+
+        Replacing (2 + 1) with 3 in (400 / (2 + 1)) gives us (400 / 3).
+
+        Now, our last expression get evaluated as 133, since we round down for the Java `int`.
+
+        You'll also notice how I put ((x * 20) / (2 + 1)). That `x` there gets replaced with the value of `x` that we
+        assigned in an earlier statement! This is how variables (x) get *evaluated*.
+
+        Java evaluation has well-defined rules, and if you don't feel like reading up on it, there are some
+        generalizations we can make about the rules:
+
+        1. Left-to-right.
+        2. PEMDAS, or Parentheses, Exponentiation, Multiplication/Division, Addition, Subtraction.
+
+        See https://introcs.cs.princeton.edu/java/11precedence/ for more info.
+         */
     }
 }
