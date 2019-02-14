@@ -28,6 +28,7 @@ openpyxl = "*"
 readchar = "*"
 windows-curses = "*"
 requests = ">=2.20.0"
+pyknow = "*"
 
 [dev-packages]
 
