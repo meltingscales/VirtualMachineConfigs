@@ -1,5 +1,34 @@
-<form action="/new_person/" method="post">
+<p>Input person here:</p>
+<form action="people" method="post">
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Submit">
+
+    {% if form.errors %}
+        {% for field in form %}
+            {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
+
 </form>
+
+<p>List of all people entered:</p>
+<ul>
+    {% for person in people %}
+        <li>
+            <p>{{ person.name }}</p>
+            <p>{{ person.birthday }}</p>
+            <a href="/people/{{ person.id }}">View</a>
+        </li>
+    {% endfor %}
+</ul>

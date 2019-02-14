@@ -3,15 +3,15 @@ from django.forms import ModelForm
 
 
 class Person(models.Model):
-    id = models.UUIDField(primary_key=True)
+    id = models.IntegerField(primary_key=True)
 
     name = models.CharField(max_length=100)
     age = models.IntegerField()
-    birthday = models.DateField()
+    birthday = models.CharField(max_length=20)
 
     def __str__(self):
-        return "I, {}, {} years old, was born on {}!" \
-            .format(self.name, self.age, self.birthday)
+        return f"I, " + self.name + ", " + str(self.age) + " years old, was born on " + str(self.birthday) + "!"
+
 
 class PersonForm(ModelForm):
     class Meta:

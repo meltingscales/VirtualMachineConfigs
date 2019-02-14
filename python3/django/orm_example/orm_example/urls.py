@@ -16,11 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from . import models
-from . import views
+from orm_example import views, models
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
-    path('new_person', models.PersonForm)
+    path('people', views.people),
+    path('people/<id>', lambda x: None)
 ]

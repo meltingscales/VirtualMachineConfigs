@@ -1,15 +1,45 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
-from orm_example.models import PersonForm
+from orm_example.models import PersonForm, Person
 
 
 def index(request):
-    return HttpResponse('<p>Hello! I am the index.</p>'
-                        '<ul>'
-                        '<li><a href="new_person">new person</a></li>'
-                        '</ul>')
+    return render(request, "index.html")
 
 
-def new_person(request):
-    return render(request, "person.html", context={"form": PersonForm})
+def people(request):
+    """
+    Shows the user a list of all people, and lets them add new ones.
+
+    Also handles HTTP POST from forms.
+    """
+
+    # Context to render the Jinja template with.
+    context = {}
+
+    # If they want to make a new person,
+    if request.method == "POST":
+
+        # Create a form from the HTTP Request.
+        form = PersonForm(request.POST)
+
+        # Check if the form satisfies all the constraints put forth by Person object.
+        if form.is_valid():
+            form.save()
+        else:
+            print("Error saving Person.")
+            print(form.errors)
+
+            # Give them back their erroneous form.
+            context['form'] = form
+
+        # Add all people in DB to context.
+        context["people"] = Person.objects.all()
+
+        # Add form in DB to context if it doesn't exist.
+        if 'form' not in context:
+            context["form"] = PersonForm
+
+    # Return `person.html` with a list of all people and a form to add a new person
+    return render(request, "person.html", context)
