@@ -4,31 +4,39 @@
 
 {% block content %}
 
-    <section>
-        <p>Input person here:</p>
+    <section class="container">
 
-        <form action="{% url 'person-list' %}" method="post">
-            {% csrf_token %}
+            <p>Input person here:</p>
+            <form action="{% url 'person-list' %}" method="post">
 
-            {{ form|crispy }}
+                {% csrf_token %}
 
-            <input type="submit" value="Submit">
-        </form>
+                {{ form|crispy }}
+
+                <input type="submit" value="Create new person" class="btn btn-primary mt-1">
+            </form>
     </section>
 
-    <section>
-        <p>List of all people entered:</p>
-        <ul>
+    <section class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Birthday</th>
+                <th scope="col">Age</th>
+                <th scope="col">View</th>
+            </tr>
+            </thead>
+            <tbody>
             {% for person in people %}
-                <li>
-                    <p>Name: {{ person.name }}</p>
-                    <p>Birthday: {{ person.birthday }}</p>
-                    <p>Age: {{ person.age }}</p>
-                    <ul>
-                        <li><a href="{% url 'person-detail' person.id %}">View</a></li>
-                    </ul>
-                </li>
+                <tr>
+                    <td>{{ person.name }}</td>
+                    <td>{{ person.birthday }}</td>
+                    <td>{{ person.age }}</td>
+                    <td><a href="{% url 'person-detail' person.id %}" class="btn btn-primary">View</a></td>
+                </tr>
             {% endfor %}
-        </ul>
+            </tbody>
+        </table>
     </section>
 {% endblock %}

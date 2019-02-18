@@ -1,11 +1,24 @@
 # How do I run this?
 
-1.  Make sure you've made the migrations for the application.
+## Install dependencies
 
-    You can do this by running `python manage.py makemigrations orm_example`.
+Run `pip install pipenv` to install a dependency manager called "pipenv".
 
-2.  Apply the migrations by running `python manage.py migrate`.
+Then, run `pipenv install --system` to install dependencies described in
+`Pipfile`.
 
-3.  Then, run `python manage.py runserver`.
+## Make and apply migrations
 
-    You only need to do step 1 and 2 whenever you change `models.py`.
+You only need these steps whenever you change `models.py`.
+
+### Make migrations
+
+You can do this by running `python manage.py makemigrations orm_example`.
+
+### Apply migrations
+
+Apply the migrations by running `python manage.py migrate`.
+
+## Run it 
+
+Run `python manage.py runserver`.

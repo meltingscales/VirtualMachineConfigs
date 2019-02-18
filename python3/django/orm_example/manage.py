@@ -2,9 +2,11 @@
 import os
 import sys
 
-if __name__ == '__main__':
 
-    # Check the user has all of the
+def depcheck():
+    """
+    Ensures you have all required dependencies.
+    """
     errors = 0
 
     try:
@@ -17,6 +19,11 @@ if __name__ == '__main__':
     if errors:
         print("Exited with {} errors.".format(errors))
         exit(1)
+
+
+if __name__ == '__main__':
+
+    depcheck()
 
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'orm_example.settings')
     try:

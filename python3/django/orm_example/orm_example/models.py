@@ -42,4 +42,5 @@ class PersonDelete(DeleteView):
     template_name = "person_delete.html"
 
     def get_success_url(self):
+        # Put them back to the list of people once they've deleted someone.
         return reverse('person-list')

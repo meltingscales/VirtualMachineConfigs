@@ -1,9 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <p>Name: {{ object.name }}</p>
-    <p>Birthday: {{ object.birthday }}</p>
-    <p>Age: {{ object.birthday }}</p>
-    <a href="{% url "person-update" object.id %}">Update</a>
-    <a href="{% url "person-delete" object.id %}">Delete</a>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Birthday</th>
+            <th scope="col">Age</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ object.name }}</td>
+            <td>{{ object.birthday }}</td>
+            <td>{{ object.age }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="{% url "person-update" object.id %}" class="btn btn-primary">Update</a>
+    <a href="{% url "person-delete" object.id %}" class="btn btn-danger">Delete</a>
 {% endblock %}
