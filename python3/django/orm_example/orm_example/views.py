@@ -1,5 +1,4 @@
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 
 from orm_example.models import PersonForm, Person
 
@@ -18,6 +17,9 @@ def people(request):
     # Context to render the Jinja template with.
     context = {}
 
+    # Add all people in DB to context.
+    context["people"] = Person.objects.all()
+
     # If they want to make a new person,
     if request.method == "POST":
 
@@ -34,12 +36,9 @@ def people(request):
             # Give them back their erroneous form.
             context['form'] = form
 
-        # Add all people in DB to context.
-        context["people"] = Person.objects.all()
-
-        # Add form in DB to context if it doesn't exist.
-        if 'form' not in context:
-            context["form"] = PersonForm
+    # Add form in DB to context if it doesn't exist.
+    if 'form' not in context:
+        context["form"] = PersonForm()
 
     # Return `person.html` with a list of all people and a form to add a new person
     return render(request, "person.html", context)

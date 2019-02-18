@@ -20,7 +20,9 @@ from orm_example import views, models
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index),
-    path('people', views.people),
-    path('people/<id>', lambda x: None)
+    path('', views.index, name='index'),
+    path('person/', views.people, name='person-list'),
+    path('person/detail/<int:pk>', models.PersonDetail.as_view(), name='person-detail'),
+    path('person/edit/<int:pk>', models.PersonUpdate.as_view(), name='person-update'),
+    path('person/delete/<int:pk>', models.PersonDelete.as_view(), name='person-delete'),
 ]

@@ -1,0 +1,24 @@
+{# This is a base template that all pages will be based off of. #}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ORM Example</title>
+</head>
+<body>
+
+<nav>
+    {% include 'navigation.html' %}
+    {# Here we include an HTML file to be rendered directly inside the <nav> tags. #}
+</nav>
+<main>
+    {% block content %}
+        {# This is where the content of the website will go. #}
+    {% endblock %}
+</main>
+
+</body>
+
+</html>
