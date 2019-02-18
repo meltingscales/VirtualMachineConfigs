@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 
     <section>
@@ -8,9 +10,7 @@
         <form action="{% url 'person-list' %}" method="post">
             {% csrf_token %}
 
-            <ul>
-                {{ form.as_ul }}
-            </ul>
+            {{ form|crispy }}
 
             <input type="submit" value="Submit">
         </form>
