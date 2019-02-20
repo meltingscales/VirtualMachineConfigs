@@ -13,7 +13,7 @@ Then, run `pipenv install --system` to install dependencies described in
 
 ## Make and apply migrations
 
-You only need these steps whenever you change `models.py`.
+You only need these steps again whenever you change `models.py`.
 
 ### Make migrations
 
