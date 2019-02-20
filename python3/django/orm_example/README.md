@@ -1,5 +1,9 @@
 # How do I run this?
 
+## Install Python 3.6
+
+Go to Python's website and install Python 3.6.
+
 ## Install dependencies
 
 Run `pip install pipenv` to install a dependency manager called "pipenv".
