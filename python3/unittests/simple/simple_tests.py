@@ -1,7 +1,7 @@
 import unittest
 from unittest import TestCase
 
-from code import add_numbers, sub_numbers
+from simple_code import add_numbers, sub_numbers
 
 
 class AddNumbersTest(TestCase):
