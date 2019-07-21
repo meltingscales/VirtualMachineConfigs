@@ -1,8 +1,6 @@
-import unittest
 from unittest import TestCase
 
 from simple_code import add_numbers, sub_numbers
-
 
 class AddNumbersTest(TestCase):
 
@@ -19,6 +17,3 @@ class AddNumbersTest(TestCase):
 class SubtractNumbersTest(TestCase):
     def testSimple(self):
         self.assertEqual(sub_numbers(3, 2), 1)
-
-if __name__ == "__main__":
-    print("Run 'python -m unittest' to run these tests!")
