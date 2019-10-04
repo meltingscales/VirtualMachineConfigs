@@ -10,4 +10,4 @@ c=Convert.new
 
 puts "Temperature in f:"
 f=gets.chomp.to_i
-puts "Temperature in c = #{c.farenheit_to_c(f).round(2)}"
+puts "Temperature in c = #{c.fahrenheit_to_c(f).round(2)}"
