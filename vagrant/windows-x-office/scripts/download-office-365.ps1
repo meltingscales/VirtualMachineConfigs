@@ -6,7 +6,6 @@ function EnsureExists($url, $filepath)
 {
     if (![System.IO.File]::Exists($filepath))
     {
-        New-Item "$filepath"
         Start-BitsTransfer -Source "$url" -Destination "$filepath"
     }
 }
