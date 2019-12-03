@@ -12,8 +12,28 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "opensky/windows-7-professional-sp1-x64"
-  config.vm.box_version = "0.1.0"
+  config.vm.box = "gusztavvargadr/windows-10"
+
+  config.vm.synced_folder './', '/sharedfolder'
+
+  config.vm.provider 'virtualbox' do |v|
+    v.name = 'Windows-Microsoft-Office'
+
+    v.gui = true
+
+    v.memory = 3000
+    v.cpus = 2
+
+    v.customize ['modifyvm', :id, '--vram', '256']
+
+#    v.customize ["storageattach", :id,
+#                 "--storagectl", "IDE", #README May need to change to "IDE" or "IDE Controller!"
+#                 "--port", "0", "--device", "1",
+#                 "--type", "dvddrive",
+#                 "--medium", "emptydrive"]
+
+  end
+
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
