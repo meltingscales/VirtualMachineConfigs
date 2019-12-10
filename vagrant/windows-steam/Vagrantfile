@@ -20,21 +20,28 @@ Vagrant.configure("2") do |config|
 
   # config.vm.synced_folder './', '/sharedfolder'
 
-  config.vm.provider 'virtualbox' do |v|
-    v.name = VM_NAME
+  config.vm.provider 'virtualbox' do |vb|
+    vb.name = VM_NAME
 
-    v.gui = true
+    vb.gui = true
 
-    v.memory = 4000
-    v.cpus = 4
+    vb.memory = 4000
+    vb.cpus = 4
 
-    v.customize ['modifyvm', :id, '--vram', '256']
-     
-    v.customize ["storageattach", :id, 
-      "--storagectl", "IDE Controller", # May need to change to "IDE" and remove "Controller" 
-      "--port", "0", "--device", "1", 
-      "--type", "dvddrive", 
-      "--medium", "emptydrive"]
+    vb.customize ['modifyvm', :id, '--vram', '256']
+
+    vb.customize ["storageattach", :id,
+                  "--storagectl", "IDE Controller", # May need to change to "IDE" and remove "Controller"
+                  "--port", "0", "--device", "1",
+                  "--type", "dvddrive",
+                  "--medium", "emptydrive"]
+
+    if RUBY_PLATFORM =~ /darwin/
+      vb.customize ["modifyvm", :id, '--audio', 'coreaudio', '--audiocontroller', 'hda'] # choices: hda sb16 ac97
+    elsif RUBY_PLATFORM =~ /mingw|mswin|bccwin|cygwin|emx/
+      vb.customize ["modifyvm", :id, '--audio', 'dsound', '--audiocontroller', 'ac97']
+    end
+
 
   end
 
@@ -100,3 +107,4 @@ Vagrant.configure("2") do |config|
                       path: "scripts/install-stuff.ps1"
 
 end
+
