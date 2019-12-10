@@ -5,6 +5,9 @@
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
+
+VM_NAME = 'Windows-Steam'
+
 Vagrant.configure("2") do |config|
   # The most common configuration options are documented and commented below.
   # For a complete reference, please see the online documentation at
@@ -13,11 +16,12 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "gusztavvargadr/windows-10"
+  config.vm.define VM_NAME
 
   # config.vm.synced_folder './', '/sharedfolder'
 
   config.vm.provider 'virtualbox' do |v|
-    v.name = 'Windows-Steam'
+    v.name = VM_NAME
 
     v.gui = true
 
