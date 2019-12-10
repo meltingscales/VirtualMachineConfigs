@@ -41,7 +41,7 @@ Vagrant.configure("2") do |config|
     elsif RUBY_PLATFORM =~ /mingw|mswin|bccwin|cygwin|emx/
       vb.customize ["modifyvm", :id, '--audio', 'dsound', '--audiocontroller', 'ac97']
     else #linux
-      vb.customize ["modifyvm", :id, '--audio', 'pulse', '--audiocontroller', 'ac97'] # Linux choices: alsa pulse
+      vb.customize ["modifyvm", :id, '--audio', 'pulse', '--audiocontroller', 'hda'] # Linux choices: alsa pulse
     end
 
 
