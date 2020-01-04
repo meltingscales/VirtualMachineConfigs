@@ -69,9 +69,13 @@ Vagrant.configure("2") do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
+    apt-get purge --auto-remove redis-server
     apt-get install build-essential dkms linux-headers-$(uname -r)
     apt-get install -y virtualbox-dkms virtualbox-guest-additions-iso virtualbox-guest-x11
-    apt-get install openvas || echo "OpenVAS setup exited with EXIT CODE `$?` but may have still completed. IDK why it does this :D"
+
+    echo "REBOOT for a larger screen and other virtualbox-guest-additions goodies."
+
+    apt-get install openvas #|| echo "OpenVAS setup exited with EXIT CODE `$?` but may have still completed. IDK why it does this :D"
     sudo openvas-setup
   SHELL
 end
