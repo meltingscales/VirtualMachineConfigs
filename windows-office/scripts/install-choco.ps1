@@ -3,3 +3,5 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.We
 choco install -y GoogleChrome
 choco install -y notepadplusplus
 choco install -y git
+choco install -y atom
+choco install -y sublime
