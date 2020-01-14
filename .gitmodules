@@ -1,3 +1,0 @@
-[submodule "vagrant-openvas"]
-	path = vagrant-openvas
-	url = https://github.com/heichblatt/vagrant-openvas
