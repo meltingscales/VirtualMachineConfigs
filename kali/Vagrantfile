@@ -69,6 +69,16 @@ Vagrant.configure("2") do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
 
+  # copy add-apt-repository
+  config.vm.provision "file", source:"scripts/add-apt-repository.sh", destination: "/tmp/add-apt-repository"
+
+  # make it executable
+  config.vm.provision "shell", run: "always", inline: <<-SHELL
+    sudo mv /tmp/add-apt-repository /usr/sbin/add-apt-repository
+
+    chmod +x /usr/sbin/add-apt-repository
+  SHELL
+
   # start timer
   config.vm.provision "shell", run: "always", inline: <<-SHELL
   
@@ -110,12 +120,14 @@ Vagrant.configure("2") do |config|
   # Android emu
   config.vm.provision "shell", inline: <<-SHELL
   
-    apt-get install -y software-properties-common
-    
     add-apt-repository ppa:morphis/anbox-support
     apt-get update
     
-    apt install -y linux-headers-$(uname -r) anbox-modules-dkms
+    apt install -y linux-headers-$(uname -r)
+
+    # can't use apt-get install anbox-modules-dkms as it's not out for Kali, must download deb file
+    wget https://launchpad.net/~morphis/+archive/ubuntu/anbox-support/+files/anbox-modules-dkms_12_all.deb
+    sudo dpkg -i anbox-modules-dkms_12_all.deb
     
     ls -1 /dev/{ashmem,binder} # ensure it exists
 
