@@ -115,23 +115,33 @@ Vagrant.configure("2") do |config|
   chmod +x install.sh
   ./install.sh
 
+  popd
+  popd
+
   SHELL
 
-  # # Android emu, anbox
-  # config.vm.provision "shell", inline: <<-SHELL
-  #
-  #   add-apt-repository ppa:morphis/anbox-support
-  #   apt-get update
-  #
-  #   apt install -y linux-headers-$(uname -r)
-  #
-  #   # can't use apt-get install anbox-modules-dkms as it's not out for Kali, must download deb file
-  #   wget https://launchpad.net/~morphis/+archive/ubuntu/anbox-support/+files/anbox-modules-dkms_13_all.deb
-  #   sudo dpkg -i anbox-modules-*
-  #
-  #   ls -1 /dev/{ashmem,binder} # ensure it exists
-  #
-  # SHELL
+  # Android emu
+  config.vm.provision "shell", inline: <<-SHELL
+
+  mkdir -p /home/vagrant/Desktop
+
+  if [ -d "/home/vagrant/Desktop/android-sdk-linux/" ]; then
+    echo "Android emu already set up."
+    exit 0;
+  fi
+
+  mkdir /tmp/androidemu/
+  pushd /tmp/androidemu/
+
+  wget http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
+
+  sudo tar -zxvf android-sdk_r24.4.1-linux.tgz
+
+  mv android-sdk-linux/ /home/vagrant/Desktop/android-sdk-linux/
+
+  popd
+
+  SHELL
 
   # stop timer
   config.vm.provision "shell", run: "always", inline: <<-SHELL
