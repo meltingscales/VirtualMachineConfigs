@@ -103,25 +103,23 @@ Vagrant.configure("2") do |config|
 
   SHELL
 
-  # # torghost, a systemwide tor proxy service.
-  # config.vm.provision "shell", inline: <<-SHELL
-  #
-  # apt-get install -y tor
-  #
-  # pushd /tmp/
-  # git clone https://github.com/susmithHCK/torghost.git
-  # pushd torghost
-  #
-  # chmod +x build.sh
-  # ./build.sh
-  #
-  # chmod +x install.sh
-  # ./install.sh
-  #
-  # popd
-  # popd
-  #
-  # SHELL
+  # kalitorify, a systemwide tor proxy service.
+  config.vm.provision "shell", inline: <<-SHELL
+
+  apt-get install -y tor
+
+  pushd /home/vagrant/Desktop/
+  git clone https://github.com/brainfucksec/kalitorify.git
+  pushd kalitorify
+
+  make install
+
+  echo "Kaltorify installed. Reboot and run ./kalitorify.sh to get started."
+  
+  popd
+  popd
+
+  SHELL
 
   # Android emu
   config.vm.provision "shell", inline: <<-SHELL
