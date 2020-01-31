@@ -2,7 +2,7 @@
 
 This VM has:
 
-- Tor at ~/Desktop/kalitorify/
-- Android emu at ~/Desktop
+- Kalitorify at `~/Desktop/kalitorify/`, a transparent Tor proxy tool
+- Android emu at `~/Desktop/idk_i_forgot_lol`
 
-That's about it. It's Kali. Many uses.
+That's about it. It's Kali. Many uses!
