@@ -117,21 +117,21 @@ Vagrant.configure("2") do |config|
 
   SHELL
 
-  # Android emu
-  config.vm.provision "shell", inline: <<-SHELL
-  
-    add-apt-repository ppa:morphis/anbox-support
-    apt-get update
-    
-    apt install -y linux-headers-$(uname -r)
-
-    # can't use apt-get install anbox-modules-dkms as it's not out for Kali, must download deb file
-    wget https://launchpad.net/~morphis/+archive/ubuntu/anbox-support/+files/anbox-modules-dkms_12_all.deb
-    sudo dpkg -i anbox-modules-dkms_12_all.deb
-    
-    ls -1 /dev/{ashmem,binder} # ensure it exists
-
-  SHELL
+  # # Android emu, anbox
+  # config.vm.provision "shell", inline: <<-SHELL
+  #
+  #   add-apt-repository ppa:morphis/anbox-support
+  #   apt-get update
+  #
+  #   apt install -y linux-headers-$(uname -r)
+  #
+  #   # can't use apt-get install anbox-modules-dkms as it's not out for Kali, must download deb file
+  #   wget https://launchpad.net/~morphis/+archive/ubuntu/anbox-support/+files/anbox-modules-dkms_13_all.deb
+  #   sudo dpkg -i anbox-modules-*
+  #
+  #   ls -1 /dev/{ashmem,binder} # ensure it exists
+  #
+  # SHELL
 
   # stop timer
   config.vm.provision "shell", run: "always", inline: <<-SHELL
