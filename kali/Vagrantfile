@@ -68,12 +68,47 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
+
+  # useful tools
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
-    apt-get install build-essential dkms linux-headers-$(uname -r)
+    apt-get upgrade -y
+
+    apt-get install -y htop iftop
+  SHELL
+
+  # virtualbox extensions
+  config.vm.provision "shell", inline: <<-SHELL
+    apt-get install -y build-essential dkms linux-headers-$(uname -r)
     apt-get install -y virtualbox-dkms virtualbox-guest-additions-iso virtualbox-guest-x11
 
     echo "REBOOT for a larger screen and other virtualbox-guest-additions goodies."
+
+  SHELL
+
+  # torghost, a systemwide tor proxy service.
+  config.vm.provision "shell", inline: <<-SHELL
+  
+  pushd /tmp/
+  git clone https://github.com/susmithHCK/torghost.git
+  pushd torghost
+
+  chmod +x install.sh
+  ./install.sh
+
+  SHELL
+
+  # Android emu
+  config.vm.provision "shell", inline: <<-SHELL
+  
+    apt-get install -y software-properties-common
+    
+    add-apt-repository ppa:morphis/anbox-support
+    apt-get update
+    
+    apt install -y linux-headers-$(uname -r) anbox-modules-dkms
+    
+    ls -1 /dev/{ashmem,binder} # ensure it exists
 
   SHELL
 end
