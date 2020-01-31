@@ -69,6 +69,13 @@ Vagrant.configure("2") do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
 
+  # start timer
+  config.vm.provision "shell", run: "always", inline: <<-SHELL
+  
+    echo `date` > ~/start_vagrant_config  
+
+  SHELL
+
   # useful tools
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
@@ -113,4 +120,19 @@ Vagrant.configure("2") do |config|
     ls -1 /dev/{ashmem,binder} # ensure it exists
 
   SHELL
+
+  # stop timer
+  config.vm.provision "shell", run: "always", inline: <<-SHELL
+  
+    echo `date` > ~/stop_vagrant_config  
+
+    echo "Start time:"
+    cat ~/start_vagrant_config
+
+    echo "Stop time:"
+    cat ~/stop_vagrant_config
+
+  SHELL
+
+
 end
