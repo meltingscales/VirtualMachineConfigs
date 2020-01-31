@@ -89,6 +89,8 @@ Vagrant.configure("2") do |config|
   # torghost, a systemwide tor proxy service.
   config.vm.provision "shell", inline: <<-SHELL
   
+  apt-get install -y tor 
+
   pushd /tmp/
   git clone https://github.com/susmithHCK/torghost.git
   pushd torghost
@@ -105,8 +107,6 @@ Vagrant.configure("2") do |config|
     
     add-apt-repository ppa:morphis/anbox-support
     apt-get update
-
-    apt-get install -y tor 
     
     apt install -y linux-headers-$(uname -r) anbox-modules-dkms
     
