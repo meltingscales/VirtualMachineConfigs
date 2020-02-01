@@ -72,7 +72,12 @@ Vagrant.configure("2") do |config|
   # copy add-apt-repository
   config.vm.provision "file", source:"scripts/add-apt-repository.sh", destination: "/tmp/add-apt-repository"
 
-  # make it executable
+  # Copy useful scripts to desktop
+  config.vm.provision "file",
+                      source:"scripts/desktop-scripts/start-tor-transparent-proxy.sh",
+                      destination: "/home/vagrant/Desktop/"
+
+  # make add-apt-repository executable
   config.vm.provision "shell", run: "always", inline: <<-SHELL
     sudo mv /tmp/add-apt-repository /usr/sbin/add-apt-repository
 
