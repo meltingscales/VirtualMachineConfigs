@@ -162,6 +162,8 @@ Vagrant.configure("2") do |config|
   # set password to something more secure
   config.vm.provision "shell", inline: <<-SHELL
   
+  exit 0 # Disabled for people who can't paste
+
   if [ -f /home/vagrant/my_password_is_random ]; then
     echo "Already changed default password."
   fi
