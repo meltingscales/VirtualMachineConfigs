@@ -3,6 +3,6 @@
 This VM has:
 
 - Kalitorify at `~/Desktop/kalitorify/`, a transparent Tor proxy tool
-- Android emu at `~/Desktop/idk_i_forgot_lol`
+- Android emu at `~/Desktop/android-sdk-linux/`
 
 That's about it. It's Kali. Many uses!
