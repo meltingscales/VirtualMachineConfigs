@@ -9,7 +9,7 @@ Snaps:
  - `snap run android-studio` (android VM)
  - `snap run wickrme` (chat)
  - `snap run discord` (chat)
- - `snap run bitwarden` (password manager)
+ - `enpass` (password manager)
 
 That's about it. It's Kali. Many uses!
 
