@@ -4,12 +4,13 @@ This VM has:
 
 - Kalitorify -- run `kalitorify --help`. It is a transparent Tor proxy tool that edits iptables for you.
 - Tor Browser helper
+- `enpass` (password manager)
+
 
 Snaps:
  - `snap run android-studio` (android VM)
  - `snap run wickrme` (chat)
  - `snap run discord` (chat)
- - `enpass` (password manager)
 
 That's about it. It's Kali. Many uses!
 
