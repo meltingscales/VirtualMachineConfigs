@@ -3,6 +3,10 @@
 This VM has:
 
 - Kalitorify at `~/Desktop/kalitorify/`, a transparent Tor proxy tool
-- Android emu at `~/Desktop/android-sdk-linux/`
+
+Snaps:
+ - `snap run android-studio`
+ - `snap run wickrme`
+ - `snap run discord`
 
 That's about it. It's Kali. Many uses!
