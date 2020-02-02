@@ -107,8 +107,8 @@ Vagrant.configure("2") do |config|
     sudo systemctl start snapd.service
 
     sudo systemctl enable apparmor # Required for `snap run` to work
-    sudo systemctl start apparmor
-    
+    sudo systemctl start apparmor # This will stop SSH AFAIK
+
     snap install discord
     snap install wickrme
     snap install bitwarden

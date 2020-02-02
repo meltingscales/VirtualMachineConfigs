@@ -12,3 +12,15 @@ Snaps:
  - `snap run bitwarden` (password manager)
 
 That's about it. It's Kali. Many uses!
+
+You must run `vagrant up --provision` after SSH fails due to a step that enables AppArmor breaking SSH connections.
+
+Too lazy to fix.
+
+The command for one-touch deploys is now:
+
+`vagrant up; vagrant up --provision`
+
+instead of just:
+
+`vagrant up`.
