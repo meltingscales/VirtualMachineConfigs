@@ -132,7 +132,7 @@ Vagrant.configure("2") do |config|
 
   apt-get install -y tor torbrowser-launcher
   
-  if [ ! -d /home/vagrant/Desktop/kalitorify ]; then
+  if [ ! hash kalitorify ]; then
 
     pushd /home/vagrant/Desktop/
     git clone https://github.com/brainfucksec/kalitorify.git
@@ -144,7 +144,11 @@ Vagrant.configure("2") do |config|
     echo "Kaltorify installed. Reboot and run ./kalitorify.sh to get started."
     
     popd
+
+    rm -r kalitorify
+
     popd
+
 
   fi
 

@@ -2,7 +2,5 @@
 
 # Start transparent proxy.
 
-cd /home/vagrant/Desktop/kalitorify/
-
-sudo ./kalitorify.sh --tor
-#sudo ./kalitorify.sh --status #unnecessary
+sudo kalitorify --tor
+#sudo kalitorify --status #unnecessary
