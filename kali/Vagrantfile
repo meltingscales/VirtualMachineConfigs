@@ -131,18 +131,18 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
 
   apt-get install -y tor torbrowser-launcher
-  
-  if [ ! hash kalitorify ]; then
+
+  if [ ! which kalitorify &> /dev/null ]; then
 
     pushd /home/vagrant/Desktop/
     git clone https://github.com/brainfucksec/kalitorify.git
     pushd kalitorify
-  
+
     make install
     chown -R vagrant:vagrant /home/vagrant/Desktop/kalitorify
-  
+
     echo "Kaltorify installed. Reboot and run ./kalitorify.sh to get started."
-    
+
     popd
 
     rm -r kalitorify
