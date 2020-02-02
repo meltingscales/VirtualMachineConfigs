@@ -98,6 +98,7 @@ Vagrant.configure("2") do |config|
 
     apt-get install -y htop iftop
     apt-get install -y snapd
+    sudo systemctl enable snapd.service
     sudo systemctl start snapd.service
     
     snap install discord
