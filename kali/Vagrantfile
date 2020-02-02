@@ -77,6 +77,10 @@ Vagrant.configure("2") do |config|
                       source:"scripts/desktop-scripts/tor-transparent-proxy-start.sh",
                       destination: "/home/vagrant/Desktop/"
 
+  config.vm.provision "file",
+                       source:"scripts/desktop-scripts/tor-transparent-proxy-stop.sh",
+                       destination: "/home/vagrant/Desktop/"
+
   # make add-apt-repository executable
   config.vm.provision "shell", run: "always", inline: <<-SHELL
     sudo mv /tmp/add-apt-repository /usr/sbin/add-apt-repository
@@ -96,7 +100,7 @@ Vagrant.configure("2") do |config|
     apt-get update
     # apt-get upgrade -y # takes too long...
 
-    apt-get install -y htop iftop
+    apt-get install -y htop iftop cpu-checker
     apt-get install -y snapd
     sudo systemctl enable snapd.service
     sudo systemctl start snapd.service
@@ -106,6 +110,11 @@ Vagrant.configure("2") do |config|
     
     snap install discord
     snap install wickrme
+  SHELL
+
+  # KVM for android studio
+  config.vm.provision "shell", inline: <<-SHELL
+    sudo apt install -y qemu-kvm libvirt0 virt-manager bridge-utils
   SHELL
 
   # virtualbox extensions
