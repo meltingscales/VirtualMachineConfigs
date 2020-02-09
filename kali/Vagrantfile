@@ -52,6 +52,7 @@ Vagrant.configure("2") do |config|
   #
 
   config.ssh.insert_key = false # Fix for NTFS drives
+  config.disksize.size = '100GB'
 
   # VirtualBox specific settings
   config.vm.provider "virtualbox" do |vb|
