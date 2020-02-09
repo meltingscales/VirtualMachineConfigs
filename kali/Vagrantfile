@@ -101,7 +101,7 @@ Vagrant.configure("2") do |config|
   
     echo "Resizing partition to fill the entire filesystem..."
 
-    exit 1 # debug stop
+    # exit 1 # debug stop
 
     # size of new swap, in GB
     NEW_SWAP_SIZE=6
@@ -123,6 +123,9 @@ Vagrant.configure("2") do |config|
     echo w # write part table
     ) | sudo fdisk /dev/sda
     
+    # show partitions
+    lsblk
+
     # Size of entire disk
     SDA_SIZE_GB=$(lsblk /dev/sda | grep "sda " | tr -s ' ' | cut -d ' ' -f 4)
 
@@ -139,7 +142,10 @@ Vagrant.configure("2") do |config|
     ) | sudo parted /dev/sda
 
     # make partition take up the entire space
-    resize2fs /dev/sda1
+    sudo resize2fs /dev/sda1
+    
+    # show partitions
+    lsblk
 
     (
     echo n  # create new partition
@@ -154,6 +160,9 @@ Vagrant.configure("2") do |config|
     echo w  # write changes
     ) | sudo fdisk /dev/sda
 
+    # show partitions
+    lsblk
+
     # format swap partition
     sudo mkswap /dev/sda2
     
@@ -165,10 +174,10 @@ Vagrant.configure("2") do |config|
     echo "/dev/sda2             swap            swap            default          0   0" >> /etc/fstab
   
     # This will error if we've fucked up /etc/fstab
-    mount -a
+    sudo mount -a
 
     # record the fact that we've grown the main partition and DO NOT do it again
-    touch /etc/vagrant_already_grown_main_partition
+    sudo touch /etc/vagrant_already_grown_main_partition
 
   SHELL
 
