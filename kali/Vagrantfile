@@ -97,9 +97,72 @@ Vagrant.configure("2") do |config|
   SHELL
 
   # resize main partition to max size
-  config.vm.provision "shell", run: "always", inline: <<-SHELL
+  config.vm.provision "shell", inline: <<-SHELL
+  
+    # size of new swap, in GB
+    NEW_SWAP_SIZE=6
+
+    # Check to see if we've already grown the main partition
+    if [ -f /etc/vagrant_already_grown_main_partition ]; then
+      exit 0
+    fi
+
+    # turn off swap
+    swapoff /dev/sda5
+
+    (
+    echo d # delete part
+    echo 2 # extended part 2 which had swap in it
+    echo p # print part table before writing
+    echo w # write part table
+    ) | sudo fdisk /dev/sda
     
-    echo "TODO: Resize main partition to main side, delete and remake swap, etc etc."
+    # Size of entire disk
+    SDA_SIZE_GB=$(lsblk /dev/sda | grep "sda " | tr -s ' ' | cut -d ' ' -f 4)
+
+    # Size of the main partition, minus 6GB for swap.
+    SDA_MAIN_PART_SIZE=$(expr ${SDA_SIZE_GB//G} - $NEW_SWAP_SIZE)"G"
+
+    # Resize /dev/sda1
+    (
+    echo resizepart # resize a partition
+    echo 1  # resize sda1
+    echo y  # yes
+    echo $SDA_MAIN_PART_SIZE # leave some space for swap
+    echo q  # quit
+    ) | sudo parted /dev/sda
+
+    # make partition take up the entire space
+    resize2fs /dev/sda1
+
+    (
+    echo n  # create new partition
+    echo p  # primary partition
+    echo 2  # 2nd partition number
+    echo    # default first sector (~96GB)
+    echo    # default last sector (~100GB or end of disk)
+
+    echo t  # change partition type
+    echo 2  # partition 2 is...
+    echo 82 # linux swap/solaris
+    echo w  # write changes
+    ) | sudo fdisk /dev/sda
+
+    # format swap partition
+    sudo mkswap /dev/sda2
+    
+    # enable swap
+    sudo swapon /dev/sda2
+  
+    # append mount command to /etc/fstab
+    echo "# AUTOMATICALLY GENERATED line by kali-vagrant partition resizing script" >> /etc/fstab
+    echo "/dev/sda2             swap            swap            default          0   0" >> /etc/fstab
+  
+    # This will error if we've fucked up /etc/fstab
+    mount -a
+
+    # record the fact that we've grown the main partition and DO NOT do it again
+    touch /etc/vagrant_already_grown_main_partition
 
   SHELL
 
