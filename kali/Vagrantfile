@@ -108,6 +108,8 @@ Vagrant.configure("2") do |config|
 
     # Check to see if we've already grown the main partition
     if [ -f /etc/vagrant_already_grown_main_partition ]; then
+      echo "/etc/vagrant_already_grown_main_partition exists!"
+      echo "We are not going to partition. We have already."
       exit 0
     fi
 
