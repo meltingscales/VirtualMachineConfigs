@@ -96,6 +96,13 @@ Vagrant.configure("2") do |config|
 
   SHELL
 
+  # resize main partition to max size
+  config.vm.provision "shell", run: "always", inline: <<-SHELL
+    
+    echo "TODO: Resize main partition to main side, delete and remake swap, etc etc."
+
+  SHELL
+
   # useful tools
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
