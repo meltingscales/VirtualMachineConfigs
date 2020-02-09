@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
-sudo dmesg | grep "Hypervisor detected" || echo "You are not in a VM! Don't run this! It will destroy your partitions!" && exit 1
+sudo dmesg | grep "Hypervisor detected" || (echo "You are not in a VM! Don't run this! It will destroy your partitions!" && exit 1)
 
-echo "Resizing partition to fill the entire filesystem..."
+if [[ ! -d /home/vagrant/ ]]; then
+    echo "No /home/vagrant/ home directory! Do not run this outside of a VM! It will destroy your partitions!"
+    exit 1
+fi
 
 # exit 1 # debug stop
 
@@ -16,6 +19,11 @@ if [[ -f /etc/vagrant_already_grown_main_partition ]]; then
   exit 0
 fi
 
+echo "Resizing partition to fill the entire filesystem..."
+echo "Partitions will be DELETED. CTRL-C to cancel."
+
+sleep 10
+
 # turn off swap
 swapoff /dev/sda5
 
@@ -28,6 +36,8 @@ echo w # write part table
 
 # show partitions
 lsblk
+
+# TODO: Remove /etc/fstab entry for old swap entry
 
 # Size of entire disk
 SDA_SIZE_GB=$(lsblk /dev/sda | grep "sda " | tr -s ' ' | cut -d ' ' -f 4)
