@@ -99,6 +99,10 @@ Vagrant.configure("2") do |config|
   # resize main partition to max size
   config.vm.provision "shell", inline: <<-SHELL
   
+    echo "Resizing partition to fill the entire filesystem..."
+
+    exit 1 # debug stop
+
     # size of new swap, in GB
     NEW_SWAP_SIZE=6
 
