@@ -2,7 +2,7 @@
 
 ## Required setup
 
-Please see the README.md at `../README.md` for a list of rqeuired software.
+Please see the README.md at `../README.md` for a list of required software.
 
 ## Features
 
