@@ -104,7 +104,7 @@ Vagrant.configure("2") do |config|
     # exit 1 # debug stop
 
     # size of new swap, in GB
-    NEW_SWAP_SIZE=6
+    NEW_SWAP_SIZE=6 #TODO The real swap size is larger for some reason than it should be. Fix this.
 
     # Check to see if we've already grown the main partition
     if [ -f /etc/vagrant_already_grown_main_partition ]; then
