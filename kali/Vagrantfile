@@ -188,7 +188,7 @@ Vagrant.configure("2") do |config|
     apt-get update
     # apt-get upgrade -y # takes too long...
 
-    apt-get install -y htop iftop cpu-checker gedit
+    apt-get install -y htop iftop cpu-checker gedit transmission
     apt-get install -y snapd
     apt-get install -y libreoffice-writer
     sudo systemctl enable snapd.service
