@@ -128,18 +128,20 @@ Vagrant.configure("2") do |config|
 
     # Size of entire disk
     SDA_SIZE_GB=$(lsblk /dev/sda | grep "sda " | tr -s ' ' | cut -d ' ' -f 4)
+    echo "Disk size is ${SDA_SIZE_GB}."
 
     # Size of the main partition, minus 6GB for swap.
     SDA_MAIN_PART_SIZE=$(expr ${SDA_SIZE_GB//G} - $NEW_SWAP_SIZE)"G"
+    echo "Main partition should be ${SDA_MAIN_PART_SIZE}."
 
     # Resize /dev/sda1
     (
     echo resizepart # resize a partition
     echo 1  # resize sda1
-    echo y  # yes
-    echo $SDA_MAIN_PART_SIZE # leave some space for swap
+    echo Yes
+    echo ${SDA_MAIN_PART_SIZE} # leave some space for swap
     echo q  # quit
-    ) | sudo parted /dev/sda
+    ) | sudo parted ---pretend-input-tty /dev/sda
 
     # make partition take up the entire space
     sudo resize2fs /dev/sda1
