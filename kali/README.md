@@ -1,6 +1,10 @@
 # Kali Vagrant VM
 
-This VM has:
+## Required setup
+
+Please see the README.md at `../README.md` for a list of rqeuired software.
+
+## Features
 
 - Kalitorify -- run `kalitorify --help`. It is a transparent Tor proxy tool that edits iptables for you.
 - Tor Browser helper
@@ -13,6 +17,8 @@ Snaps:
  - `snap run discord` (chat)
 
 That's about it. It's Kali. Many uses!
+
+## Caveats/extra setup
 
 You must run `vagrant up --provision` after SSH fails due to a step that enables AppArmor breaking SSH connections.
 
