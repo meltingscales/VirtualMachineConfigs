@@ -172,7 +172,9 @@ Vagrant.configure("2") do |config|
 
     popd
 
-
+  else
+    which kalitorify &> /dev/null
+    echo 'Kalitorify is already installed. Exit status $?'
   fi
 
   SHELL
