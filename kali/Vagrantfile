@@ -65,7 +65,7 @@ Vagrant.configure("2") do |config|
 
     # Add a VLAN for pentesting, etc.
     # https://superuser.com/questions/846964/how-to-add-a-host-only-adapter-to-a-virtualbox-machine-via-vagrant-file-config
-    config.vm.network "private_network", :type => 'dhcp', :name => 'vboxnet0', :adapter => 2
+    #config.vm.network "private_network", :type => 'dhcp', :name => 'vboxnet0', :adapter => 2
 
   end
 
