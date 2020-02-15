@@ -155,7 +155,10 @@ Vagrant.configure("2") do |config|
 
   apt-get install -y tor torbrowser-launcher
 
-  if [ ! which kalitorify &> /dev/null ]; then
+  which kalitorify
+  # if exit code is nonzero, kalitorify is not a command.
+
+  if [ "$?" -eq "1" ]; then
 
     pushd /home/vagrant/Desktop/
     git clone https://github.com/brainfucksec/kalitorify.git
@@ -173,8 +176,8 @@ Vagrant.configure("2") do |config|
     popd
 
   else
-    which kalitorify &> /dev/null
-    echo 'Kalitorify is already installed. Exit status $?'
+    which kalitorify
+    echo "Kalitorify is already installed. Exit status $?"
   fi
 
   SHELL
