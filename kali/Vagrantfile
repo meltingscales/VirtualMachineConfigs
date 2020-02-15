@@ -103,7 +103,7 @@ Vagrant.configure("2") do |config|
   # start timer
   config.vm.provision "shell", run: "always", inline: <<-SHELL
   
-    echo `date` > ~/start_vagrant_config
+    echo `date` > /home/vagrant/start_vagrant_config
   SHELL
 
   # resize main partition to max size
@@ -187,13 +187,13 @@ Vagrant.configure("2") do |config|
   # stop timer
   config.vm.provision "shell", run: "always", inline: <<-SHELL
   
-    echo `date` > ~/stop_vagrant_config  
+    echo `date` > /home/vagrant/stop_vagrant_config  
 
     echo "Start time:"
-    cat ~/start_vagrant_config
+    cat /home/vagrant/start_vagrant_config
 
     echo "Stop time:"
-    cat ~/stop_vagrant_config
+    cat /home/vagrant/stop_vagrant_config
 
   SHELL
 
