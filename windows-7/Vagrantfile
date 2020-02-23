@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
   config.vm.box_version = "0.1.0"
   config.vm.define VM_NAME
 
-  # config.vm.synced_folder './', '/sharedfolder'
+  config.vm.synced_folder './', '/sharedfolder'
 
   config.vm.provider 'virtualbox' do |vb|
     vb.name = VM_NAME
@@ -30,12 +30,6 @@ Vagrant.configure("2") do |config|
     vb.cpus = 4
 
     vb.customize ['modifyvm', :id, '--vram', '256']
-
-    vb.customize ["storageattach", :id,
-                  "--storagectl", "IDE Controller", # May need to change to "IDE" and remove "Controller"
-                  "--port", "0", "--device", "1",
-                  "--type", "dvddrive",
-                  "--medium", "emptydrive"]
 
     if RUBY_PLATFORM =~ /darwin/
       vb.customize ["modifyvm", :id, '--audio', 'coreaudio', '--audiocontroller', 'hda'] # OSX choices: hda sb16 ac97
