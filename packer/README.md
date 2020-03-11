@@ -4,7 +4,10 @@
 
 See <https://github.com/mkaczanowski/packer-builder-arm> on how to install the builder for ARM.
 
-You need Linux for this and a 64-bit processor with virtualization.
+`packer-builder-arm` plugin must be built using Go and then stored under `/usr/bin/packer-builder-arm`.  
+Make sure it's executable!
+
+You need Linux, QEMU for this and a 64-bit processor with virtualization.
 
 ## Commands
 
