@@ -11,4 +11,4 @@ You need Linux, QEMU for this and a 64-bit processor with virtualization.
 
 ## Commands
 
-    time -v packer build raspberrypi/raspbian.json
+    time -v sudo packer build raspberrypi/raspbian.json
