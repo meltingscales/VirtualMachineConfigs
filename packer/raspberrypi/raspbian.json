@@ -36,7 +36,9 @@
     {
       "type": "shell",
       "inline": [
-        "touch /tmp/test"
+        "touch /tmp/test",
+        "echo 'wow look at me!!!! wow look at me!!!! wow look at me!!!! wow look at me!!!! wow look at me!!!!'",
+        "sleep 20"
       ]
     }
   ]
