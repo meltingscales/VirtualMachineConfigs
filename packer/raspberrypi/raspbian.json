@@ -38,7 +38,11 @@
       "inline": [
         "touch /tmp/test",
         "echo 'wow look at me!!!! wow look at me!!!! wow look at me!!!! wow look at me!!!! wow look at me!!!!'",
-        "sleep 20"
+        "sleep 1",
+        "ping google.com -c 4",
+        "sudo apt update",
+        "sudo apt install fish cowsay -y",
+        "cowsay 'Im raspberry pi :)'"
       ]
     }
   ]
