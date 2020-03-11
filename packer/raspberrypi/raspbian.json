@@ -41,8 +41,7 @@
         "sleep 1",
         "ping google.com -c 4",
         "sudo apt update",
-        "sudo apt install fish cowsay -y",
-        "cowsay 'Im raspberry pi :)'"
+        "sudo apt install fish -y"
       ]
     }
   ]
