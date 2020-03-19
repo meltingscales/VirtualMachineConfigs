@@ -6,5 +6,6 @@ choco install -y GoogleChrome
 choco install -y notepadplusplus
 choco install -y git
 choco install -y atom
+choco install -y 7zip
 choco install -y ghostscript
 choco install -y imagemagick
