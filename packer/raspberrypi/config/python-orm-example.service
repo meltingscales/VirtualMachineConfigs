@@ -11,7 +11,7 @@ Restart=always
 RestartSec=1
 User=root
 WorkingDirectory=/usr/share/henryfbp-examples/python3/django/orm_example
-ExecStart=/usr/bin/env pipenv run python manage.py runserver
+ExecStart=/usr/bin/env python3 manage.py runserver
 
 [Install]
 WantedBy=multi-user.target
