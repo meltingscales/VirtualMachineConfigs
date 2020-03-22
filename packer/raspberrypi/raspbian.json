@@ -36,13 +36,23 @@
     {
       "type": "shell",
       "inline": [
-        "touch /tmp/test",
+        "touch /tmp/packer-is-working-hooray",
         "echo 'wow look at me!!!! wow look at me!!!! wow look at me!!!! wow look at me!!!! wow look at me!!!!'",
         "sleep 1",
         "ping google.com -c 4",
         "sudo apt update",
         "sudo apt install fish -y"
       ]
+    },
+    {
+      "type": "shell",
+      "script": "scripts/enable-python-webserver-ORM-example-from-git-repo.sh"
+    },
+    {
+      "type": "file",
+      "source": "config/python-orm-example-service",
+      "destination": "/etc/systemd/system/python-orm-example-service"
     }
+
   ]
 }

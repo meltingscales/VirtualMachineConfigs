@@ -1,0 +1,17 @@
+# copy this to /etc/systemd/system/
+# enable with systemctl enable <SERVICE>
+# use systemctl [status, start, stop]
+[Unit]
+Description=Test service that shows how to enable a system service automatically on an rpi packer image
+After=network.target
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=root
+WorkingDirectory=/usr/share/henryfbp-examples/python3/django/orm_example
+ExecStart=/usr/bin/env pipenv run python manage.py runserver
+
+[Install]
+WantedBy=multi-user.target
