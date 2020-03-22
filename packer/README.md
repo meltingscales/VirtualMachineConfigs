@@ -33,4 +33,4 @@ script once they work, because you can test them without having to wait if you h
 
 See <https://azeria-labs.com/emulate-raspberry-pi-with-qemu/>
 
-    git clone https://github.com/dhruvvyas90/qemu-rpi-kernel
+I have not gotten this to work. This may be very hard.
