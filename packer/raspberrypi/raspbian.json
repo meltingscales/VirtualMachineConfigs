@@ -46,12 +46,12 @@
     },
     {
       "type": "shell",
-      "script": "scripts/enable-python-webserver-ORM-example-from-git-repo.sh"
+      "script": "raspberrypi/scripts/enable-python-webserver-ORM-example-from-git-repo.sh"
     },
     {
       "type": "file",
-      "source": "config/python-orm-example-service",
-      "destination": "/etc/systemd/system/python-orm-example-service"
+      "source": "raspberrypi/config/python-orm-example.service",
+      "destination": "/etc/systemd/system/python-orm-example.service"
     }
 
   ]
