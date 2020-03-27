@@ -2,7 +2,7 @@
 
 ## Required setup
 
-Please [see the README.md](../README.md) at `../README.md` for a list of required software.
+Please [see the README.md](../blob/master/README.md) at `../README.md` for a list of required software.
 
 ## Features
 
