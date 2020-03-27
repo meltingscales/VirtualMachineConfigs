@@ -11,6 +11,7 @@ pushd Github
 git clone https://github.com/philipperemy/tensorflow-1.4-billion-password-analysis
 
 git clone https://github.com/skyblueee/sqli-labs-php7
+git clone https://github.com/tuxotron/Audi_SQLi_lamp_container
 git clone https://github.com/WebGoat/WebGoat
 git clone https://github.com/bkimminich/juice-shop
 git clone https://github.com/jehy-security/bwapp
