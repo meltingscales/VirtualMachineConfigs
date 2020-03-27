@@ -11,6 +11,8 @@ No license.
 
 ## Running
 
+- Install VirtualBox. See <https://www.virtualbox.org/>.
+
 - Install Vagrant. See <https://www.vagrantup.com/downloads.html> for instructions.
 
 - Then, in any of these directories, run `vagrant up` in a terminal. See each sub-readme for specific instructions.
