@@ -40,3 +40,9 @@ The command for one-touch deploys is now:
 instead of just:
 
 `vagrant up`.
+
+## Issues
+
+### Burp Suite not intercepting localhost connections in Firefox
+
+See <https://security.stackexchange.com/questions/142552/how-to-configure-burp-suite-for-localhost-application?answertab=active#tab-top>
