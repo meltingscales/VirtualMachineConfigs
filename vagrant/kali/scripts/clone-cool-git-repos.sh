@@ -15,6 +15,7 @@ git clone https://github.com/tuxotron/Audi_SQLi_lamp_container
 git clone https://github.com/WebGoat/WebGoat
 git clone https://github.com/bkimminich/juice-shop
 
+# bwapp and docker script
 git clone https://github.com/jehy-security/bwapp
 mkdir -p bwapp-docker
 pushd bwapp-docker
@@ -27,6 +28,8 @@ docker run -d -p 80:80 -p 21:21 -p 8443:8443 -p 443:443 raesene/bwapp;
 echo "go to http://localhost:80/install.php to see BWAPP :)"
 
 EOF
+popd #bwapp-docker
+
 
 git clone https://github.com/hclproducts/AltoroJ
 
@@ -37,8 +40,6 @@ else
 fi
 
 git clone https://github.com/joaomatosf/jexboss
-
-popd #bwapp-docker
 
 popd
 
