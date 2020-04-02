@@ -30,9 +30,12 @@ EOF
 
 git clone https://github.com/hclproducts/AltoroJ
 
-if [[! -f jboss-4.0.4.GA-Patch1-installer.jar ]]; then
+if [[ ! -f jboss-4.0.4.GA-Patch1-installer.jar ]]; then
 	wget https://ayera.dl.sourceforge.net/project/jboss/JBoss/JBoss-4.0.4.GA/jboss-4.0.4.GA-Patch1-installer.jar
+else
+	echo "JBoss JAR already downloaded."
 fi
+
 git clone https://github.com/joaomatosf/jexboss
 
 popd #bwapp-docker
