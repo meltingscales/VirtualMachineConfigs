@@ -24,7 +24,7 @@ rm start-bwapp-docker.sh
 cat > ./start-bwapp-docker.sh <<EOF
 #!/usr/bin/env bash
 
-docker run -d -p 80:80 -p 21:21 -p 8335:8335 raesene/bwapp;
+docker run -d -p 80:80 -p 21:21 -p 8443:8443 -p 443:443 raesene/bwapp;
 echo "go to http://localhost:80/install.php to see BWAPP :)"
 
 EOF
