@@ -14,13 +14,8 @@ git clone https://github.com/skyblueee/sqli-labs-php7
 git clone https://github.com/tuxotron/Audi_SQLi_lamp_container
 git clone https://github.com/WebGoat/WebGoat
 git clone https://github.com/bkimminich/juice-shop
+
 git clone https://github.com/jehy-security/bwapp
-git clone https://github.com/hclproducts/AltoroJ
-
-if [[! -f jboss-4.0.4.GA-Patch1-installer.jar ]]; then
-	wget https://ayera.dl.sourceforge.net/project/jboss/JBoss/JBoss-4.0.4.GA/jboss-4.0.4.GA-Patch1-installer.jar
-fi
-
 mkdir -p bwapp-docker
 pushd bwapp-docker
 
@@ -32,6 +27,13 @@ docker run -d -p 80:80 -p 21:21 -p 8443:8443 -p 443:443 raesene/bwapp;
 echo "go to http://localhost:80/install.php to see BWAPP :)"
 
 EOF
+
+git clone https://github.com/hclproducts/AltoroJ
+
+if [[! -f jboss-4.0.4.GA-Patch1-installer.jar ]]; then
+	wget https://ayera.dl.sourceforge.net/project/jboss/JBoss/JBoss-4.0.4.GA/jboss-4.0.4.GA-Patch1-installer.jar
+fi
+git clone https://github.com/joaomatosf/jexboss
 
 popd #bwapp-docker
 
