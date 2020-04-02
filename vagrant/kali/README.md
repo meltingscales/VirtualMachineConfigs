@@ -46,3 +46,7 @@ instead of just:
 ### Burp Suite not intercepting localhost connections in Firefox
 
 See <https://security.stackexchange.com/questions/142552/how-to-configure-burp-suite-for-localhost-application?answertab=active#tab-top>
+
+### JBoss doesn't work
+
+Use JDK 8 (not JRE 8). Make sure to `update-java-alternatives`. 
