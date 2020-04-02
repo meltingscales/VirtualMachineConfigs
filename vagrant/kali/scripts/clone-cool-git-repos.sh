@@ -17,6 +17,10 @@ git clone https://github.com/bkimminich/juice-shop
 git clone https://github.com/jehy-security/bwapp
 git clone https://github.com/hclproducts/AltoroJ
 
+if [[! -f jboss-4.0.4.GA-Patch1-installer.jar ]]; then
+	wget https://ayera.dl.sourceforge.net/project/jboss/JBoss/JBoss-4.0.4.GA/jboss-4.0.4.GA-Patch1-installer.jar
+fi
+
 mkdir -p bwapp-docker
 pushd bwapp-docker
 
