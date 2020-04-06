@@ -20,7 +20,6 @@ git clone https://github.com/jehy-security/bwapp
 mkdir -p bwapp-docker
 pushd bwapp-docker
 
-rm start-bwapp-docker.sh
 cat > ./start-bwapp-docker.sh <<EOF
 #!/usr/bin/env bash
 
