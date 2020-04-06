@@ -43,6 +43,12 @@ instead of just:
 
 ## Issues
 
+### On windows, Vagrant SSH provisioning fails as SSH does not connect
+
+Disable all `config.vm.network "private_network"` lines in the Vagrantfile.
+
+Not sure why this happens but disabling it fixes issues. Re-enable later.
+
 ### Burp Suite not intercepting localhost connections in Firefox
 
 See <https://security.stackexchange.com/questions/142552/how-to-configure-burp-suite-for-localhost-application?answertab=active#tab-top>
