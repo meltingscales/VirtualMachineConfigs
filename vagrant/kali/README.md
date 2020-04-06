@@ -29,7 +29,9 @@ That's about it. It's Kali. Many uses!
 
 ## Caveats/extra setup
 
-You must run `vagrant up --provision` after SSH fails due to a step that enables AppArmor breaking SSH connections.
+### SSH may fail once
+
+You may have to run `vagrant up --provision` after SSH fails due to a step that enables AppArmor breaking SSH connections.
 
 Too lazy to fix.
 
