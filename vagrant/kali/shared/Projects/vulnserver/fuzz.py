@@ -1,5 +1,9 @@
 #!/usr/bin/env python2
 
+"""
+Determines the length of bytes necessary to trigger a buffer overflow in vulnserver
+"""
+
 import sys, socket
 from time import sleep
 from options import HOST, PORT

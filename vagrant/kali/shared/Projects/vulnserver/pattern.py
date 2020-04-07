@@ -1,5 +1,10 @@
 #!/usr/bin/env python2
 
+'''
+Sends a pattern of unique bytes from pattern_create.rb, which, when you examine the EIP register value, will tell you
+the offset for a payload position.
+'''
+
 import socket
 
 from options import HOST, PORT

