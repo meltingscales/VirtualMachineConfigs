@@ -1,5 +1,10 @@
+#!/usr/bin/env python2
+
 import struct
 from pprint import pprint
+import hexdump
+
+from hexfns import int_to_bytes, reverse_endian_of_bytes
 
 PORT = 9999
 HOST = '192.168.33.16'
