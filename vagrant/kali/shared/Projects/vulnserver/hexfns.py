@@ -16,6 +16,7 @@ assert (int_to_hex_string(0x1234) == '1234')
 
 
 def int_to_bytes(integer):
+    """Given an integer return a byte string."""
     return hex_string_to_bytes(int_to_hex_string(integer))
 
 
@@ -23,6 +24,7 @@ assert (hex_string_to_bytes(int_to_hex_string(0x1234)) == '\x12\x34')
 
 
 def reverse_endian_of_bytes(bytestring=b'\xca\xfe\xba\xbe'):
+    """Reverse the endianness of a byte string."""
     # bits = b""
     # for x in xrange(len(bytestring), 0, -2):
     #     bits += bytestring[x:x + 1]
@@ -31,3 +33,4 @@ def reverse_endian_of_bytes(bytestring=b'\xca\xfe\xba\xbe'):
 
 
 assert (reverse_endian_of_bytes('\xca\xfe\xba\xbe') == '\xbe\xba\xfe\xca')
+assert (reverse_endian_of_bytes(reverse_endian_of_bytes('\x12\x34\x56\x78')) == '\x12\x34\x56\x78')
