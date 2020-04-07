@@ -1,6 +1,7 @@
 #!/usr/bin/env python2
 
-import sys, socket
+import socket
+
 from badchars import badchars
 from options import HOST, PORT, SHELLCODE_OFFSET
 
