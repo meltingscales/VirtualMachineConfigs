@@ -9,7 +9,7 @@ import socket
 
 from options import HOST, PORT
 
-with open('pattern_create_3200.dat', 'r') as f:
+with open('data/pattern_create_3200.dat', 'r') as f:
     offset = f.readline()
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
