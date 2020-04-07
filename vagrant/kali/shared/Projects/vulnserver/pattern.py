@@ -1,13 +1,15 @@
 #!/usr/bin/env python2
 
-import sys, socket
+import socket
+
+from options import HOST, PORT
 
 with open('pattern_create_3200.dat', 'r') as f:
-	offset = f.readline()
+    offset = f.readline()
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(('192.168.33.16', 9999))
-cmd=('TRUN /.:/' + offset)
+s.connect((HOST, PORT))
+cmd = ('TRUN /.:/' + offset)
 
 # print("SEND "+cmd)
 s.send(cmd)
