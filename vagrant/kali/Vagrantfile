@@ -8,69 +8,26 @@ class VagrantPlugins::ProviderVirtualBox::Action::Network
   end
 end
 
-# All Vagrant configuration is done below. The "2" in Vagrant.configure
-# configures the configuration version (we support older styles for
-# backwards compatibility). Please don't change it unless you know what
-# you're doing.
-Vagrant.configure("2") do |config|
-  # The most common configuration options are documented and commented below.
-  # For a complete reference, please see the online documentation at
-  # https://docs.vagrantup.com.
+VM_NAME = 'Kali Linux 2019.4.0'
+VM_IP = '192.168.33.7'
 
-  # Every Vagrant development environment requires a box. You can search for
-  # boxes at https://vagrantcloud.com/search.
+Vagrant.configure("2") do |config|
+
   config.vm.box = "kalilinux/rolling"
   config.vm.box_version = "2019.4.0"
-#  config.vm.box = "kalilinux/rolling-light"
+
+  config.vm.define VM_NAME
+  config.vm.network "private_network", ip: VM_IP # XXX Disable this line if the machine fails to provision on Windows
 
   # disables ssh keys, use uname/pw
+  config.ssh.insert_key = false # Fix for NTFS drives
   config.ssh.username = "vagrant"
   config.ssh.password = "vagrant"
 
+  # disable default shared folder
+  config.vm.synced_folder './', '/vagrant', disabled: true
+  config.vm.synced_folder 'shared', '/vagrant'
 
-  # Disable automatic box update checking. If you disable this, then
-  # boxes will only be checked for updates when the user runs
-  # `vagrant box outdated`. This is not recommended.
-  # config.vm.box_check_update = false
-
-  # Create a forwarded port mapping which allows access to a specific port
-  # within the machine from a port on the host machine. In the example below,
-  # accessing "localhost:8080" will access port 80 on the guest machine.
-  # NOTE: This will enable public access to the opened port
-  # config.vm.network "forwarded_port", guest: 80, host: 8080
-
-  # Create a forwarded port mapping which allows access to a specific port
-  # within the machine from a port on the host machine and only allow access
-  # via 127.0.0.1 to disable public access
-  # config.vm.network "forwarded_port", guest: 9392, host: 9392, host_ip: "127.0.0.1" # openvas
-
-  # Create a private network, which allows host-only access to the machine
-  # using a specific IP.
-  config.vm.network "private_network", ip: "192.168.33.7" # XXX Disable this line if the machine fails to provision on Windows
-
-  # see https://www.virtualbox.org/manual/ch06.html
-  # config.vm.network "private_network", type: "dhcp" # DHCP private lan for interacting with other boxes
-
-  # Create a public network, which generally matched to bridged network.
-  # Bridged networks make the machine appear as another physical device on
-  # your network.
-  # config.vm.network "public_network"
-
-  # Share an additional folder to the guest VM. The first argument is
-  # the path on the host to the actual folder. The second argument is
-  # the path on the guest to mount the folder. And the optional third
-  # argument is a set of non-required options.
-  config.vm.synced_folder "shared/", "/vagrantshared"
-
-  # disable defalt share
-  config.vm.synced_folder ".", "/vagrant", disabled: true
-
-  # Provider-specific configuration so you can fine-tune various
-  # backing providers for Vagrant. These expose provider-specific options.
-  # Example for VirtualBox:
-  #
-
-  config.ssh.insert_key = false # Fix for NTFS drives
   config.disksize.size = '150GB'
 
   # VirtualBox specific settings
@@ -83,29 +40,22 @@ Vagrant.configure("2") do |config|
 
   end
 
-  # View the documentation for the provider you are using for more
-  # information on available options.
-
-  # Enable provisioning with a shell script. Additional provisioners such as
-  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
-  # documentation for more information about their specific syntax and use.
-
   # initial apt-get update
   config.vm.provision "shell", inline: <<-SHELL
       apt-get update
   SHELL
 
   # copy add-apt-repository
-  config.vm.provision "file", source:"scripts/add-apt-repository.sh", destination: "/tmp/add-apt-repository"
+  config.vm.provision "file", source: "scripts/add-apt-repository.sh", destination: "/tmp/add-apt-repository"
 
   # Copy useful scripts to desktop
   config.vm.provision "file",
-                      source:"scripts/desktop-scripts/tor-transparent-proxy-start.sh",
+                      source: "scripts/desktop-scripts/tor-transparent-proxy-start.sh",
                       destination: "/home/vagrant/Desktop/"
 
   config.vm.provision "file",
-                       source:"scripts/desktop-scripts/tor-transparent-proxy-stop.sh",
-                       destination: "/home/vagrant/Desktop/"
+                      source: "scripts/desktop-scripts/tor-transparent-proxy-stop.sh",
+                      destination: "/home/vagrant/Desktop/"
 
   # make add-apt-repository executable
   config.vm.provision "shell", run: "always", inline: <<-SHELL
