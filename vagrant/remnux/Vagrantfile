@@ -1,0 +1,33 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VM_NAME = 'Remnux Ubuntu 14.04 (Trusty) x64'
+VM_IP = '192.168.33.8'
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "ubuntu/trusty64"
+  config.vm.define VM_NAME
+  config.vm.network "private_network", ip: VM_IP
+
+  # disable default shared folder
+  config.vm.synced_folder './', '/vagrant', disabled: true
+  config.vm.synced_folder 'shared', '/vagrant'
+
+  config.vm.provider 'virtualbox' do |v|
+    v.name = VM_NAME
+
+    v.gui = true
+
+    v.memory = 3000
+    v.cpus = 2
+
+    v.customize ['modifyvm', :id, '--vram', '256']
+
+  end
+
+  config.vm.provision "shell", inline: <<-SHELL
+    apt-get update
+    wget --quiet -O - https://remnux.org/get-remnux.sh | sudo bash
+  SHELL
+end
