@@ -49,9 +49,13 @@ Vagrant.configure("2") do |config|
     git clone https://github.com/corelan/mona
     git clone https://github.com/fireeye/flare-vm
 
-    cd flare-vm
-    powershell ./install.ps1 -Password vagrant
-    cd ..
+    If(!(test-path "flare-vm"))
+    {
+        cd flare-vm
+        powershell ./install.ps1 -Password vagrant
+        cd ..
+        write-host "Flare-VM installed. Your VM will now restart if it has not done so already."
+    }
 
   SHELL
 
