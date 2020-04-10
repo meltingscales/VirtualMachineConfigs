@@ -1,0 +1,53 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VM_NAME = 'Windows-10-analysis-and-vulnerable'
+VM_IP = '192.168.33.16'
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "gusztavvargadr/windows-10"
+
+  config.vm.network "private_network", ip: VM_IP
+
+  # disable default shared folder
+  config.vm.synced_folder './', '/vagrant', disabled: true
+  config.vm.synced_folder 'shared', '/vagrant'
+
+  config.vm.define VM_NAME
+
+  config.vm.provider 'virtualbox' do |v|
+    v.name = VM_NAME
+
+    v.gui = true
+
+    v.memory = 2000
+    v.cpus = 2
+
+    v.customize ['modifyvm', :id, '--vram', '256']
+
+#    v.customize ["storageattach", :id,
+#                 "--storagectl", "IDE", #README May need to change to "IDE" or "IDE Controller!"
+#                 "--port", "0", "--device", "1",
+#                 "--type", "dvddrive",
+#                 "--medium", "emptydrive"]
+
+  end
+
+  config.vm.provision "shell", privileged: "true", powershell_elevated_interactive: "true",
+                      path: "../scripts/install-choco.ps1"
+
+  config.vm.provision "shell", inline: <<-SHELL
+    cd ~
+
+    mkdir Github
+
+    cd Github
+
+    git clone https://github.com/stephenbradshaw/vulnserver
+    git clone https://github.com/kbandla/ImmunityDebugger
+    git clone https://github.com/corelan/mona
+
+  SHELL
+
+end
