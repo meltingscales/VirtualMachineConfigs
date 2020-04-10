@@ -28,6 +28,10 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
+
+    echo "After this, SSH will be dead forever!! You must run 'update-remnux full' manually!"
+    sleep 10
+
     wget --quiet -O - https://remnux.org/get-remnux.sh | sudo bash
   SHELL
 end
