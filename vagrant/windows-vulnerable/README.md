@@ -1,5 +1,3 @@
-# Windows-x-office
+# Windows-Vulnerable
 
-For when you want to try out Microsoft Office.
-
-Please buy Microsoft Office.
+Windows with vulnerable software installed upon provisioning for pentesting.
