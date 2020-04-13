@@ -55,6 +55,7 @@ Vagrant.configure("2") do |config|
         powershell ./install.ps1 -Password vagrant
         cd ..
         write-host "Flare-VM installed. Your VM will now restart if it has not done so already."
+        write-host "Now would be a good time to take a snapshot before you start installing malware."
     }
 
   SHELL
