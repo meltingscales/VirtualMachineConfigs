@@ -40,6 +40,6 @@ Vagrant.configure("2") do |config|
                       path: "../scripts/install-choco-and-cool-tools.ps1"
 
   config.vm.provision "shell", privileged: "true", powershell_elevated_interactive: "true", run: "always",
-                      path: "../scripts/install-vs.ps1"
+                      path: "../scripts/install-vs-community.ps1"
 
 end
