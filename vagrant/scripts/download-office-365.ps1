@@ -10,12 +10,6 @@ function EnsureExists($url, $filepath)
     }
 }
 
-Class Resource
-{
-    [String]$filepath
-    [String]$url
-}
-
 $file = -join ((Resolve-Path "~/Downloads/"), "Office365.img")
 $url = "http://officecdn.microsoft.com/db/492350F6-3A01-4F97-B9C0-C7C6DDF67D60/media/en-US/O365ProPlusRetail.img"
 
