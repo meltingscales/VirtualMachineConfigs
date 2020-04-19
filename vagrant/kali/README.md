@@ -45,7 +45,15 @@ instead of just:
 
 ## Issues
 
-### On windows, Vagrant SSH provisioning fails as SSH does not connect
+### No internet
+
+See below.
+
+### Vagrant SSH provisioning fails as SSH does not connect
+
+You can run `sudo dhclient eth1` to fix this. Not sure why this works.
+
+Alternatively,
 
 Disable all `config.vm.network "private_network"` lines in the Vagrantfile.
 
