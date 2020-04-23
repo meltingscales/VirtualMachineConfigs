@@ -10,7 +10,7 @@ end
 
 VM_NAME = 'Kali Linux 2019.4.0'
 VM_IP = '192.168.33.7'
-VM_RAM_MB='4100'
+VM_RAM_MB='3000'
 
 Vagrant.configure("2") do |config|
 
