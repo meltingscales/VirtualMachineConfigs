@@ -51,7 +51,7 @@ See below.
 
 ### Vagrant SSH provisioning fails as SSH does not connect
 
-You can run `sudo dhclient eth1` to fix this. Not sure why this works.
+You can run `sudo dhclient eth0` to fix this. Not sure why this works.
 
 Alternatively,
 
