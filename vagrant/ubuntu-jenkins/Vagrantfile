@@ -7,7 +7,7 @@ VM_RAM_MB = '2000'
 
 Vagrant.configure("2") do |config|
 
-  config.vm.box = "ubuntu/bionic64"
+  config.vm.box = "hashicorp/bionic64"
 
   config.vm.define VM_NAME
   config.vm.network "private_network", ip: VM_IP
@@ -20,12 +20,13 @@ Vagrant.configure("2") do |config|
 
   end
 
-  config.vm.provision "shell", inline: <<-SHELL
+  config.vm.provision "shell", env: {:IP => VM_IP}, inline: <<-SHELL
 
-    exit 0 #debug    
+    #exit 0 #debug    
 
-    wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
-    sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+    wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
+    sudo sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'
+    sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys FCEF32E745F2C3D5
 
     apt update
 
@@ -33,8 +34,11 @@ Vagrant.configure("2") do |config|
     apt-get install -y jenkins
     systemctl start jenkins
 
-    echo "Jenkins is installed! Log in at https://<this VM's IP>:8080/ and follow the instructions."
-
     curl 127.0.0.1:8080
+
+    echo "Jenkins is installed! Log in at ${IP}:8080 and follow the instructions."
+
+    echo "Run 'vagrant ssh' if you need to read files from the VM."
+
   SHELL
 end
