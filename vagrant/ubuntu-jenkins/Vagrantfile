@@ -36,6 +36,7 @@ Vagrant.configure("2") do |config|
     apt update
 
     apt-get install -y openjdk-8-jre
+    apt-get install -y maven
     apt-get install -y jenkins
     systemctl start jenkins
 
