@@ -12,6 +12,11 @@ Vagrant.configure("2") do |config|
   config.vm.define VM_NAME
   config.vm.network "private_network", ip: VM_IP
 
+  # disable default shared folder
+  config.vm.synced_folder './', '/vagrant', disabled: true
+  config.vm.synced_folder 'shared', '/vagrant'
+
+
   # VirtualBox specific settings
   config.vm.provider "virtualbox" do |vb|
 
@@ -39,6 +44,8 @@ Vagrant.configure("2") do |config|
     echo "Jenkins is installed! Log in at ${IP}:8080 and follow the instructions."
 
     echo "Run 'vagrant ssh' if you need to read files from the VM."
+
+    echo "After that, install the 'Build Pipeline' plugin and get some Git repos with Jenkinsfiles!"
 
   SHELL
 end
