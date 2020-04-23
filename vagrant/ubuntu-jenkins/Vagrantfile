@@ -1,0 +1,30 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VM_NAME = 'Ubuntu 14.04 Jenkins'
+VM_IP = '192.168.33.22'
+VM_RAM_MB = '2000'
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "ubuntu/trusty64"
+
+  config.vm.define VM_NAME
+  config.vm.network "private_network", ip: VM_IP
+
+  # VirtualBox specific settings
+  config.vm.provider "virtualbox" do |vb|
+
+    # Customize the amount of memory on the VM:
+    vb.memory = VM_RAM_MB
+
+  end
+
+  # initial apt-get update
+  config.vm.provision "shell", inline: <<-SHELL
+      apt-get update
+
+      echo 'TODO: actually set up jenkins'
+  SHELL
+
+end
