@@ -25,7 +25,7 @@ Vagrant.configure("2") do |config|
 
   end
 
-  config.vm.provision "shell", env: {:IP => VM_IP}, inline: <<-SHELL
+  config.vm.provision "shell", inline: <<-SHELL
 
     #exit 0 #debug    
 
@@ -38,8 +38,12 @@ Vagrant.configure("2") do |config|
     apt-get install -y openjdk-8-jre
     apt-get install -y maven
     apt-get install -y jenkins
+    systemctl enable jenkins
     systemctl start jenkins
+  SHELL
 
+
+  config.vm.provision "shell", run: "always", env: {:IP => VM_IP}, inline: <<-SHELL
     curl 127.0.0.1:8080
 
     echo "Jenkins is installed! Log in at ${IP}:8080 and follow the instructions."
