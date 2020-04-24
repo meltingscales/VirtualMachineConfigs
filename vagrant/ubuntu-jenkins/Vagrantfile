@@ -48,7 +48,8 @@ Vagrant.configure("2") do |config|
     declare -a jenkinsplugins=("cloudbees-folder" "antisamy-markup-formatter" "build-timeout" "credentials-binding" \
       "rebuild" "ssh-agent" "timestamper" "ws-cleanup" "ant" "gradle" "nodejs" "workflow-aggregator" \
       "github-branch-source" "pipeline-github-lib" "pipeline-stage-view" "bitbucket" "git" "cvs" "github" \
-      "subversion" "ssh-slaves" "matrix-auth" "pam-auth" "ldap" "email-ext" "mailer" "ssh" "publish-over-ssh" "locale")
+      "subversion" "ssh-slaves" "matrix-auth" "pam-auth" "ldap" "email-ext" "mailer" "ssh" "publish-over-ssh" "locale" \
+      "dependencyanalyzer" "m2release" "maven-info" "maven-plugin" "pipeline-maven" "plot" "violations" "warnings")
     
     for plugin in ${jenkinsplugins[@]}; do
       java -jar ./jenkins-cli.jar -s "http://127.0.0.1:8080" -auth admin:"$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)" \
