@@ -70,5 +70,7 @@ Vagrant.configure("2") do |config|
 
     echo "After that, install the 'Build Pipeline' plugin and get some Git repos with Jenkinsfiles!"
 
+    echo "A load of extra plugins have been installed."
+
   SHELL
 end
