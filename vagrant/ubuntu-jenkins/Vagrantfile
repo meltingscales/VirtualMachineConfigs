@@ -64,6 +64,8 @@ Vagrant.configure("2") do |config|
 
     echo "Run 'vagrant ssh' if you need to read files from the VM."
 
+    echo "The initial Jenkins admin password is in '/var/lib/jenkins/secrets/initialAdminPassword'."
+
     echo "After that, get some Git repos with Jenkinsfiles or other repos!"
 
     echo "A load of extra plugins have been installed."
