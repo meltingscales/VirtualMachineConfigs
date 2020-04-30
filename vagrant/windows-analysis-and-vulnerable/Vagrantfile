@@ -35,7 +35,10 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provision "shell", privileged: "true", powershell_elevated_interactive: "true",
-                      path: "../scripts/install-choco-and-cool-tools.ps1"
+                      path: "../scripts/install-choco.ps1"
+
+  config.vm.provision "shell", privileged: "true", powershell_elevated_interactive: "true",
+                      path: "../scripts/install-git-using-choco.ps1"
 
   config.vm.provision "shell", inline: <<-SHELL
     cd ~
@@ -48,7 +51,19 @@ Vagrant.configure("2") do |config|
     git clone https://github.com/kbandla/ImmunityDebugger
     git clone https://github.com/corelan/mona
     git clone https://github.com/fireeye/flare-vm
+    
+    choco install graphviz
 
+    # Add to path after cloning
+    If(!(test-path "pdfobjflow3-python3"))
+    {
+      echo "$Env:Path" >> path_backup.txt
+      git clone https://github.com/HenryFBP/pdfobjflow3-python3
+      setx /M PATH "$Env:Path;$((Get-Item -Path "pdfobjflow3-python3").FullName)"
+    }
+    
+    exit 0 #TEST
+  
     If(!(test-path "flare-vm"))
     {
         cd flare-vm
@@ -57,6 +72,7 @@ Vagrant.configure("2") do |config|
         write-host "Flare-VM installed. Your VM will now restart if it has not done so already."
         write-host "Now would be a good time to take a snapshot before you start installing malware."
     }
+
 
   SHELL
 
