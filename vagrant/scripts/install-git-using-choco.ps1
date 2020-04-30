@@ -1,1 +1,1 @@
-choco instal git
+choco install git
