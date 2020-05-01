@@ -5,9 +5,16 @@ A collection of some useful Vagrantfiles and setup scripts.
 Feel free to do whatever you want with this code.
 No license.
 
-## Required Vagrant plugins
+## Vagrant plugins
 
-- `vagrant plugin install vagrant-disksize`
+Some of these boxes require these plugins.
+
+Install them with `vagrant plugin install <PLUGIN>` if you get an error message.
+
+-   `vagrant plugin install vagrant-disksize` 
+-   `vagrant plugin install vagrant-libvirt` (see <https://github.com/vagrant-libvirt/vagrant-libvirt>) and 
+    <https://github.com/hashicorp/vagrant/issues/7039>
+    -   I recommend using `virt-manager` to manage KVM VMs in a GUI. Similar to VirtualBox.
 
 ## Running
 
