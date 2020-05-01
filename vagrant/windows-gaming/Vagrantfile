@@ -1,0 +1,47 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VM_NAME = 'Windows-Gaming'
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "gusztavvargadr/windows-10"
+  config.vm.define VM_NAME
+
+  # config.vm.synced_folder './', '/sharedfolder'
+
+  config.vm.provider 'virtualbox' do |vb|
+    vb.name = VM_NAME
+
+    vb.gui = true
+
+    vb.memory = 4000
+    vb.cpus = 4
+
+    vb.customize ['modifyvm', :id, '--vram', '256']
+
+    vb.customize ["storageattach", :id,
+                  "--storagectl", "IDE Controller", # May need to change to "IDE" and remove "Controller"
+                  "--port", "0", "--device", "1",
+                  "--type", "dvddrive",
+                  "--medium", "emptydrive"]
+
+    if RUBY_PLATFORM =~ /darwin/
+      vb.customize ["modifyvm", :id, '--audio', 'coreaudio', '--audiocontroller', 'hda'] # OSX choices: hda sb16 ac97
+    elsif RUBY_PLATFORM =~ /mingw|mswin|bccwin|cygwin|emx/
+      vb.customize ["modifyvm", :id, '--audio', 'dsound', '--audiocontroller', 'ac97']
+    else #linux
+      vb.customize ["modifyvm", :id, '--audio', 'pulse', '--audiocontroller', 'hda'] # Linux choices: alsa pulse
+    end
+
+
+  end
+
+
+  config.vm.provision "shell", privileged: "true", powershell_elevated_interactive: "true",
+                      path: "../scripts/install-choco-and-cool-tools.ps1"
+
+  config.vm.provision "shell", privileged: "true", powershell_elevated_interactive: "true", run: 'always',
+                      path: "scripts/install-stuff.ps1"
+
+end
+
