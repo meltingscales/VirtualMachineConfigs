@@ -20,6 +20,8 @@ Install them with `vagrant plugin install <PLUGIN>` if you get an error message.
 
 - Install VirtualBox. See <https://www.virtualbox.org/>.
 
+- Some of these VMs use KVM. This is more advanced. Use Google. VB is easier.
+
 - Install Vagrant. See <https://www.vagrantup.com/downloads.html> for instructions.
 
 - Then, in any of these directories, run `vagrant up` in a terminal. See each sub-readme for specific instructions.
