@@ -13,3 +13,7 @@ Before running malware:
 ## Links
 
 <https://www.malware-traffic-analysis.net/>
+
+## Notes
+
+Password is `infected` or `password` for most zips.
