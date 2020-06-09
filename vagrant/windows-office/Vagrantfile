@@ -43,4 +43,11 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", privileged: "true", powershell_elevated_interactive: "true", run: "always",
                       path: "../scripts/download-office-365.ps1"
 
+  #asp.net, needed for some tools
+  config.vm.provision "shell", inline: <<-SHELL
+    choco install dotnet3.5
+    choco install dotnet4.7.2
+  SHELL
+
+
 end
