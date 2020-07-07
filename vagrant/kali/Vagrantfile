@@ -157,7 +157,7 @@ Vagrant.configure("2") do |config|
     make install
     chown -R vagrant:vagrant /home/vagrant/Desktop/kalitorify
 
-    echo "Kaltorify installed. Reboot and run 'kalitorify' to get started."
+    echo "Kalitorify installed. Reboot and run 'kalitorify' to get started."
 
     popd
 
