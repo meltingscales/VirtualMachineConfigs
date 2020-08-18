@@ -50,6 +50,7 @@ Vagrant.configure("2") do |config|
     git clone https://github.com/stephenbradshaw/vulnserver
     git clone https://github.com/kbandla/ImmunityDebugger
     git clone https://github.com/corelan/mona
+    git clone https://github.com/nsacyber/GRASSMARLIN
 
     choco install graphviz
 
