@@ -84,7 +84,7 @@ Vagrant.configure("2") do |config|
     export DEBIAN_FRONTEND=noninteractive # prevent installers from asking us stuff
     sudo gem install mdless
 
-    apt-get install -y htop iftop cpu-checker gedit transmission baobab nano tcpdump maven perl-tk # python3-pip
+    apt-get install -y htop iftop cpu-checker gedit transmission baobab nano tcpdump maven perl-tk gnupg2 # python3-pip
     apt-get install -y snapd
     apt-get install -y kleopatra thunderbird
 
