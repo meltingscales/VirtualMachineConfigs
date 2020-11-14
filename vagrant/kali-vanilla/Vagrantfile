@@ -1,0 +1,47 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# monkey patch for https://github.com/hashicorp/vagrant/issues/8878
+class VagrantPlugins::ProviderVirtualBox::Action::Network
+  def dhcp_server_matches_config?(dhcp_server, config)
+    true
+  end
+end
+
+VM_NAME = 'Kali Linux Vanilla 2019.4.0'
+VM_IP = '192.168.33.69'
+VM_RAM_MB='3000'
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "kalilinux/rolling"
+  config.vm.box_version = "2019.4.0"
+
+  config.vm.define VM_NAME
+  config.vm.network "private_network", ip: VM_IP # XXX Disable this line if the machine fails to provision on Windows
+
+  # disables ssh keys, use uname/pw
+  config.ssh.insert_key = false # Fix for NTFS drives
+  config.ssh.username = "vagrant"
+  config.ssh.password = "vagrant"
+
+  # disable default shared folder
+  config.vm.synced_folder './', '/vagrant', disabled: true
+  config.vm.synced_folder 'shared', '/vagrant'
+
+  # VirtualBox specific settings
+  config.vm.provider "virtualbox" do |vb|
+    # Show the VirtualBox GUI when booting the machine
+    vb.gui = true
+
+    # Customize the amount of memory on the VM:
+    vb.memory = VM_RAM_MB
+
+  end
+
+  # initial apt-get update
+  config.vm.provision "shell", inline: <<-SHELL
+      apt-get update
+  SHELL
+
+end
