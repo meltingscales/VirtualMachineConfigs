@@ -27,6 +27,7 @@ Vagrant.configure("2") do |config|
     apt install -y ubuntu-desktop
     apt install -y docker docker-compose
     apt install -y snap
+    apt install -y virtualbox-guest-additions-iso
     sudo snap install --classic code
   SHELL
 end
