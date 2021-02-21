@@ -21,6 +21,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
+    apt install -y gcc make perl
     apt install -y apt-transport-https
     apt install -y software-properties-common wget
     apt install -y tasksel
