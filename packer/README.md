@@ -1,5 +1,11 @@
 # Packer
 
+## General commands
+
+	packer validate image_name.json
+    
+    packer build image_name.json
+
 ## ARM images
 
 You need Linux, QEMU for this and a 64-bit processor with virtualization.
