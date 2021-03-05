@@ -6,6 +6,8 @@
     
     packer build image_name.json
 
+Consider setting `PACKER_CACHE_DIR` to a specific directory.
+
 ## ARM images
 
 You need Linux, QEMU for this and a 64-bit processor with virtualization.
