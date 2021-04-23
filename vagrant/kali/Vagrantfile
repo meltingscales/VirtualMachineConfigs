@@ -41,8 +41,9 @@ Vagrant.configure("2") do |config|
 
   end
 
-  # initial apt-get update
+  # initial apt-get update, fix keys
   config.vm.provision "shell", inline: <<-SHELL
+      apt-key adv --keyserver hkp://keys.gnupg.net --recv-keys 7D8D0BF6
       apt-get update
   SHELL
 
