@@ -1,14 +1,14 @@
-# windows-analysis-and-vulnerable
+# windows-10-flare-vm
 
-Windows with vulnerable software installed upon provisioning for pentesting.
+Windows with FLARE-VM installed upon provisioning for pentesting.
 
 Also has analysis tools like debuggers and disassemblers.
 
 Before running malware:
 
-- Disable Guest Additions,
-- Disable the network,
-- Take a VM snapshot.
+- Take a VM snapshot
+- Disable Guest Additions
+- Disable the network
 
 ## Links
 
