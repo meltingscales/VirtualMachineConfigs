@@ -70,5 +70,8 @@ Vagrant.configure("2") do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
     echo 'ssh works!'
+
+    apt update
+    apt install libssl-dev
   SHELL
 end
