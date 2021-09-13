@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 VM_NAME = 'Ubuntu 18.04 Development'
-VM_RAM_MB='3000'
+VM_RAM_MB = '6000'
 
 Vagrant.configure("2") do |config|
 
@@ -31,8 +31,17 @@ Vagrant.configure("2") do |config|
     apt install -y snap
     apt install -y virtualbox-guest-additions-iso
     apt install -y fish
+
     sudo snap install --classic code
+
     sudo snap install --classic kubectl
     sudo snap install --classic helm
+
+    # minikube stuff
+    sudo apt install conntrack
+    curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    sudo install minikube-linux-amd64 /usr/local/bin/minikube
+    # then run `sudo minikube start --driver=none` to start it 
+
   SHELL
 end
