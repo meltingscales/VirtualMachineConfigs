@@ -33,5 +33,6 @@ Vagrant.configure("2") do |config|
     apt install -y fish
     sudo snap install --classic code
     sudo snap install --classic kubectl
+    sudo snap install --classic helm
   SHELL
 end
