@@ -8,22 +8,17 @@ class VagrantPlugins::ProviderVirtualBox::Action::Network
   end
 end
 
-VM_NAME = 'Kali Linux 2019.4.0'
+VM_NAME = 'Kali Linux 2021.3.0'
 VM_IP = '192.168.33.7'
 VM_RAM_MB='3000'
 
 Vagrant.configure("2") do |config|
 
   config.vm.box = "kalilinux/rolling"
-  config.vm.box_version = "2019.4.0"
+  config.vm.box_version = "2021.3.0"
 
   config.vm.define VM_NAME
   config.vm.network "private_network", ip: VM_IP # XXX Disable this line if the machine fails to provision on Windows
-
-  # disables ssh keys, use uname/pw
-  config.ssh.insert_key = false # Fix for NTFS drives
-  config.ssh.username = "vagrant"
-  config.ssh.password = "vagrant"
 
   # disable default shared folder
   config.vm.synced_folder './', '/vagrant', disabled: true
@@ -43,12 +38,19 @@ Vagrant.configure("2") do |config|
 
   # initial apt-get update, fix keys
   config.vm.provision "shell", inline: <<-SHELL
-      apt-key adv --keyserver hkp://keys.gnupg.net --recv-keys 7D8D0BF6
+      # apt-key adv --keyserver hkp://keys.gnupg.net --recv-keys 7D8D0BF6 # not needed anymore
       apt-get update
   SHELL
 
   # copy add-apt-repository
   config.vm.provision "file", source: "scripts/add-apt-repository.sh", destination: "/tmp/add-apt-repository"
+
+  # make add-apt-repository executable
+  config.vm.provision "shell", run: "always", inline: <<-SHELL
+    sudo mv /tmp/add-apt-repository /usr/sbin/add-apt-repository
+
+    chmod +x /usr/sbin/add-apt-repository
+  SHELL
 
   # Copy useful scripts to desktop
   config.vm.provision "file",
@@ -58,13 +60,6 @@ Vagrant.configure("2") do |config|
   config.vm.provision "file",
                       source: "scripts/desktop-scripts/tor-transparent-proxy-stop.sh",
                       destination: "/home/vagrant/Desktop/"
-
-  # make add-apt-repository executable
-  config.vm.provision "shell", run: "always", inline: <<-SHELL
-    sudo mv /tmp/add-apt-repository /usr/sbin/add-apt-repository
-
-    chmod +x /usr/sbin/add-apt-repository
-  SHELL
 
   # start timer
   config.vm.provision "shell", run: "always", inline: <<-SHELL
@@ -85,7 +80,7 @@ Vagrant.configure("2") do |config|
     export DEBIAN_FRONTEND=noninteractive # prevent installers from asking us stuff
     sudo gem install mdless
 
-    apt-get install -y htop iftop cpu-checker gedit transmission transmission-gtk baobab nano tcpdump maven perl-tk gnupg2 # python3-pip
+    apt-get install -y htop iftop cpu-checker gedit transmission transmission-gtk baobab nano tcpdump maven perl-tk gnupg2 fish # python3-pip
     apt-get install -y snapd
     apt-get install -y kleopatra thunderbird
 
@@ -195,25 +190,9 @@ Vagrant.configure("2") do |config|
 
   SHELL
 
-  # set password to something more secure
   config.vm.provision "shell", inline: <<-SHELL
-  
-  exit 0 # Disabled for people who can't paste
-
-  if [ -f /home/vagrant/my_password_is_random ]; then
-    echo "Already changed default password."
-  fi
-
-  newpassword=`openssl rand -base64 32`
-  
-  echo "vagrant:$newpassword" | chpasswd
-
-  echo "The new password of the user 'vagrant' is now '$newpassword' -- write it down."
-  
-  newpassword="im gone now :)"
-
-  touch /home/vagrant/my_password_is_random
-
+    echo "Done. Take a snapshot!"
+    echo "Run: 
+    vagrant snapshot save 'after vagrant'"
   SHELL
-
 end
