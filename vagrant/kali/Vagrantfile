@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder './', '/vagrant', disabled: true
   config.vm.synced_folder 'shared', '/vagrant'
 
-  config.disksize.size = '150GB'
+  config.disksize.size = '500GB'
 
   # VirtualBox specific settings
   config.vm.provider "virtualbox" do |vb|
