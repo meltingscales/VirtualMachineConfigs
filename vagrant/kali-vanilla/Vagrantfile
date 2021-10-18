@@ -8,22 +8,17 @@ class VagrantPlugins::ProviderVirtualBox::Action::Network
   end
 end
 
-VM_NAME = 'Kali Linux Vanilla 2019.4.0'
+VM_NAME = 'Kali Linux Vanilla 2021.3.0'
 VM_IP = '192.168.33.69'
 VM_RAM_MB='3000'
 
 Vagrant.configure("2") do |config|
 
   config.vm.box = "kalilinux/rolling"
-  config.vm.box_version = "2019.4.0"
+  config.vm.box_version = "2021.3.0"
 
   config.vm.define VM_NAME
   config.vm.network "private_network", ip: VM_IP # XXX Disable this line if the machine fails to provision on Windows
-
-  # disables ssh keys, use uname/pw
-  config.ssh.insert_key = false # Fix for NTFS drives
-  config.ssh.username = "vagrant"
-  config.ssh.password = "vagrant"
 
   # disable default shared folder
   config.vm.synced_folder './', '/vagrant', disabled: true
@@ -41,8 +36,10 @@ Vagrant.configure("2") do |config|
 
   # initial apt-get update
   config.vm.provision "shell", inline: <<-SHELL
-      sudo apt-key adv --keyserver hkp://keys.gnupg.net --recv-keys 7D8D0BF6
+      # sudo apt-key adv --keyserver hkp://keys.gnupg.net --recv-keys 7D8D0BF6
       apt-get update
+      apt-get install -y fish # test apt
+      echo "y\n" | chsh -s /bin/fish vagrant
   SHELL
 
 end
