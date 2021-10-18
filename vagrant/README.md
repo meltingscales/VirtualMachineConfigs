@@ -25,3 +25,11 @@ Install them with `vagrant plugin install <PLUGIN>` if you get an error message.
 - Install Vagrant. See <https://www.vagrantup.com/downloads.html> for instructions.
 
 - Then, in any of these directories, run `vagrant up` in a terminal. See each sub-readme for specific instructions.
+
+## Issues
+
+### VMs won't start
+
+See <https://www.virtualbox.org/ticket/18536>.
+
+Run `scripts/fix-hyperv-issues.ps1` and then restart windows TWICE.
