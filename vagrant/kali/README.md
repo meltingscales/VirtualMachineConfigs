@@ -8,7 +8,7 @@ Please [see the README.md](../README.md) at `../README.md` for a list of require
 
 ### Pentesting demos
 
-See `~/Github/` in the VM for some cool repos that let you pentest locally. Please read the README files in each repo.
+See `~/Git/` in the VM for some cool repos that let you pentest locally. Please read the README files in each repo.
 
 I have tried to find ones that use Docker for your convenience to avoid manual setup.
 

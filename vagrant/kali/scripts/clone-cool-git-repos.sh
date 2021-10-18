@@ -4,9 +4,9 @@ sudo su vagrant
 
 cd /home/vagrant
 
-mkdir -p Github
+mkdir -p Git
 
-pushd Github
+pushd Git
 
 git clone https://github.com/philipperemy/tensorflow-1.4-billion-password-analysis
 
@@ -42,4 +42,4 @@ git clone https://github.com/joaomatosf/jexboss
 
 popd
 
-chown -R vagrant:vagrant /home/vagrant/Github
+chown -R vagrant:vagrant /home/vagrant/Git
