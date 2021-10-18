@@ -38,8 +38,11 @@ echo w # write part table
 lsblk
 
 # Remove /etc/fstab entry for old swap entry
-sed /UUID=c63577d4-cdcb-405d-b757-f1744747888c/d /etc/fstab -i # delete line in-place that starts with UUID=...
+sed /UUID=.*swap/d /etc/fstab -i # delete line in-place that starts with UUID= and has swap after
 # this prevents the system from taking 1m30s to start up every time
+
+echo "/etc/fstab contents:"
+cat /etc/fstab
 
 # Size of entire disk
 SDA_SIZE_GB=$(lsblk /dev/sda | grep "sda " | tr -s ' ' | cut -d ' ' -f 4)
