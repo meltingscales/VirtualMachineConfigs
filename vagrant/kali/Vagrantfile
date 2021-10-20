@@ -10,7 +10,8 @@ end
 
 VM_NAME = 'Kali Linux 2021.3.0'
 VM_IP = '192.168.33.7'
-VM_RAM_MB='3000'
+VM_RAM_MB='5000'
+VM_CPUS='4'
 
 Vagrant.configure("2") do |config|
 
@@ -33,6 +34,8 @@ Vagrant.configure("2") do |config|
 
     # Customize the amount of memory on the VM:
     vb.memory = VM_RAM_MB
+
+    vb.cpus = VM_CPUS
 
   end
 
