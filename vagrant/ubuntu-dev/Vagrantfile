@@ -42,6 +42,11 @@ Vagrant.configure("2") do |config|
     curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
     sudo install minikube-linux-amd64 /usr/local/bin/minikube
     # then run `sudo minikube start --driver=none` to start it 
+  SHELL
 
+  config.vm.provision "shell", inline: <<-SHELL
+    echo "Done. Take a snapshot!"
+    echo "Run: 
+    vagrant snapshot save 'after vagrant'"
   SHELL
 end
