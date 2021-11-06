@@ -59,7 +59,7 @@ Vagrant.configure("2") do |config|
       #temp test
       pwd
       ls -lash
-      exit 1 
+      exit 1 # TODO FINISH THIS LATER 
 
       popd # to /tmp
       popd # to whatever before
