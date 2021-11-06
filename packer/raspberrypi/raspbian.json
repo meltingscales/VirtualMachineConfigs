@@ -1,63 +1,63 @@
 {
-  "variables": {},
-  "builders": [
-    {
-      "type": "arm",
-      "file_urls": [
-        "https://downloads.raspberrypi.org/raspbian/images/raspbian-2019-09-30/2019-09-26-raspbian-buster.zip"
-      ],
-      "file_checksum_url": "https://downloads.raspberrypi.org/raspbian/images/raspbian-2019-09-30/2019-09-26-raspbian-buster.zip.sha256",
-      "file_checksum_type": "sha256",
-      "file_target_extension": "zip",
-      "image_build_method": "reuse",
-      "image_path": "images_output/raspberry-pi.img",
-      "image_size": "2G",
-      "image_type": "dos",
-      "image_partitions": [
+    "variables": {},
+    "builders": [
         {
-          "name": "boot",
-          "type": "c",
-          "start_sector": "8192",
-          "filesystem": "vfat",
-          "size": "256M",
-          "mountpoint": "/boot"
+            "type": "arm",
+            "file_urls": [
+                "https://downloads.raspberrypi.org/raspbian/images/raspbian-2019-09-30/2019-09-26-raspbian-buster.zip"
+            ],
+            "file_checksum_url": "https://downloads.raspberrypi.org/raspbian/images/raspbian-2019-09-30/2019-09-26-raspbian-buster.zip.sha256",
+            "file_checksum_type": "sha256",
+            "file_target_extension": "zip",
+            "image_build_method": "reuse",
+            "image_path": "images_output/raspberry-pi.img",
+            "image_size": "2G",
+            "image_type": "dos",
+            "image_partitions": [
+                {
+                    "name": "boot",
+                    "type": "c",
+                    "start_sector": "8192",
+                    "filesystem": "vfat",
+                    "size": "256M",
+                    "mountpoint": "/boot"
+                },
+                {
+                    "name": "root",
+                    "type": "83",
+                    "start_sector": "532480",
+                    "filesystem": "ext4",
+                    "size": "0",
+                    "mountpoint": "/"
+                }
+            ],
+            "image_chroot_env": [
+                "PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
+            ],
+            "qemu_binary_source_path": "/usr/bin/qemu-arm-static",
+            "qemu_binary_destination_path": "/usr/bin/qemu-arm-static"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline": [
+                "touch /tmp/packer-is-working-hooray",
+                "echo 'wow look at me!!!! wow look at me!!!! wow look at me!!!! wow look at me!!!! wow look at me!!!!'",
+                "sleep 1",
+                "ping google.com -c 4",
+                "sudo apt update",
+                "sudo apt install fish -y"
+            ]
         },
         {
-          "name": "root",
-          "type": "83",
-          "start_sector": "532480",
-          "filesystem": "ext4",
-          "size": "0",
-          "mountpoint": "/"
+            "type": "file",
+            "source": "raspberrypi/config/python-orm-example.service",
+            "destination": "/etc/systemd/system/python-orm-example.service"
+        },
+        {
+            "type": "shell",
+            "script": "raspberrypi/scripts/enable-python-webserver-ORM-example-from-git-repo.sh"
         }
-      ],
-      "image_chroot_env": [
-        "PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
-      ],
-      "qemu_binary_source_path": "/usr/bin/qemu-arm-static",
-      "qemu_binary_destination_path": "/usr/bin/qemu-arm-static"
-    }
-  ],
-  "provisioners": [
-    {
-      "type": "shell",
-      "inline": [
-        "touch /tmp/packer-is-working-hooray",
-        "echo 'wow look at me!!!! wow look at me!!!! wow look at me!!!! wow look at me!!!! wow look at me!!!!'",
-        "sleep 1",
-        "ping google.com -c 4",
-        "sudo apt update",
-        "sudo apt install fish -y"
-      ]
-    },
-    {
-      "type": "file",
-      "source": "raspberrypi/config/python-orm-example.service",
-      "destination": "/etc/systemd/system/python-orm-example.service"
-    },
-    {
-      "type": "shell",
-      "script": "raspberrypi/scripts/enable-python-webserver-ORM-example-from-git-repo.sh"
-    }
-  ]
+    ]
 }
