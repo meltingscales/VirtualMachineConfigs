@@ -3,6 +3,7 @@
 
 VM_NAME = 'Ubuntu 18.04 Development'
 VM_RAM_MB = '6000'
+VM_CPUS = '8'
 
 Vagrant.configure("2") do |config|
 
@@ -16,6 +17,7 @@ Vagrant.configure("2") do |config|
 
     # Customize the amount of memory on the VM:
     vb.memory = VM_RAM_MB
+    vb.cpus = VM_CPUS
 
   end
 
@@ -25,19 +27,54 @@ Vagrant.configure("2") do |config|
     apt install -y fish
     echo 'vagrant' | chsh vagrant -s /usr/bin/fish
 
-    apt install -y ubuntu-desktop #takes forever
+    apt install -y ubuntu-desktop #takes forever :p
 
+    apt install -y snap
+    sudo snap install bashtop
     apt install -y gcc make perl ruby
+    sudo snap install go --classic # we need this as we must be using at least go v1.14.1 ... apt-get gives us an older version >:(
     gem install mdless
     apt install -y apt-transport-https
     apt install -y software-properties-common wget
     apt install -y tasksel
     apt install -y docker docker-compose
     apt install -y openjdk-11-jdk
-    apt install -y snap
     apt install -y virtualbox-guest-additions-iso
     
-    apt install -y vagrant packer
+    apt install -y vagrant
+
+    # packer setup, from source
+    which packer
+    if [ "$?" -eq "1" ]; then # if exit code is nonzero, it is not a command  
+      pushd /tmp/
+      mkdir -p /tmp/packer-setup/
+      pushd /tmp/packer-setup/
+      wget https://github.com/hashicorp/packer/archive/refs/tags/v1.7.8.zip
+      unzip v1.7.8.zip
+      cd ./packer-*/
+      go mod download
+      go install
+      popd # to /tmp
+      popd # to whatever before
+    fi
+
+
+    # packer-builder-arm setup, from <https://github.com/mkaczanowski/packer-builder-arm>
+    if [[ ! -f /usr/bin/packer-builder-arm ]]; then
+      pushd /tmp/
+      git clone https://github.com/mkaczanowski/packer-builder-arm
+      cd packer-builder-arm
+      go mod download
+      go build
+      chmod +x ./packer-builder-arm
+      sudo cp ./packer-builder-arm /usr/bin/
+      sudo packer build boards/odroid-u3/archlinuxarm.json || (echo "Failed! See packer-builder-arm section and fix!")
+      popd    
+    else
+      echo "'/usr/bin/packer-builder-arm' already exists!"
+    fi
+    # end of packer-builder-arm setup
+
     sudo snap install --classic code
 
     sudo snap install --classic kubectl
@@ -47,7 +84,7 @@ Vagrant.configure("2") do |config|
     sudo apt install conntrack
     curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
     sudo install minikube-linux-amd64 /usr/local/bin/minikube
-    # then run `sudo minikube start --driver=none` to start it 
+    echo 'then run `sudo minikube start --driver=none` to start it'
   SHELL
 
   config.vm.provision "shell", inline: <<-SHELL
