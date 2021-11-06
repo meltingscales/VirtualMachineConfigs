@@ -52,8 +52,15 @@ Vagrant.configure("2") do |config|
       wget https://github.com/hashicorp/packer/archive/refs/tags/v1.7.8.zip
       unzip v1.7.8.zip
       cd ./packer-*/
+      echo "yay, time to wait :) gompilation dime :DDDD"
       go mod download
       go install
+
+      #temp test
+      pwd
+      ls -lash
+      exit 1 
+
       popd # to /tmp
       popd # to whatever before
     fi
