@@ -3,7 +3,7 @@
 
 VM_NAME = 'Ubuntu 18.04 Development'
 VM_RAM_MB = '6000'
-VM_CPUS = '8'
+VM_CPUS = '4'
 
 Vagrant.configure("2") do |config|
 
@@ -27,6 +27,9 @@ Vagrant.configure("2") do |config|
     apt install -y fish
     echo 'vagrant' | chsh vagrant -s /usr/bin/fish
 
+    apt install -y python3-pip #why is this not installed by default?!
+    python3 -m pip install pipenv
+
     apt install -y ubuntu-desktop #takes forever :p
 
     apt install -y snap
@@ -37,7 +40,14 @@ Vagrant.configure("2") do |config|
     apt install -y apt-transport-https
     apt install -y software-properties-common wget
     apt install -y tasksel
+
+
     apt install -y docker docker-compose
+
+    # fix for `docker ...` commands needing to be run as root. Note: may need to reboot. idk lol :p
+    sudo groupadd docker
+    sudo usermod -aG docker vagrant
+
     apt install -y openjdk-11-jdk
     apt install -y virtualbox-guest-additions-iso
     
