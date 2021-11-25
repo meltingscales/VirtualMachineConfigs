@@ -30,7 +30,9 @@ Vagrant.configure("2") do |config|
     apt install -y python3-pip #why is this not installed by default?!
     python3 -m pip install pipenv
 
+    echo "Go grab a coffee, this may take a while..."
     apt install -y ubuntu-desktop #takes forever :p
+    echo "You can run 'startx' to start desktop, or reboot."
 
     apt install -y snap
     sudo snap install bashtop
@@ -74,6 +76,8 @@ Vagrant.configure("2") do |config|
       packer -v
       popd # to /tmp
       popd # to whatever before
+    else
+      echo "packer already exists."
     fi
 
 
