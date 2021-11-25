@@ -74,7 +74,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", path: "scripts/resize-default-partitions-to-disk.sh"
 
   # clone cool repos
-  config.vm.provision "shell", path: "scripts/clone-cool-git-repos.sh"
+  config.vm.provision "shell", path: "../scripts/clone-cool-git-repos.sh"
 
   # useful tools
   config.vm.provision "shell", inline: <<-SHELL

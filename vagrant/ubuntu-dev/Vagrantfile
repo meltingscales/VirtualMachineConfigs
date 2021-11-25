@@ -109,6 +109,10 @@ Vagrant.configure("2") do |config|
     echo 'then run `sudo minikube start --driver=none` to start it'
   SHELL
 
+  # clone cool repos
+  config.vm.provision "shell", path: "../scripts/clone-cool-git-repos.sh"
+
+
   config.vm.provision "shell", inline: <<-SHELL
     echo "Done. Take a snapshot!"
     echo "Run: 
