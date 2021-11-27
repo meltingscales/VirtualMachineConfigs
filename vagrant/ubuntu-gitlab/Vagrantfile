@@ -27,8 +27,15 @@ Vagrant.configure("2") do |config|
 
   end
 
-  config.vm.provision "shell", inline: <<-BODADO
+  config.vm.provision "shell",
+  env: {:URL => 'http://'+VM_IP+"/users/sign_in"},
+  inline: <<-BODADO
     #!/bin/env bash
+
+    command_exists () {
+      type "$1" &> /dev/null ;
+    }
+  
     sudo apt update
 
     apt-get install -y fish # test apt
@@ -41,15 +48,22 @@ Vagrant.configure("2") do |config|
     sudo bash /tmp/script.deb.sh
     popd
 
-    sudo apt install gitlab-ce
-
+    if command_exists gitlab-ctl ; then
+      echo "[i] gitlab-ce not installed, due to gitlab-ctl not existing, installing..."
+      sudo apt install gitlab-ce
+      sudo gitlab-ctl reconfigure
+    else
+      echo "[/] gitlab-ce already installed due to gitlab-ctl existing."
+    fi
     # sudo ufw enable
     # sudo ufw allow http
     # sudo ufw allow https
     # sudo ufw allow OpenSSH
 
-    sudo gitlab-ctl reconfigure
     sudo gitlab-ctl status
+
+    echo "Done, visit $URL to log in."
+
     BODADO
 
 end
