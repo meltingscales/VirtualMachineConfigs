@@ -55,14 +55,17 @@ Vagrant.configure("2") do |config|
     else
       echo "[/] gitlab-ce already installed due to gitlab-ctl existing."
     fi
-    # sudo ufw enable
-    # sudo ufw allow http
-    # sudo ufw allow https
-    # sudo ufw allow OpenSSH
+
+    sudo ufw enable
+    sudo ufw allow http
+    sudo ufw allow https
+    sudo ufw allow OpenSSH
 
     sudo gitlab-ctl status
 
     echo "Done, visit $URL to log in."
+    echo "Note you will need to manually approve new users since this is a vanilla self hosted GitLab instance."
+    echo "Try running 'vagrant ssh' and 'sudo gitlab-ctl'."
 
     BODADO
 
