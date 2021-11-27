@@ -4,6 +4,7 @@
 # stolen from https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-gitlab-on-ubuntu-18-04
 
 VM_NAME = 'Ubuntu Bionic 18.04 GitLab'
+VM_IP = '192.168.33.70' #visit http://192.168.33.70/users/sign_in to log in
 VM_RAM_MB = '2000'
 
 Vagrant.configure("2") do |config|
@@ -11,6 +12,7 @@ Vagrant.configure("2") do |config|
   config.vm.box = "generic/ubuntu1804"
 
   config.vm.define VM_NAME
+  config.vm.network "private_network", ip: VM_IP # XXX Disable this line if the machine fails to provision on Windows
 
   # disable default shared folder
   config.vm.synced_folder './', '/vagrant', disabled: true
@@ -27,8 +29,6 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "shell", inline: <<-BODADO
     #!/bin/env bash
-
-    echo 'lol'
     sudo apt update
 
     apt-get install -y fish # test apt
@@ -44,12 +44,13 @@ Vagrant.configure("2") do |config|
 
     sudo apt install gitlab-ce
 
-    sudo ufw enable
-    sudo ufw allow http
-    sudo ufw allow https
-    sudo ufw allow OpenSSH
+    # sudo ufw enable
+    # sudo ufw allow http
+    # sudo ufw allow https
+    # sudo ufw allow OpenSSH
 
     sudo gitlab-ctl reconfigure
-  BODADO
+    sudo gitlab-ctl status
+    BODADO
 
 end
