@@ -54,7 +54,7 @@ Vagrant.configure("2") do |config|
 
   
   config.vm.provision "shell", run: "always", inline: <<-SHELL
-  choco install -y processhacker
+    choco install -y processhacker cdrtfe cutter radare2 vcredist2015
 SHELL
 
 
