@@ -55,6 +55,8 @@ Vagrant.configure("2") do |config|
   
   config.vm.provision "shell", run: "always", inline: <<-SHELL
     choco install -y processhacker cdrtfe cutter radare2 vcredist2015
+
+    write-host "Done. Run 'vagrant snapshot save pristine' to make a snapshot before you install any software."
 SHELL
 
 
