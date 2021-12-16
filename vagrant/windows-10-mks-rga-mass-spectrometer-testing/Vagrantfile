@@ -42,12 +42,20 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "shell", run: "always", inline: <<-SHELL
     choco install -y git
+    refreshenv
 
-    mkdir -p (resolve-path ~/Github/)
-    cd ~/Github/
+    if (! (test-path ~/Github)) {
+      mkdir -p ~/Github/
+    }
+    pushd ~/Github/
     git clone https://github.com/HenryFBP/easyview-MKS-RGA-mass-spectrometer-archive
     explorer easyview-MKS-RGA-mass-spectrometer-archive
   SHELL
+
   
+  config.vm.provision "shell", run: "always", inline: <<-SHELL
+  choco install -y processhacker
+SHELL
+
 
 end
