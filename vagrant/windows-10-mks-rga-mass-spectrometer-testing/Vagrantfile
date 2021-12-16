@@ -44,10 +44,10 @@ Vagrant.configure("2") do |config|
     choco install -y git
     refreshenv
 
-    if (! (test-path ~/Github)) {
-      mkdir -p ~/Github/
+    if (! (test-path ~/Git)) {
+      mkdir -p ~/Git/
     }
-    pushd ~/Github/
+    pushd ~/Git/
     git clone https://github.com/HenryFBP/easyview-MKS-RGA-mass-spectrometer-archive
     explorer easyview-MKS-RGA-mass-spectrometer-archive
   SHELL
