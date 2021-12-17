@@ -34,13 +34,11 @@ Vagrant.configure("2") do |config|
     apt install -y ubuntu-desktop #takes forever :p
     echo "You can run 'startx' to start desktop, or reboot."
 
-    apt install -y snap
+    apt install -y snap gitk
     
     sudo snap install bashtop
     sudo snap install --classic code
-
-    curl -s "https://get.sdkman.io" | bash
-    sdk install gradle 7.3.2
+    sudo snap install --classic gradle
 
     apt install -y gcc make perl ruby maven
     
