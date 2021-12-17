@@ -35,14 +35,16 @@ Vagrant.configure("2") do |config|
     echo "You can run 'startx' to start desktop, or reboot."
 
     apt install -y snap
+    
     sudo snap install bashtop
+    sudo snap install --classic code
+    
     apt install -y gcc make perl ruby
     sudo snap install go --classic # we need this as we must be using at least go v1.14.1 ... apt-get gives us an older version >:(
     gem install mdless
     apt install -y apt-transport-https
     apt install -y software-properties-common wget
     apt install -y tasksel
-
 
     apt install -y docker docker-compose
 
@@ -54,6 +56,26 @@ Vagrant.configure("2") do |config|
     apt install -y virtualbox-guest-additions-iso
     
     apt install -y vagrant
+
+  SHELL
+
+  # jb toolbox
+  config.vm.provision "shell", path: "../scripts/install-jb-toolbox.sh"
+
+  # clone cool repos
+  config.vm.provision "shell", path: "../scripts/clone-cool-git-repos.sh"
+
+  # this shit takes forever
+  config.vm.provision "shell", inline: <<-SHELL
+  
+    sudo snap install --classic kubectl
+    sudo snap install --classic helm
+
+    # minikube stuff
+    sudo apt install conntrack
+    curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    sudo install minikube-linux-amd64 /usr/local/bin/minikube
+    echo 'then run `sudo minikube start --driver=none` to start it'
 
     # packer setup, from source
     which packer
@@ -80,7 +102,6 @@ Vagrant.configure("2") do |config|
       echo "packer already exists."
     fi
 
-
     # packer-builder-arm setup, from <https://github.com/mkaczanowski/packer-builder-arm>
     if [[ ! -f /usr/bin/packer-builder-arm ]]; then
       pushd /tmp/
@@ -96,24 +117,7 @@ Vagrant.configure("2") do |config|
       echo "'/usr/bin/packer-builder-arm' already exists!"
     fi
     # end of packer-builder-arm setup
-
-    sudo snap install --classic code
-
-    sudo snap install --classic kubectl
-    sudo snap install --classic helm
-
-    # minikube stuff
-    sudo apt install conntrack
-    curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-    sudo install minikube-linux-amd64 /usr/local/bin/minikube
-    echo 'then run `sudo minikube start --driver=none` to start it'
   SHELL
-
-  # jb toolbox
-  config.vm.provision "shell", path: "../scripts/install-jb-toolbox.sh"
-
-  # clone cool repos
-  config.vm.provision "shell", path: "../scripts/clone-cool-git-repos.sh"
 
 
   config.vm.provision "shell", inline: <<-SHELL
