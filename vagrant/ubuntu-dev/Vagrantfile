@@ -67,15 +67,19 @@ Vagrant.configure("2") do |config|
 
   # this shit takes forever
   config.vm.provision "shell", inline: <<-SHELL
-  
+
     sudo snap install --classic kubectl
     sudo snap install --classic helm
 
     # minikube stuff
     sudo apt install conntrack
-    curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-    sudo install minikube-linux-amd64 /usr/local/bin/minikube
-    echo 'then run `sudo minikube start --driver=none` to start it'
+    if [[ ! -f /usr/local/bin/minikube ]]; then
+      echo "Installing minikube as it is not in /usr/local/bin/minikube!"
+      curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+      sudo install minikube-linux-amd64 /usr/local/bin/minikube
+    fi
+
+    echo 'Run `sudo minikube start --driver=none` to start Minikube.'
 
     # packer setup, from source
     which packer
