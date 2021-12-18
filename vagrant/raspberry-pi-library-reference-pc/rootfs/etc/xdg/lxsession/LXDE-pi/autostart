@@ -1,0 +1,10 @@
+#@lxpanel --profile LXDE-pi  # This is the top bar. Disabled for kiosk mode.
+#@pcmanfm --desktop --profile LXDE-pi # This is the background.
+#@xscreensaver -no-splash # This is the screensaver.
+#@point-rpi
+
+@xset s off
+@xset –dpms
+@xset s noblank
+
+@bash /home/pi/start_OPAC.sh

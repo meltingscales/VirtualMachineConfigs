@@ -1,0 +1,3 @@
+https://raspberrypi.stackexchange.com/questions/311/how-do-i-backup-my-raspberry-pi
+https://lifehacker.com/how-to-clone-your-raspberry-pi-sd-card-for-super-easy-r-1261113524
+https://www.raspberrypi.org/forums/viewtopic.php?t=90261

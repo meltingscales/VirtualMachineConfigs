@@ -1,0 +1,1 @@
+https://raspberrypi.stackexchange.com/questions/16957/whitelist-internet-filter

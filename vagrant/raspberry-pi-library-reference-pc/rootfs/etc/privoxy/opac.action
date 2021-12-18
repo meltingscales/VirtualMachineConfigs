@@ -1,0 +1,17 @@
+{ +block{For any non-library material search, please use the public computers.} } #Block all URLs by default
+
+/ #Matches all URLS.
+
+{ -block }
+
+oakbluffslibrary.org
+*.clamsnet.org
+clamsnet.org
+commonwealthcatalog.org
+*.overdrive.com
+*.ebscohost.com
+galepages.com
+mblc.state.ma.us
+
+maps.google.com
+docs.google.com

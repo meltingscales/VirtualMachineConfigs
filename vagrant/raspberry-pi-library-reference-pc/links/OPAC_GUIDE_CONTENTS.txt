@@ -1,0 +1,77 @@
+Building Small, Cheap, Dedicated Catalog Stations: Do-It-Yourself Raspberry Pi OPACS
+by Jed Phillips is the Reference, Information & Technology Services Librarian at the Ames Free Library in North Easton, Massachusetts. He is a hardcore techie (or "amateur futurist" as he terms himself) and hopes that his hands-on experiences will be of help to the larger public library community. on May 1, 2015
+
+
+
+ 
+17
+Share
+One fact that I have witnessed in almost every public library is that space is a limited resource and a little more of it is always useful. This is especially true in our library, the Ames Free Library in Easton, MA, which is a historical 1883 structure with no leeway to expand. It goes as no surprise then, that I kept this in mind when contemplating my best course of action in replacing our aging and bulky desktop computers being utilized as OPAC machines. Not only did they take up significant space, they were difficult to lock down and prevent unintended uses.
+
+Three primary factors had to be considered when researching replacement options. As I said, space is at a premium so any hardware I would bring in would need a small footprint. Price is always a factor. I needed something that remained relatively inexpensive. Finally, because of the very specific function this device needed to serve, easy customization was also a required feature. After careful consideration and research, it was decided that the Raspberry Pi was my solution.
+
+Raspberry Pi is a credit card sized computer that has low power consumption, can connect to a TV or monitor, uses a standard keyboard and mouse and runs a variety of Linux based operating systems known for easy customization. A kit that includes everything you might need runs for about $60, and once fully assembled, takes up about as much space as a baby’s footprint. Because each existing OPAC already utilized a flatscreen monitor as well as a USB connected keyboard and mouse, there were no additional hardware costs beyond that of the Raspberry Pi itself. Replacing an aging OPAC for $60 was a price point I could not ignore.
+
+Once my kit was received, the hardware was assembled and OS active within 5 minutes, after which I could attempt the customization needed to make the device behave as I desired. Simply put, I needed our OPAC machines to automatically boot into our online catalog. I needed web navigation disabled so that only the catalog was accessible. I also wanted the device locked down so that there was no way to interact or view the Raspberry Pi’s GUI or command terminal. Through a text based command terminal available in Raspbian, I was able to input the changes I desired and have the new OPAC up and running within an hour. I have outlined the process in greater detail below.
+
+Raspberry Pi OPAC Install: How-to
+
+This simple instructional will outline the process of setting up a Raspberry Pi web OPAC from scratch. You will require a Raspberry Pi with the Raspbian OS installed on the micro SD card. What’s that you say? Well, most Raspberry Pi kits come with NOOBS (New Out Of The Box Software) installed on the SD card already. I recommend the kits from Cana Kit (www.canakit.com). While you can manually download and burn an OS disk image to a blank SD card and buy all the necessary components, it is easier and actually more cost effective to use a kit with a pre-loaded card.
+
+Installing the OS
+The first order of business is to install your operating system (OS). Since an OS is simply a set of basic programs and utilities that make your computer (in this case your Raspberry Pi) run, for this project I recommend Raspbian. Raspbian is a free OS that has been optimized to run on a Raspberry Pi.
+
+If you have followed my recommendations, you took the smart step of purchasing a Raspberry Pi kit that includes an SD card pre-installed with NOOBS. If you didn’t take my advice, download Raspbian, burn the disk image to an SD card, boot up and install, open a terminal window and then re-join the rest of us.
+
+Okay, next, we will insert our SD card containing NOOBS into the Raspberry Pi, connect the Pi to a monitor (via the HDMI port) and a mouse and keyboard (via USB), attach a wireless USB dongle or ethernet cord, then connect the power supply. The Raspberry Pi will automatically boot.
+
+When booting for the first time using NOOBS (or holding ‘SHIFT’ on reboot for recovering an existing install) you will encounter the Pi Recovery Screen. Here is what you do:
+
+Select and install Raspbian
+Follow the setup instructions
+Turn on the GUI (graphical user interface) if required.
+Now that the OS is properly activated, we will customize it to act as a dedicated OPAC by entering a few new commands. For this we will need to install a web browser in order to access our online catalog.
+
+To Install Browser:
+
+Open Terminal (if running from GUI)
+Install updates by entering: sudo apt-get update && apt-get upgrade –y
+Install Chromium by entering: sudo apt-get install chromium x11-xserver-utils
+Next we will disable sleep so that our new OPAC machine stays on.
+
+To Disable Sleep:
+
+Edit the lightdm.conf file by entering: sudo nano /etc/lightdm/lightdm.conf
+Add the following lines to the [SeatDefaults] section:
+xserver-command=X –s 0 dpms
+
+To Hide Cursor When Not Active:
+
+Install Unclutter by entering:
+sudo apt-get install unclutter
+
+To Configure LXDE:
+
+Edit the LXDE autostart file by entering:
+sudo nano /etc/xdg/lxsession/LXDE/autostart
+
+Comment out everything by adding # in front of each existing line and then add the following lines:
+@xset s off
+
+@xset –dpms
+
+@xset s noblank
+
+while true; do 
+
+                                chromium –kiosk –incognito http://yourlibrarycatalogue.html
+
+done
+
+Then Reboot:
+
+Reboot the Raspberry Pi by entering: sudo reboot
+
+Your install is complete. Once the reboot finishes, your Raspberry Pi will auto-boot directly into your web based catalog search page. It is now impossible to navigate to any other website or access any other function on the Raspberry Pi.
+
+Congratulations!
