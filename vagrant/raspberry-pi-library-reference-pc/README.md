@@ -18,7 +18,7 @@ This work was tested on an x86 (NOT ARM!) image:
     -   4.19
 -   Size:
     -   2,948MB
--   SHA256 file integrity hash: 
+-   SHA256 file integrity hash (of `.iso` file, not `.box` file): 
     -   `c78c8dca8ca80ffbac90f4cedfedb6793b37b06df307b0c87e778eef3842a9be`
 
 NOTE: Not tested on a real Raspberry Pi yet.
