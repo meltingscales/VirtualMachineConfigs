@@ -6,6 +6,23 @@ No video games, non-worksafe sites, email browsing, etc.
 
 Migrated from <https://github.com/HenryFBP/obpl-opac>
 
+## Base Image
+
+This work was tested on an x86 (NOT ARM!) image:
+
+<https://downloads.raspberrypi.org/rpd_x86/images/rpd_x86-2021-01-12/2021-01-11-raspios-buster-i386.iso>
+
+-   Release date: 
+    -   January 11th 2021
+-   Kernel version:
+    -   4.19
+-   Size:
+    -   2,948MB
+-   SHA256 file integrity hash: 
+    -   `c78c8dca8ca80ffbac90f4cedfedb6793b37b06df307b0c87e778eef3842a9be`
+
+NOTE: Not tested on a real Raspberry Pi yet.
+
 ## How do I use this?
 
 TODO
