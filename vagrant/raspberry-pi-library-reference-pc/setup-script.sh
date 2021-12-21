@@ -7,8 +7,11 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-# Directory holding
+# Directory holding the OPAC config
 CONFIG_DIR=/data/opac-config-dir/
+
+# dont edit
+OPAC_COPIED_FLAG=/home/pi/COPIED_OPAC_FILES
 
 if [[ ! -d $CONFIG_DIR ]]; then
    echo "Missing directory $CONFIG_DIR"
@@ -34,10 +37,10 @@ apt-get install -y unclutter
 echo "Installing 'privoxy' to prevent people from accessing certain sites."
 apt-get install -y privoxy
 
-if [[ ! -f /home/pi/COPIED_OPAC_FILES ]]; then
+if [[ ! -f $OPAC_COPIED_FLAG ]]; then
    echo "We have not copied the OPAC setup files from $CONFIG_DIR"
    rsync -avz $CONFIG_DIR / #--dry-run --verbose
-   touch /home/pi/COPIED_OPAC_FILES
+   echo "We have copied OPAC files." > $OPAC_COPIED_FLAG
    echo "You should reboot to see changes!"
 else
    echo "Already copied OPAC setup files from $CONFIG_DIR".
