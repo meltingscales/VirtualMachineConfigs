@@ -22,7 +22,7 @@ echo "Updating software via apt-get..."
 apt-get update
 # apt-get upgrade -y
 
-apt-get install -y gedit htop lynx fish
+apt-get install -y gedit htop lynx fish dos2unix
 
 which chromium
 # if exit code is nonzero, chromium is not a command.
