@@ -42,6 +42,7 @@ if [[ ! -f $OPAC_COPIED_FLAG ]]; then
    rsync -avz $CONFIG_DIR / #--dry-run --verbose
    echo "We have copied OPAC files." > $OPAC_COPIED_FLAG
    echo "You should reboot to see changes!"
+   echo "Also -- before that...Change the password for the 'pi' user!"
 else
    echo "Already copied OPAC setup files from $CONFIG_DIR".
 fi
