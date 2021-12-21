@@ -2,16 +2,16 @@
 #
 # See http://publiclibrariesonline.org/2015/05/building-small-cheap-dedicated-catalog-stations-do-it-yourself-rasberry-pi-opacs/
 
-if [[ $EUID -ne 0 ]]; then
-   echo "This script must be run as root. Try 'sudo $0'."
-   exit 1
-fi
-
 # Directory holding the OPAC config
 CONFIG_DIR=/data/opac-config-dir/
 
 # dont edit
 OPAC_COPIED_FLAG=/home/pi/COPIED_OPAC_FILES
+
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root. Try 'sudo $0'."
+   exit 1
+fi
 
 if [[ ! -d $CONFIG_DIR ]]; then
    echo "Missing directory $CONFIG_DIR"
@@ -24,6 +24,7 @@ apt-get update
 
 apt-get install -y gedit htop lynx fish dos2unix
 
+echo "Removing unneeded packages..."
 apt-get remove -y libreoffice-*
 
 apt-get autoremove -y

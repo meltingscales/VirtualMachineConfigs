@@ -5,8 +5,9 @@ Meant to set up a Raspberry Pi to serve as an Online Public Access Catalogue (OP
 No video games, non-worksafe sites, email browsing, etc.
 
 Migrated from <https://github.com/HenryFBP/obpl-opac>
+## Base Images
 
-## Base Image
+### x86
 
 This work was tested on an x86 (NOT ARM!) image:
 
@@ -21,11 +22,24 @@ This work was tested on an x86 (NOT ARM!) image:
 -   SHA256 file integrity hash (of `.iso` file, not `.box` file): 
     -   `c78c8dca8ca80ffbac90f4cedfedb6793b37b06df307b0c87e778eef3842a9be`
 
-NOTE: Not tested on a real Raspberry Pi yet.
+### ARM
+
+NOTE: Not tested yet.
+
+https://downloads.raspberrypi.org/raspios_armhf/images/raspios_armhf-2021-11-08/2021-10-30-raspios-bullseye-armhf.zip
 
 ## How do I use this?
 
-TODO
+1.  Install base ARM image onto a physical Raspberry Pi
+2.  Copy `setup-script.sh` and `opac-config-dir/` onto your raspberry pi using a USB stick, or by using `git clone https://github.com/HenryFBP/VagrantPackerFiles && cd VagrantPackerFiles/vagrant/raspberry-pi-library-reference-pc/`
+3.  Edit `CONFIG_DIR` variable in `setup-script.sh` to reflect the place that `opac-config-dir/` was copied to.
+4.  Run `bash setup-script.sh` and examine stdout for messages to see if succeeded or failed.
+5.  Repeat 3/4 if unsuccessful, or restart Pi.
+6.  You should see a black screen with Chromium running a proxy that only lets you visit sites defined in the below list:
+
+    [./opac-config-dir/etc/privoxy/opac.action](./opac-config-dir/etc/privoxy/opac.action)
+
+    Feel free to edit it to reflect your organization's domain whitelist.
 
 ## Issues
 
