@@ -1,0 +1,3 @@
+
+    packer init .
+    packer build .

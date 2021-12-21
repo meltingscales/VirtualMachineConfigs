@@ -30,3 +30,8 @@ TODO
 ## Issues
 
 TODO
+
+## TODO
+
+-   Use Packer
+    -   https://www.packer.io/guides/automatic-operating-system-installs/preseed_ubuntu
