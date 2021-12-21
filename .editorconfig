@@ -4,6 +4,6 @@
 root = true
 
 # Unix-style newlines with a newline ending every file
-[*.{sh,ps1}]
+[*]
 end_of_line = lf
 insert_final_newline = true

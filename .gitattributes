@@ -1,2 +1,1 @@
-*.sh    text=auto   eol=lf
-*.ps1   text=auto   eol=lf
+*       text=auto   eol=lf
