@@ -41,7 +41,7 @@ apt-get install -y privoxy
 
 if [[ ! -f $OPAC_COPIED_FLAG ]]; then
    echo "We have not copied the OPAC setup files from $CONFIG_DIR"
-   rsync -avz $CONFIG_DIR / #--dry-run --verbose
+   rsync -avz $CONFIG_DIR --verbose / #--dry-run 
    echo "We have copied OPAC files." > $OPAC_COPIED_FLAG
    echo "You should reboot to see changes!"
    echo "Also -- before that...Change the password for the 'pi' user!"
