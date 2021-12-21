@@ -24,6 +24,10 @@ apt-get update
 
 apt-get install -y gedit htop lynx fish dos2unix
 
+apt-get remove -y libreoffice-*
+
+apt-get autoremove -y
+
 which chromium
 # if exit code is nonzero, chromium is not a command.
 if [ "$?" -eq "1" ]; then
