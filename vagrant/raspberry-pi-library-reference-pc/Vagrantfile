@@ -12,6 +12,10 @@ Vagrant.configure("2") do |config|
   # Directory that the setup script uses...
   config.vm.synced_folder "./opac-config-dir/", "/data/opac-config-dir/"
 
+  config.vm.provision "shell", run: "always", inline: <<-SHELL
+    echo "lol scripty"
+  SHELL
+
   config.vm.provision "shell", path: "./setup-script.sh"
 
 end

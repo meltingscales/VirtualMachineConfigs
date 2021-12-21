@@ -7,4 +7,4 @@
 @xset –dpms
 @xset s noblank
 
-@bash /home/pi/start_OPAC.sh
+@bash /home/pi/start-OPAC.sh
