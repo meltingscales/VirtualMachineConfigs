@@ -29,6 +29,8 @@ which chromium
 if [ "$?" -eq "1" ]; then
    echo "Installing 'Chromium', an open-source Google Chrome-like browser."
    apt-get install -y chromium
+else
+   echo "Already have Chromium installed."
 fi
 
 echo "Installing 'unclutter' to hide cursor when not active..."
