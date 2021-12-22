@@ -34,7 +34,7 @@
     <action name="Exit" />
   </item> 
   -->
-  <item label="Disabled as this is an OPAC PC">    
+  <item label="Right-click has been disabled as this is an OPAC PC.">    
     <action name="nop"/>
   </item>
 </menu>
