@@ -47,6 +47,8 @@ if [[ $DEBUG -ne 0 ]]; then
       ls -lash /
       df -h
       rm -f /bigassfile
+
+      # After this, you can shrink the disk or `dd` to a new, smaller disk -- use gparted iso to boot from.
    else
      exit 1
    fi

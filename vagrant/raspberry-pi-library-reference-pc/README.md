@@ -49,3 +49,6 @@ TODO
 
 -   Use Packer
     -   https://www.packer.io/guides/automatic-operating-system-installs/preseed_ubuntu
+
+-   Currently, images are produced by running `vagrant package` in this directory.
+    -   It creates a `package.box` file (zip file) that can be uploaded to Vagrant public box repository.
