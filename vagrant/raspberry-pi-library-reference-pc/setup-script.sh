@@ -9,7 +9,7 @@ CONFIG_DIR=/data/opac-config-dir/
 OPAC_COPIED_FLAG=/home/pi/COPIED_OPAC_FILES
 
 # edit below if you know what you're doing
-DEBUG=1
+DEBUG=0
 DEBUG_EXTRA_COMMANDS=0
 
 if [[ $EUID -ne 0 ]]; then
