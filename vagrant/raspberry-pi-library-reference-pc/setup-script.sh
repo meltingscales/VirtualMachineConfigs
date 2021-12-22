@@ -8,6 +8,8 @@ CONFIG_DIR=/data/opac-config-dir/
 # dont edit
 OPAC_COPIED_FLAG=/home/pi/COPIED_OPAC_FILES
 
+DEBUG=0
+
 if [[ $EUID -ne 0 ]]; then
    echo "This script must be run as root. Try 'sudo $0'."
    exit 1
@@ -18,14 +20,25 @@ if [[ ! -d $CONFIG_DIR ]]; then
    exit 1
 fi
 
+   # Debug halt, i.e. for tweaking base image
+if [[ $DEBUG -ne 0 ]]; then
+   echo "Halting in debug mode. See below 'exit 1' for debug packages/commands."
+
+   exit 1
+   
+   apt-get install -y baobab wajig
+   apt-get install -y gedit htop lynx fish dos2unix
+
+   wajig large
+
+fi
+
 echo "Updating software via apt-get..."
 apt-get update
 # apt-get upgrade -y
 
-apt-get install -y gedit htop lynx fish dos2unix
-
 echo "Removing unneeded packages..."
-apt-get remove -y libreoffice-*
+apt-get remove -y libreoffice-* qemu-user-static openjdk-*
 
 apt-get autoremove -y
 
