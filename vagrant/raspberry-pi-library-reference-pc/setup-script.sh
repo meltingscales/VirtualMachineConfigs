@@ -5,10 +5,12 @@
 # Directory holding the OPAC config
 CONFIG_DIR=/data/opac-config-dir/
 
-# dont edit
+# flag that indicates that config files have already been copied
 OPAC_COPIED_FLAG=/home/pi/COPIED_OPAC_FILES
 
-DEBUG=0
+# edit below if you know what you're doing
+DEBUG=1
+DEBUG_EXTRA_COMMANDS=0
 
 if [[ $EUID -ne 0 ]]; then
    echo "This script must be run as root. Try 'sudo $0'."
@@ -24,23 +26,35 @@ fi
 if [[ $DEBUG -ne 0 ]]; then
    echo "Halting in debug mode. See below 'exit 1' for debug packages/commands."
 
-   exit 1
-   
-   apt-get install -y baobab wajig
-   apt-get install -y gedit htop lynx fish dos2unix
+   if [[ $DEBUG_EXTRA_COMMANDS -ne 0 ]]; then
+      echo "Running extra debug commands."
 
-   wajig large
+      apt-get install -y baobab gparted wajig
+      apt-get install -y gedit htop lynx fish dos2unix pv
 
+      wajig large
+      
+      echo "Removing unneeded packages..."
+      apt-get remove -y libreoffice-* qemu-user-static openjdk-*
+
+      apt-get autoremove -y
+
+      # Fill up all blocks in virtual disk, to improve compression
+      dd if=/dev/zero | pv | sudo dd of=/bigassfile
+      sync
+      sleep 1
+      sync
+      ls -lash /
+      df -h
+      rm -f /bigassfile
+   else
+     exit 1
+   fi
 fi
 
 echo "Updating software via apt-get..."
 apt-get update
 # apt-get upgrade -y
-
-echo "Removing unneeded packages..."
-apt-get remove -y libreoffice-* qemu-user-static openjdk-*
-
-apt-get autoremove -y
 
 which chromium
 # if exit code is nonzero, chromium is not a command.
