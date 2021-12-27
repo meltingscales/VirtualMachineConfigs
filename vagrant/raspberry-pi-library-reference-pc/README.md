@@ -31,7 +31,14 @@ https://downloads.raspberrypi.org/raspios_armhf/images/raspios_armhf-2021-11-08/
 ## How do I use this?
 
 1.  Install [a base x86/x64 image](https://www.raspberrypi.com/software/) onto a physical Raspberry Pi's SD card.
-2.  Copy `setup-script.sh` and `opac-config-dir/` onto your raspberry pi using a USB stick, or by using `git clone https://github.com/HenryFBP/VagrantPackerFiles && cd VagrantPackerFiles/vagrant/raspberry-pi-library-reference-pc/`
+2.  Copy `setup-script.sh` and `opac-config-dir/` onto your raspberry pi using a USB stick, or by using 
+    
+    ```bash
+    apt install -y git
+    git clone https://github.com/HenryFBP/VagrantPackerFiles
+    cd VagrantPackerFiles/vagrant/raspberry-pi-library-reference-pc/
+    ```
+    
 3.  Edit the `CONFIG_DIR` variable in `setup-script.sh` to reflect the place that `opac-config-dir/` was copied to.
 4.  Run `bash setup-script.sh` and examine terminal output for messages to see if succeeded or failed.
 5.  Change the password for the `pi` user by running `passwd pi`
