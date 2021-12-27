@@ -34,11 +34,6 @@ if [[ $DEBUG -ne 0 ]]; then
 
       wajig large
       
-      echo "Removing unneeded packages..."
-      apt-get remove -y libreoffice-* qemu-user-static openjdk-*
-
-      apt-get autoremove -y
-
       # Fill up all blocks in virtual disk, to improve compression
       dd if=/dev/zero | pv | sudo dd of=/bigassfile
       sync
@@ -58,6 +53,11 @@ echo "Updating software via apt-get..."
 apt-get update
 # apt-get upgrade -y
 
+echo "Removing unneeded packages..."
+apt-get remove -y libreoffice-* qemu-user-static openjdk-*
+
+apt-get autoremove -y
+
 which chromium
 # if exit code is nonzero, chromium is not a command.
 if [ "$?" -eq "1" ]; then
@@ -75,10 +75,10 @@ apt-get install -y privoxy
 
 if [[ ! -f $OPAC_COPIED_FLAG ]]; then
    echo "We have not copied the OPAC setup files from $CONFIG_DIR"
-   rsync -avz $CONFIG_DIR --verbose / #--dry-run 
+   rsync -avz $CONFIG_DIR --verbose /
    echo "We have copied OPAC files." > $OPAC_COPIED_FLAG
    echo "You should reboot to see changes!"
-   echo "Also -- before that...Change the password for the 'pi' user!"
+   echo "Also -- before that...Change the default password for the 'pi' user by running 'passwd pi'!"
 else
    echo "Already copied OPAC setup files from $CONFIG_DIR".
 fi
