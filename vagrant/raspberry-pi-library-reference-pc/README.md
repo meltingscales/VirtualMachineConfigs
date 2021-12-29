@@ -50,6 +50,17 @@ Feel free to edit it to your organization's needs.
 
 Also, the place that we tell Privoxy to actually apply our `opac.action` file is [`/etc/privoxy/config`](/vagrant/raspberry-pi-library-reference-pc/opac-config-dir/etc/privoxy/config#L389), line 389.
 
+### Problems with allowed sites not working
+
+If you think a site that's allowed is malfunctioning (e.g: <http://commonwealthcatalog.org/>), it could be because:
+
+-   That site relies on an external domain, i.e. `googleapis.com`, to function
+-   That site relies on a subdomain, i.e. `api.commonwealthcatalog.org`, to function
+
+You can diagnose this by opening the "Console" or "Network" panel (F12) in Google Chrome, and looking to see which requests error with `TUNNEL_CONNECTION_FAILED`.
+
+Then, selectively allow those sites and either reboot or run `service privoxy restart`.
+
 ## Base Images
 
 ### x86
