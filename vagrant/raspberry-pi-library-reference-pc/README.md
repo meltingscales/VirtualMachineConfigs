@@ -32,7 +32,7 @@ Migrated from <https://github.com/HenryFBP/obpl-opac>
 
 6.  You should see a black screen with Chromium running a proxy that only lets you visit sites defined in the below list:
 
-    [./opac-config-dir/etc/privoxy/opac.action](./opac-config-dir/etc/privoxy/opac.action)
+    [/etc/privoxy/opac.action](./opac-config-dir/etc/privoxy/opac.action)
 
     Feel free to edit it to reflect your organization's domain whitelist.
 
@@ -40,7 +40,7 @@ Migrated from <https://github.com/HenryFBP/obpl-opac>
 
 Allowed/blocked sites are defined in this file:
 
-[./opac-config-dir/etc/privoxy/opac.action](./opac-config-dir/etc/privoxy/opac.action)
+[/etc/privoxy/opac.action](./opac-config-dir/etc/privoxy/opac.action)
 
 It's in "whitelist/allowlist" configuration (Due to line 3), to block all by default and only allow specific domains. 
 
