@@ -58,6 +58,16 @@ https://downloads.raspberrypi.org/raspios_armhf/images/raspios_armhf-2021-11-08/
 
     Feel free to edit it to reflect your organization's domain whitelist.
 
+## What sites are blocked?
+
+Determined by this file:
+
+[./opac-config-dir/etc/privoxy/opac.action](./opac-config-dir/etc/privoxy/opac.action)
+
+It's in "whitelist/allowlist" configuration (Due to line 3), to block all by default and only allow specific domains. 
+
+Feel free to edit it to your organization's needs.
+
 ## Issues
 
 TODO
