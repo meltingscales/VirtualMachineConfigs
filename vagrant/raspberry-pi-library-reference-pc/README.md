@@ -38,13 +38,17 @@ Migrated from <https://github.com/HenryFBP/obpl-opac>
 
 ## What sites are blocked?
 
-Determined by this file:
+Allowed/blocked sites are defined in this file:
 
 [./opac-config-dir/etc/privoxy/opac.action](./opac-config-dir/etc/privoxy/opac.action)
 
 It's in "whitelist/allowlist" configuration (Due to line 3), to block all by default and only allow specific domains. 
 
 Feel free to edit it to your organization's needs.
+
+[See Privoxy's site for more info on action files.](https://www.privoxy.org/user-manual/actions-file.html)
+
+Also, the place that we tell Privoxy to actually apply our `opac.action` file is [`/etc/privoxy/config`](/vagrant/raspberry-pi-library-reference-pc/opac-config-dir/etc/privoxy/config#L389), line 389.
 
 ## Base Images
 

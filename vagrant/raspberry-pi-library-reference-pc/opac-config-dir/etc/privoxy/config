@@ -386,7 +386,7 @@ logdir /var/log/privoxy
 actionsfile match-all.action # Actions that are applied to all sites and maybe overruled later on.
 actionsfile default.action   # Main actions file
 actionsfile user.action      # User customizations
-actionsfile opac.action     # Our custom block actions
+actionsfile opac.action      # Our custom block actions
 #
 #  2.6. filterfile
 #  ================
