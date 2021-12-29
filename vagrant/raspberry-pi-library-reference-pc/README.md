@@ -13,28 +13,6 @@ Migrated from <https://github.com/HenryFBP/obpl-opac>
 3.  In this directory (`/vagrant/raspberry-pi-library-reference-pc/`), run `vagrant up` in terminal
 4.  Open VirtualBox and reboot the Pi. It should reboot into a fully configured OPAC PC!
 
-## Base Images
-
-### x86
-
-This work was tested on an x86 (NOT ARM!) image:
-
-<https://downloads.raspberrypi.org/rpd_x86/images/rpd_x86-2021-01-12/2021-01-11-raspios-buster-i386.iso>
-
--   Release date: 
-    -   January 11th 2021
--   Kernel version:
-    -   4.19
--   Size:
-    -   2,948MB
--   SHA256 file integrity hash (of `.iso` file, not `.box` file): 
-    -   `c78c8dca8ca80ffbac90f4cedfedb6793b37b06df307b0c87e778eef3842a9be`
-
-### ARM
-
-NOTE: Not tested yet.
-
-https://downloads.raspberrypi.org/raspios_armhf/images/raspios_armhf-2021-11-08/2021-10-30-raspios-bullseye-armhf.zip
 
 ## How do I use this on a real Raspberry Pi?
 
@@ -67,6 +45,29 @@ Determined by this file:
 It's in "whitelist/allowlist" configuration (Due to line 3), to block all by default and only allow specific domains. 
 
 Feel free to edit it to your organization's needs.
+
+## Base Images
+
+### x86
+
+This work was tested on an x86 (NOT ARM!) image:
+
+<https://downloads.raspberrypi.org/rpd_x86/images/rpd_x86-2021-01-12/2021-01-11-raspios-buster-i386.iso>
+
+-   Release date: 
+    -   January 11th 2021
+-   Kernel version:
+    -   4.19
+-   Size:
+    -   2,948MB
+-   SHA256 file integrity hash (of `.iso` file, not `.box` file): 
+    -   `c78c8dca8ca80ffbac90f4cedfedb6793b37b06df307b0c87e778eef3842a9be`
+
+### ARM
+
+NOTE: Not tested yet.
+
+https://downloads.raspberrypi.org/raspios_armhf/images/raspios_armhf-2021-11-08/2021-10-30-raspios-bullseye-armhf.zip
 
 ## Issues
 
