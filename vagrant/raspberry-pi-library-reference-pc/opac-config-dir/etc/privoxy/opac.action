@@ -1,6 +1,6 @@
 { +block{For any non-library material search, please use the public computers.} } #Block all URLs by default
 
-/ #Matches all URLS.
+/ # This blocks all URLS by default.
 
 { -block }
 
