@@ -5,6 +5,14 @@ Meant to set up a Raspberry Pi to serve as an Online Public Access Catalogue (OP
 No video games, non-worksafe sites, email browsing, etc.
 
 Migrated from <https://github.com/HenryFBP/obpl-opac>
+
+## Testing locally
+
+1.  Install [Vagrant](https://vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/)
+2.  Clone/download this repo.
+3.  In this directory (`/vagrant/raspberry-pi-library-reference-pc/`), run `vagrant up` in terminal
+4.  Open VirtualBox and reboot the Pi. It should reboot into a fully configured OPAC PC!
+
 ## Base Images
 
 ### x86
@@ -28,7 +36,7 @@ NOTE: Not tested yet.
 
 https://downloads.raspberrypi.org/raspios_armhf/images/raspios_armhf-2021-11-08/2021-10-30-raspios-bullseye-armhf.zip
 
-## How do I use this?
+## How do I use this on a real Raspberry Pi?
 
 1.  Install [a base x86/x64 image](https://www.raspberrypi.com/software/) onto a physical Raspberry Pi's SD card.
 2.  Copy `setup-script.sh` and `opac-config-dir/` onto your raspberry pi using a USB stick, or by using 
