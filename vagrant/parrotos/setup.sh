@@ -18,7 +18,7 @@ fi
 
 apt-get update
 
-apt-get install -y lynx gedit
+apt-get install -y lynx gedit fish
 
 # must run as vagrant
 su - vagrant <<MARKER
