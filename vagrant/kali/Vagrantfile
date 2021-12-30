@@ -46,7 +46,7 @@ Vagrant.configure("2") do |config|
   SHELL
 
   # copy add-apt-repository
-  config.vm.provision "file", source: "scripts/add-apt-repository.sh", destination: "/tmp/add-apt-repository"
+  config.vm.provision "file", source: "./scripts/add-apt-repository.sh", destination: "/tmp/add-apt-repository"
 
   # make add-apt-repository executable
   config.vm.provision "shell", run: "always", inline: <<-SHELL
@@ -57,11 +57,11 @@ Vagrant.configure("2") do |config|
 
   # Copy useful scripts to desktop
   config.vm.provision "file",
-                      source: "scripts/desktop-scripts/tor-transparent-proxy-start.sh",
+                      source: "./scripts/desktop-scripts/tor-transparent-proxy-start.sh",
                       destination: "/home/vagrant/Desktop/"
 
   config.vm.provision "file",
-                      source: "scripts/desktop-scripts/tor-transparent-proxy-stop.sh",
+                      source: "./scripts/desktop-scripts/tor-transparent-proxy-stop.sh",
                       destination: "/home/vagrant/Desktop/"
 
   # start timer
@@ -71,7 +71,7 @@ Vagrant.configure("2") do |config|
   SHELL
 
   # resize main partition to max size
-  config.vm.provision "shell", path: "scripts/resize-default-partitions-to-disk.sh"
+  config.vm.provision "shell", path: "./scripts/resize-default-partitions-to-disk.sh"
 
   # clone cool repos
   config.vm.provision "shell", path: "../scripts/clone-cool-git-repos.sh"
@@ -83,9 +83,12 @@ Vagrant.configure("2") do |config|
     export DEBIAN_FRONTEND=noninteractive # prevent installers from asking us stuff
     sudo gem install mdless
 
-    apt-get install -y htop iftop cpu-checker gedit transmission transmission-gtk baobab nano tcpdump maven perl-tk gnupg2 fish # python3-pip
     apt-get install -y snapd
+    snap install -y code --classic
+
+    apt-get install -y htop iftop cpu-checker gedit transmission transmission-gtk baobab nano tcpdump maven perl-tk gnupg2 fish # python3-pip
     apt-get install -y kleopatra thunderbird
+
 
     if ! dpkg -s "docker-ce" 2>/dev/null; then
       echo "Installing docker-ce as it is not installed."
