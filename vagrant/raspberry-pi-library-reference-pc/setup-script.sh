@@ -2,7 +2,7 @@
 #
 # See http://publiclibrariesonline.org/2015/05/building-small-cheap-dedicated-catalog-stations-do-it-yourself-rasberry-pi-opacs/
 
-# Directory holding the OPAC config
+# Directory holding the OPAC config. Change this path, if using a USB drive or `git clone` to get the configuration files from GitHub.
 CONFIG_DIR=/data/opac-config-dir/
 
 # flag that indicates that config files have already been copied
