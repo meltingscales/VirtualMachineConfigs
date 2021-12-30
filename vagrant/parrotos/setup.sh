@@ -18,7 +18,7 @@ fi
 
 apt-get update
 
-apt-get install -y lynx 
+apt-get install -y lynx gedit
 
 # must run as vagrant
 su - vagrant <<MARKER
