@@ -27,7 +27,7 @@ su - vagrant <<MARKER
     fi
 
     pushd ~/Git/
-        git config pull.rebase false
+        git config --global pull.rebase false
         git clone git@github.com:HenryFBP/hackthebox.git
         git clone git@github.com:HenryFBP/examples.git
         git clone git@github.com:HenryFBP/vagrantpackerfiles.git
