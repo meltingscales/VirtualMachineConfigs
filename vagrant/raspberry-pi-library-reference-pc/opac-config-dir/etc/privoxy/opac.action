@@ -1,8 +1,10 @@
 { +block{For any non-library material search, please use the public computers.} } #Block all URLs by default
 
-/ # This blocks all URLS by default.
+/ # This blocks all domains by default.
 
 { -block }
+
+# The below domains are ALLOWED.
 
 oakbluffslibrary.org
 *.oakbluffslibrary.org
