@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
+NONROOT_USER=vagrant
 SSH_KEY_LOCATION=/home/vagrant/.ssh/id_rsa
+SSH_PUBKEY_LOCATION=$SSH_KEY_LOCATION.pub
 
 if [[ $EUID -ne 0 ]]; then
    echo "This script must be run as root. Try 'sudo $0'."
@@ -8,23 +10,23 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 if [[ ! -f $SSH_KEY_LOCATION ]]; then
-    echo "Please generate or import an SSH key at '$SSH_KEY_LOCATION' with 'ssh-keygen'. 
-This is required for cloning Git repositories.
-After doing so, make sure to import it into GitHub."
+    echo "Please generate or import an SSH key at '$SSH_KEY_LOCATION'.
+    This is required for cloning Git repositories."
     exit 1
 fi
 
-
 apt-get update
 
-if [[ ! -d ~/Git/ ]]; then
-    mkdir ~/Git/
-fi
+# must run as vagrant
+su - vagrant <<MARKER
+    if [[ ! -d ~/Git/ ]]; then
+        mkdir ~/Git/
+    fi
 
+    pushd ~/Git/
+        git clone git@github.com:HenryFBP/hackthebox.git
+        git clone git@github.com:HenryFBP/examples.git
+    popd
+MARKER
 
-pushd ~/Git/
-    git clone git@github.com:HenryFBP/hackthebox.git
-    git clone git@github.com:HenryFBP/examples.git
-popd
-
-printf "lol hello\n"
+printf "lol hello, we are done\n"
