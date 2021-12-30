@@ -18,6 +18,8 @@ fi
 
 apt-get update
 
+apt-get install -y lynx 
+
 # must run as vagrant
 su - vagrant <<MARKER
     if [[ ! -d ~/Git/ ]]; then
@@ -27,6 +29,7 @@ su - vagrant <<MARKER
     pushd ~/Git/
         git clone git@github.com:HenryFBP/hackthebox.git
         git clone git@github.com:HenryFBP/examples.git
+        git clone git@github.com:HenryFBP/vagrantpackerfiles.git
     popd
 MARKER
 
