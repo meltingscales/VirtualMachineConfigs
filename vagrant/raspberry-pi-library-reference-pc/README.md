@@ -1,5 +1,7 @@
 # Raspberry Pi Library Reference PC
 
+Adapted from <http://publiclibrariesonline.org/2015/05/building-small-cheap-dedicated-catalog-stations-do-it-yourself-rasberry-pi-opacs/>
+
 Meant to set up a Raspberry Pi to serve as an Online Public Access Catalogue (OPAC) computer.
 
 No video games, non-worksafe sites, email browsing, etc.
