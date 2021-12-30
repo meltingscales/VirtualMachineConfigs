@@ -14,6 +14,7 @@ git clone https://github.com/skyblueee/sqli-labs-php7
 git clone https://github.com/tuxotron/Audi_SQLi_lamp_container
 git clone https://github.com/WebGoat/WebGoat
 git clone https://github.com/bkimminich/juice-shop
+git clone https://github.com/henryfbp/hackthebox
 
 # bwapp and docker script
 git clone https://github.com/jehy-security/bwapp
@@ -39,6 +40,6 @@ fi
 
 git clone https://github.com/joaomatosf/jexboss
 
-popd
+popd # leave ~/Git
 
 chown -R vagrant:vagrant /home/vagrant/Git
