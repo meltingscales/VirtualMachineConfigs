@@ -31,6 +31,7 @@ su - vagrant <<MARKER
         git clone git@github.com:HenryFBP/hackthebox.git
         git clone git@github.com:HenryFBP/examples.git
         git clone git@github.com:HenryFBP/vagrantpackerfiles.git
+        git clone git@github.com:danielmiessler/SecLists
     popd
 MARKER
 
