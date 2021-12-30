@@ -11,7 +11,8 @@ fi
 
 if [[ ! -f $SSH_KEY_LOCATION ]]; then
     echo "Please generate or import an SSH key at '$SSH_KEY_LOCATION'.
-    This is required for cloning Git repositories."
+This is required for cloning Git repositories.
+Make sure to then import '$SSH_PUBKEY_LOCATION' into GitHub."
     exit 1
 fi
 
