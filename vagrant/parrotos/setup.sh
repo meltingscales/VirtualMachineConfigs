@@ -35,6 +35,7 @@ su - vagrant <<MARKER
         git clone git@github.com:HenryFBP/vagrantpackerfiles.git
         git clone git@github.com:danielmiessler/SecLists
         git clone git@github.com:andrew-d/static-binaries
+        git clone https://github.com/HenryFBP/CVE-2021-3129_exploit
     popd
 MARKER
 
