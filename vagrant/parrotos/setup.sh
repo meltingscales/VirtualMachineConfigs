@@ -22,6 +22,12 @@ apt-get install -y lynx gedit fish iftop
 
 pip3 install updog
 
+if [[ ! -f /usr/share/wordlists/rockyou.txt ]]; then
+    pushd /usr/share/wordlists/
+        gunzip rockyou.txt.gz
+    popd
+fi
+
 # must run as vagrant
 su - vagrant <<MARKER
     if [[ ! -d ~/Git/ ]]; then
