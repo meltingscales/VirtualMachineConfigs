@@ -20,6 +20,9 @@ apt-get update
 
 apt-get install -y lynx gedit fish iftop
 
+# install jb toolbox
+curl https://raw.githubusercontent.com/HenryFBP/VagrantPackerFiles/master/vagrant/scripts/install-jb-toolbox.sh | sudo bash
+
 pip3 install updog
 
 if [[ ! -f /usr/share/wordlists/rockyou.txt ]]; then
