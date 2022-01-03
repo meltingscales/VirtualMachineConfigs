@@ -16,8 +16,6 @@ if [[ ! -f $TOOLLOC ]]; then
             mv jetbrains-toolbox /bin/
         popd
     popd
-
-    jetbrains-toolbox &
 else
     echo "Already exists: $TOOLLOC"
 fi
