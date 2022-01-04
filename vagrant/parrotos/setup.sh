@@ -40,6 +40,9 @@ su - vagrant <<MARKER
 
     pushd ~/Git/
         git config --global pull.rebase false
+        git config --global user.email "HenryFBP@gmail.com"
+        git config --global user.name "Henry Post"
+
         git clone git@github.com:HenryFBP/hackthebox.git
         git clone git@github.com:HenryFBP/autohackthebox.git
         git clone git@github.com:HenryFBP/examples.git
