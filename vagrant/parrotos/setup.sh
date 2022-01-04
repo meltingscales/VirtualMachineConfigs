@@ -41,8 +41,9 @@ su - vagrant <<MARKER
     pushd ~/Git/
         git config --global pull.rebase false
         git clone git@github.com:HenryFBP/hackthebox.git
+        git clone git@github.com:HenryFBP/autohackthebox.git
         git clone git@github.com:HenryFBP/examples.git
-        git clone git@github.com:HenryFBP/vagrantpackerfiles.git
+        git clone git@github.com:HenryFBP/VagrantPackerFiles.git
         git clone git@github.com:danielmiessler/SecLists
         git clone git@github.com:andrew-d/static-binaries
         git clone https://github.com/HenryFBP/CVE-2021-3129_exploit
