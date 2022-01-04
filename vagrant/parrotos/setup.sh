@@ -4,6 +4,9 @@ NONROOT_USER=vagrant
 SSH_KEY_LOCATION=/home/vagrant/.ssh/id_rsa
 SSH_PUBKEY_LOCATION=$SSH_KEY_LOCATION.pub
 
+EMAIL="HenryFBP@gmail.com"
+NAME="Henry Post"
+
 if [[ $EUID -ne 0 ]]; then
    echo "This script must be run as root. Try 'sudo $0'."
    exit 1
@@ -40,10 +43,11 @@ su --shell=/bin/bash - vagrant <<MARKER
 
     pushd ~/Git/
         git config --global pull.rebase false
-        git config --global user.email "HenryFBP@gmail.com"
-        git config --global user.name "Henry Post"
+        git config --global user.email $EMAIL
+        git config --global user.name $NAME
 
         git clone git@github.com:HenryFBP/hackthebox.git
+        git clone git@github.com:HenryFBP/dotfiles.git
         git clone git@github.com:HenryFBP/autohackthebox.git
         git clone git@github.com:HenryFBP/examples.git
         git clone git@github.com:HenryFBP/VagrantPackerFiles.git
