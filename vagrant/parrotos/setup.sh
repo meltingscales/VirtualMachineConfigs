@@ -33,7 +33,7 @@ if [[ ! -f /usr/share/wordlists/rockyou.txt ]]; then
 fi
 
 # must run as vagrant
-su - vagrant <<MARKER
+su --shell=/bin/bash - vagrant <<MARKER
     if [[ ! -d ~/Git/ ]]; then
         mkdir ~/Git/
     fi
