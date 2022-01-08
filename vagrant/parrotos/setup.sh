@@ -23,12 +23,40 @@ apt-get update
 
 apt-get install -y lynx gedit fish iftop
 
+
+which docker # if exit code is nonzero, then it is not a command.
+if [ "$?" -eq "1" ]; then
+    # required to add docker
+    sudo apt-get install \
+        ca-certificates \
+        curl \
+        gnupg \
+        lsb-release
+
+    # add docker GPG key
+    curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+    # add docker stable repo
+    echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
+    $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+    apt update
+
+    # install docker repos
+    apt install -y docker-ce docker-ce-cli containerd.io
+else
+    echo "Docker is already installed."
+    which docker
+fi
+
 # install jb toolbox
 curl https://raw.githubusercontent.com/HenryFBP/VagrantPackerFiles/master/vagrant/scripts/install-jb-toolbox.sh | sudo bash
 
 pip3 install pipenv
 pip3 install updog
 
+# unzip rockyou.txt wordlist
 if [[ ! -f /usr/share/wordlists/rockyou.txt ]]; then
     pushd /usr/share/wordlists/
         gunzip rockyou.txt.gz
@@ -36,7 +64,7 @@ if [[ ! -f /usr/share/wordlists/rockyou.txt ]]; then
 fi
 
 # must run as vagrant
-su --shell=/bin/bash - vagrant <<MARKER
+su --shell=/bin/bash - $NONROOT_USER <<MARKER
     if [[ ! -d ~/Git/ ]]; then
         mkdir ~/Git/
     fi
