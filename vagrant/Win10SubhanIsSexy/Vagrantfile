@@ -53,8 +53,8 @@ Vagrant.configure("2") do |config|
         git clone https://github.com/henryfbp/dotfiles
       popd
 
-      # $arg="-noexit" #for debug
-      $arg=""
+      # $arg="-noexit" #for debug, you have to manually close powershell
+      $arg="" # powershell auto exits
 
       start-process -Wait powershell -argument "$arg ~/Git/dotfiles/util/fetch-all-git-repos.ps1"      
       start-process -Wait powershell -argument "$arg ~/Git/dotfiles/windows/setup/first-setup-clone-repos.ps1"
