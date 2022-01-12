@@ -53,8 +53,8 @@ Vagrant.configure("2") do |config|
         git clone https://github.com/henryfbp/dotfiles
       popd
 
-      powershell.exe ~/Git/dotfiles/windows/setup/first-setup-clone-repos.ps1
-      powershell.exe ~/Git/dotfiles/windows/setup/first-setup-install-packages.ps1
+      start-process powershell -argument "-noexit ~/Git/dotfiles/windows/setup/first-setup-clone-repos.ps1"
+      start-process powershell -argument "-noexit ~/Git/dotfiles/windows/setup/first-setup-install-packages.ps1 -yesIKnowItsABigAssInstall true"
       
 
     POTATO
