@@ -1,0 +1,62 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+
+VM_NAME = 'Win10SubhanIsSexy'
+#VM_IP = '192.168.33.12'
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "gusztavvargadr/windows-10"
+
+  config.vm.synced_folder './', '/sharedfolder'
+  config.vm.define VM_NAME
+
+  # config.vm.network "private_network", ip: VM_IP
+
+
+  config.vm.provider 'virtualbox' do |v|
+    v.name = VM_NAME
+
+    v.gui = true
+
+    v.memory = 8000
+    v.cpus = 4
+
+    v.customize ['modifyvm', :id, '--vram', '256']
+
+#    v.customize ["storageattach", :id,
+#                 "--storagectl", "IDE", #README May need to change to "IDE" or "IDE Controller!"
+#                 "--port", "0", "--device", "1",
+#                 "--type", "dvddrive",
+#                 "--medium", "emptydrive"]
+
+  end
+
+  config.vm.provision "shell", privileged: "true", powershell_elevated_interactive: "true",
+    inline: <<-POTATO
+
+      echo "pranked, you're mom gay" > "~/Desktop/rat ;3c.txt"
+
+      Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+      choco install -y git
+
+      if (!(get-item ~/Git/)) {
+        mkdir ~/Git/
+      }
+      pushd ~/Git/
+        git clone https://github.com/henryfbp/dotfiles
+      popd
+
+      powershell.exe ~/Git/dotfiles/windows/setup/first-setup-clone-repos.ps1
+      powershell.exe ~/Git/dotfiles/windows/setup/first-setup-install-packages.ps1
+      
+
+    POTATO
+
+end
