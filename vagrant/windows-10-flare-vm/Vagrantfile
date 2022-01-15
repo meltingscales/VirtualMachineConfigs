@@ -71,6 +71,8 @@ Vagrant.configure("2") do |config|
 
       setx /M PATH "$newpath"
 
+      refreshenv
+
       write-host "NEW path: "
       write-host "$Env:Path"
     }
@@ -82,9 +84,10 @@ Vagrant.configure("2") do |config|
         powershell ./install.ps1 -Password vagrant
       popd
       write-host "Flare-VM installed. Your VM will now restart if it has not done so already."
-      write-host "Now would be a good time to take a snapshot before you start installing malware."
-      write-host "Example - run 'vagrant snapshot save after-install'"
     }
+
+    write-host "Now would be a good time to take a snapshot before you start installing malware."
+    write-host "Example - run 'vagrant snapshot save after-install'"
 
 
   SHELL
