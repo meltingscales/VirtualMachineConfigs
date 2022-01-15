@@ -81,7 +81,9 @@ Vagrant.configure("2") do |config|
     {
       git clone https://github.com/fireeye/flare-vm
       pushd flare-vm
+        Set-MpPreference -DisableRealtimeMonitoring $true #hopefully fixes "this is a virus REEEEEE" message from windows
         powershell ./install.ps1 -Password vagrant
+        Set-MpPreference -DisableRealtimeMonitoring $false
       popd
       write-host "Flare-VM installed. Your VM will now restart if it has not done so already."
     }
