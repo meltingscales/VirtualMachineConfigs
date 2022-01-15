@@ -1,6 +1,1 @@
-wewoeowoeoweoe
-
-vhdx
-
-
-meme
+vm made for a friend
