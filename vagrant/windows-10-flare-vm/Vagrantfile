@@ -54,8 +54,10 @@ Vagrant.configure("2") do |config|
     git clone https://github.com/nsacyber/GRASSMARLIN
     git clone https://github.com/dzzie/pdfstreamdumper
     git clone https://github.com/henryfbp/mystery-files
+    git clone https://github.com/DerPopo/UABE
 
-    choco install graphviz
+    choco install -y graphviz
+    choco install -y jetbrainstoolbox #for dotpeek
 
     # Add to path after cloning
     If(!(test-path "pdfobjflow3-python3"))
