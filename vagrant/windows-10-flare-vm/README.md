@@ -12,7 +12,8 @@ Before running malware:
 
 ## Links
 
-<https://www.malware-traffic-analysis.net/>
+-   <https://www.malware-traffic-analysis.net/>
+-   <https://github.com/mandiant/flare-vm>
 
 ## Notes
 

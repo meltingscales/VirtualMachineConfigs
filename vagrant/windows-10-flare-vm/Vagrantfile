@@ -41,17 +41,19 @@ Vagrant.configure("2") do |config|
                       path: "../scripts/install-git-using-choco.ps1"
 
   config.vm.provision "shell", inline: <<-SHELL
-    cd ~
 
-    mkdir Github
+    If(!(test-path ~/Git)) {
+      mkdir ~/Git
+    }
 
-    cd Github
+    pushd ~/Git
 
     git clone https://github.com/stephenbradshaw/vulnserver
     git clone https://github.com/kbandla/ImmunityDebugger
     git clone https://github.com/corelan/mona
     git clone https://github.com/nsacyber/GRASSMARLIN
     git clone https://github.com/dzzie/pdfstreamdumper
+    git clone https://github.com/henryfbp/mystery-files
 
     choco install graphviz
 
@@ -60,15 +62,25 @@ Vagrant.configure("2") do |config|
     {
       echo "$Env:Path" >> path_backup.txt
       git clone https://github.com/HenryFBP/pdfobjflow3-python3
-      setx /M PATH "$Env:Path;$((Get-Item -Path "pdfobjflow3-python3").FullName)"
+
+      write-host "Original path: "
+      write-host "$Env:Path"
+
+      $objflowpath=(Get-Item -Path 'pdfobjflow3-python3').FullName
+      $newpath="$Env:Path;$objflowpath"
+
+      setx /M PATH "$newpath"
+
+      write-host "NEW path: "
+      write-host "$Env:Path"
     }
 
     If(!(test-path "flare-vm"))
     {
       git clone https://github.com/fireeye/flare-vm
-      cd flare-vm
-      powershell ./install.ps1 -Password vagrant
-      cd ..
+      pushd flare-vm
+        powershell ./install.ps1 -Password vagrant
+      popd
       write-host "Flare-VM installed. Your VM will now restart if it has not done so already."
       write-host "Now would be a good time to take a snapshot before you start installing malware."
     }
