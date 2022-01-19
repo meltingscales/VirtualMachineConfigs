@@ -23,7 +23,36 @@ apt-get update
 
 apt-get install -y fish
 
-curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install > omf-install.fish
+chmod +x omf-install.fish
+./omf-install.fish --noninteractive --yes || echo "omf install either failed or omf is already installed."
+rm ./omf-install.fish
+
+FISHORIG=/home/$NONROOT_USER/.config/fish/config.fish
+FISHBAK=$FISHORIG.bak
+if [ ! -f $FISHBAK ]; then
+    echo "Backing up file at $FISHORIG!"
+    cp $FISHORIG $FISHBAK
+fi
+
+cat <<WEWLAD > $FISHORIG
+set PATH ~/.local/bin /snap/bin /usr/sandbox/ /usr/local/bin /usr/bin /bin /usr/local/games /usr/games /usr/share/games /usr/local/sbin /usr/sbin /sbin $PATH
+
+alias ls='ls -lh --color=auto'
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias weather="curl wttr.in"
+if type -q codium
+    alias code="codium"
+end
+WEWLAD
+
+# can replace this with whatever theme you want...
+omf install ays
+omf theme ays
 
 apt-get install -y lynx gedit iftop
 
