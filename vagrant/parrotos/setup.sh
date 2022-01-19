@@ -82,10 +82,14 @@ else
     which docker
 fi
 
+
+# install chrome browser
+apt-get -y install chromium
+
 # install chromedriver
 if [ ! -f /bin/chromedriver ]; then
     pushd /tmp
-    wget https://chromedriver.storage.googleapis.com/98.0.4758.48/chromedriver_linux64.zip
+    wget https://chromedriver.storage.googleapis.com/97.0.4692.71/chromedriver_linux64.zip
     unzip chromedriver_linux64.zip
     mv chromedriver /bin/
 fi
