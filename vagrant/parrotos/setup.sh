@@ -25,7 +25,7 @@ apt-get install -y fish
 
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install > omf-install.fish
 chmod +x omf-install.fish
-./omf-install.fish --noninteractive --yes || echo "omf install either failed or omf is already installed."
+sudo -u $NONROOT_USER fish -c "./omf-install.fish --noninteractive --yes || echo 'omf install either failed or omf is already installed.'"
 rm ./omf-install.fish
 
 FISHORIG=/home/$NONROOT_USER/.config/fish/config.fish
@@ -51,8 +51,8 @@ end
 WEWLAD
 
 # can replace this with whatever theme you want...
-omf install ays
-omf theme ays
+sudo -u $NONROOT_USER fish -c "omf install ays"
+sudo -u $NONROOT_USER fish -c "omf theme ays"
 
 apt-get install -y lynx gedit iftop
 
