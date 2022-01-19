@@ -21,8 +21,11 @@ fi
 
 apt-get update
 
-apt-get install -y lynx gedit fish iftop
+apt-get install -y fish
 
+curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+
+apt-get install -y lynx gedit iftop
 
 which docker # if exit code is nonzero, then it is not a command.
 if [ "$?" -eq "1" ]; then
