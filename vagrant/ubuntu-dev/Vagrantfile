@@ -83,48 +83,12 @@ Vagrant.configure("2") do |config|
 
     echo 'Run `sudo minikube start --driver=none` to start Minikube.'
 
-    # packer setup, from source
-    which packer
-    if [ ! "$?" -eq "0" ]; then # if exit code is nonzero, it is not a command  
-      echo "Installing packer from source, as it does not exist on path!"
-      pushd /tmp/
-      mkdir -p /tmp/packer-setup/
-      pushd /tmp/packer-setup/
-      wget https://github.com/hashicorp/packer/archive/refs/tags/v1.7.8.zip
-      unzip v1.7.8.zip
-      cd ./packer-*/
-      echo "yay, time to wait :) gompilation dime :DDDD"
-      go mod download
-      mkdir -p ./bin/
-      go build -o bin/packer ./
-      chmod +x bin/packer
-      mv bin/packer /bin/packer
+SHELL
 
-      ls -lash /bin/packer
-      packer -v
-      popd # to /tmp
-      popd # to whatever before
-    else
-      echo "packer already exists."
-    fi
+# packer
+config.vm.provision "shell", path: "../scripts/install-packer-from-source.sh"
 
-    # packer-builder-arm setup, from <https://github.com/mkaczanowski/packer-builder-arm>
-    if [[ ! -f /usr/bin/packer-builder-arm ]]; then
-      pushd /tmp/
-      git clone https://github.com/mkaczanowski/packer-builder-arm
-      cd packer-builder-arm
-      go mod download
-      go build
-      chmod +x ./packer-builder-arm
-      sudo cp ./packer-builder-arm /usr/bin/
-      sudo packer build boards/odroid-u3/archlinuxarm.json || (echo "Failed! See packer-builder-arm section and fix!")
-      popd    
-    else
-      echo "'/usr/bin/packer-builder-arm' already exists!"
-    fi
-    # end of packer-builder-arm setup
-  SHELL
-
+config.vm.provision "shell", path: "../scripts/install-packer-builder-arm.sh"
 
   config.vm.provision "shell", inline: <<-SHELL
     echo "Done. Take a snapshot!"
