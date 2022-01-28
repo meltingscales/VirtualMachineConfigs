@@ -1,6 +1,6 @@
-# VagrantPackerFiles
+# VirtualMachineConfigs
 
-A collection of Vagrantfiles and Packer builds I use.
+A collection of Vagrant/Packer/Helm/Docker builds I use.
 
 No license, I only request you link to this original repo.
 
