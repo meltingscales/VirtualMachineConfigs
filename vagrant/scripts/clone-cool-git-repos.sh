@@ -1,20 +1,26 @@
 #!/usr/bin/env bash
 
-sudo su vagrant
+NONROOT_USER=vagrant
 
-cd /home/vagrant
+sudo su $NONROOT_USER
+
+cd /home/$NONROOT_USER
 
 mkdir -p Git
 
 pushd Git
 
 git clone https://github.com/philipperemy/tensorflow-1.4-billion-password-analysis
-
 git clone https://github.com/skyblueee/sqli-labs-php7
 git clone https://github.com/tuxotron/Audi_SQLi_lamp_container
 git clone https://github.com/WebGoat/WebGoat
 git clone https://github.com/bkimminich/juice-shop
+git clone https://github.com/joaomatosf/jexboss
+
 git clone https://github.com/henryfbp/hackthebox
+git clone https://github.com/henryfbp/autohackthebox
+git clone https://github.com/henryfbp/VirtualMachineConfigs
+git clone https://github.com/henryfbp/dotfiles
 
 # bwapp and docker script
 git clone https://github.com/jehy-security/bwapp
@@ -38,8 +44,6 @@ else
 	echo "JBoss JAR already downloaded."
 fi
 
-git clone https://github.com/joaomatosf/jexboss
-
 popd # leave ~/Git
 
-chown -R vagrant:vagrant /home/vagrant/Git
+chown -R $NONROOT_USER:$NONROOT_USER /home/$NONROOT_USER/Git
