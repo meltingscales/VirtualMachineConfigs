@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 VM_NAME = 'Ubuntu 18.04 Development'
-VM_RAM_MB = '6000'
+VM_RAM_MB = '8000'
 VM_CPUS = '4'
 
 Vagrant.configure("2") do |config|
@@ -68,7 +68,6 @@ Vagrant.configure("2") do |config|
   # clone cool repos
   config.vm.provision "shell", path: "../scripts/clone-cool-git-repos.sh"
 
-  # this shit takes forever
   config.vm.provision "shell", inline: <<-SHELL
 
     sudo snap install --classic kubectl
@@ -86,9 +85,8 @@ Vagrant.configure("2") do |config|
 
 SHELL
 
-# packer
+# this packer stuff takes forever
 config.vm.provision "shell", path: "../scripts/install-packer-from-source.sh"
-
 config.vm.provision "shell", path: "../scripts/install-packer-builder-arm.sh"
 
   config.vm.provision "shell", inline: <<-SHELL
