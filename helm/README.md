@@ -8,6 +8,8 @@
 ### start rancher
 
     docker run -d --restart=unless-stopped \
-  -p 80:80 -p 443:443 \
-  --privileged \
-  rancher/rancher:latest
+        -p 80:81 -p 443:444 \
+        --privileged \
+        rancher/rancher:latest
+
+    echo "now go visit https://localhost:444/"
