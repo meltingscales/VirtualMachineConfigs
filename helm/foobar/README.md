@@ -1,12 +1,20 @@
+# Helm chart "foobar"
+
+Decided this is going to be a GitLab helm chart. Because why not.
+
 ## deploy
 
     minikube start
-    helm install foobar-test foobar/
+    helm install gitlab-test foobar/
 
 ## redeploy
 
-    helm upgrade foobar-test foobar/
+    helm upgrade gitlab-test foobar/
+
+## debug
+
+    kubectl logs svc/gitlab-test-foobar
 
 ## uninstall
 
-    helm uninstall foobar-test
+    helm uninstall gitlab-test
