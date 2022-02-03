@@ -1,21 +1,31 @@
-# Running
+# Running locally
 
     pipenv install
     pipenv run python ping1.py
 
 # Build docker image
 
-    docker build ./ --tag ping1:latest
+    docker build ./ --tag henryfbp/ping1:latest
 
-## test
+## Test local docker image
 
-    docker run -d -p 80:5000 ping1:latest
+    docker run -d -p 80:5000 henryfbp/ping1:latest
     echo "Visit http://localhost:80/ping1"
 
-## stop the test
+## delete container
+
+    docker images
+    docker rmi 1234abcd
+
+## stop the container
 
     docker ps
-    docker stop <id>
+    docker stop 1234abcd
+
+## get shell into running container
+
+    docker ps
+    docker exec -it 1234abcd /bin/bash
 
 # Notes
 
