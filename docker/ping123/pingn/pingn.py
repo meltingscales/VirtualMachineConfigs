@@ -9,7 +9,7 @@ ms = Microservice(path=__file__)
 app = ms.create_app()
 
 # Are we the root ping that depends on nothing?
-IS_ROOT_PING = get_config_item(app, 'IS_ROOT_PING', False)
+IS_ROOT_PING = get_config_item(app, 'ROOT_PING', False)
 
 if not IS_ROOT_PING:
     CHILD_URL = get_config_item(app, 'CHILD_URL')
@@ -28,7 +28,7 @@ def index():
 
 @app.route(APP_ENDPOINT)
 def pingn():
-    result = {"message": "hello from " + app.config.get('APP_NAME')}
+    result = {"message": "hello from " + APP_NAME}
 
     # If we depend on something, query it
     if not IS_ROOT_PING:
