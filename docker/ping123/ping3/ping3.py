@@ -43,7 +43,7 @@ def ping3():
     result = {"message": "hello from "+app.config.get('APP_NAME')}
 
     data = {}
-    with urllib.request.urlopen(PING2_URL+"/ping1") as url:
+    with urllib.request.urlopen(PING2_URL+"/ping2") as url:
         data = json.loads(url.read().decode())
 
     result.update({"ping2_result": data})
