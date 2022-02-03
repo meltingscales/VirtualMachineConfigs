@@ -2,9 +2,13 @@ FROM python:3.9.10-slim-buster
 
 RUN pip install pipenv
 
-WORKDIR /app
-COPY . .
 
+WORKDIR /app
+
+COPY Pipfile .
+COPY Pipfile.lock .
 RUN pipenv install
-EXPOSE 5000/tcp
+
+COPY . .
+EXPOSE 5000
 CMD ["pipenv", "run", "python", "ping1.py"]
