@@ -16,6 +16,14 @@ To make 3 servers (may need to run in separate terminals), run in BASH (not fish
 
 ### let's have fun
 
+    bash lotsaping.sh
+
+#### stop the fun
+
+    ps -aux | grep pingn
+    pkill -f "python pingn.py"
+    rm *.log
+
 ## Build docker image
 
     docker build ./ --tag henryfbp/pingn:latest
