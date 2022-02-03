@@ -1,8 +1,8 @@
 from multiprocessing.sharedctypes import Value
 import os
-import sys
-from docker.ping1.ping1 import ping1
 from flask import jsonify
+import urllib.request
+import json
 
 from pyms.flask.app import Microservice
 
@@ -42,10 +42,11 @@ def ping2():
 
     result = {"message": "hello from "+app.config.get('APP_NAME')}
 
-    # TODO query ping1 server...
-    ping1_result = {"ping1_result": "TODO: Query ping1 server..."}
+    data = {}
+    with urllib.request.urlopen(PING1_URL+"/ping1") as url:
+        data = json.loads(url.read().decode())
 
-    result.update(ping1_result)
+    result.update({"ping1_result": data})
 
     return jsonify(result)
 

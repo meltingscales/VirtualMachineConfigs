@@ -6,8 +6,10 @@ It contacts ping1 to get its data, and returns it to you.
 
 ## Running locally
 
+First, ensure ping1 is running at <http://localhost:5000/>. Then run the below commands.
+
     pipenv install
-    PING1_SERVER="http://localhost:5000/"; pipenv run python ping2.py
+    PING1_URL="http://localhost:5000/" pipenv run python ping2.py
 
 ## Build docker image
 
@@ -16,6 +18,8 @@ It contacts ping1 to get its data, and returns it to you.
 
 ### Test local docker image
 
-    docker run --detach --publish 81:5001 henryfbp/ping2:latest
+First, ensure ping1 is running at <http://localhost:80/>. Then run the below commands.
+
+    docker run --detach --env PING1_SERVER="http://localhost:80/" --publish 81:5001 henryfbp/ping2:latest
     echo "Visit http://localhost:81/ping2"
 
