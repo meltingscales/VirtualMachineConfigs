@@ -1,0 +1,5 @@
+pyms:
+  config:
+    APP_NAME: "ping3"
+    HOST: 0.0.0.0
+    PORT: 5002
