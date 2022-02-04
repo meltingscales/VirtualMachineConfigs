@@ -16,6 +16,8 @@ if not IS_ROOT_PING:
     CHILD_NAME = get_config_item(app, 'CHILD_NAME')
     CHILD_ENDPOINT = "/{0}".format(CHILD_NAME)
     CHILD_URL_ENDPOINT = CHILD_URL + CHILD_ENDPOINT
+else:
+    print("This is a root ping server.")
 
 APP_NAME = get_config_item(app, 'APP_NAME')
 APP_ENDPOINT = "/{0}".format(APP_NAME)
