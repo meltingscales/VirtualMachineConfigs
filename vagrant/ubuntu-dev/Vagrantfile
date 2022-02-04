@@ -21,11 +21,15 @@ Vagrant.configure("2") do |config|
 
   end
 
+  # initial apt-get update
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
+  SHELL
+  
+  # fish shell
+  config.vm.provision "shell", path: "../scripts/install-fish.sh"
 
-    apt install -y fish
-    echo 'vagrant' | chsh vagrant -s /usr/bin/fish
+  config.vm.provision "shell", inline: <<-SHELL
 
     apt install -y python3-pip #why is this not installed by default?!
     python3 -m pip install pipenv
