@@ -10,9 +10,21 @@ To make 3 servers (may need to run in separate terminals), run in BASH (not fish
 
     pipenv install
 
-    ROOT_PING=1 APP_NAME=ping1 PORT=5001                                                  pipenv run python pingn.py
-                APP_NAME=ping2 PORT=5002 CHILD_URL=http://localhost:5001 CHILD_NAME=ping1 pipenv run python pingn.py
-                APP_NAME=ping3 PORT=5003 CHILD_URL=http://localhost:5002 CHILD_NAME=ping2 pipenv run python pingn.py
+### bash
+
+```sh
+ROOT_PING=1 APP_NAME=ping1 PORT=5001                                                  pipenv run python pingn.py
+            APP_NAME=ping2 PORT=5002 CHILD_URL=http://localhost:5001 CHILD_NAME=ping1 pipenv run python pingn.py
+            APP_NAME=ping3 PORT=5003 CHILD_URL=http://localhost:5002 CHILD_NAME=ping2 pipenv run python pingn.py
+```
+
+### powershell
+
+```ps1
+$ROOT_PING=1 $APP_NAME=ping1 $PORT=5001                                                    pipenv run python pingn.py
+             $APP_NAME=ping2 $PORT=5002 $CHILD_URL=http://localhost:5001 $CHILD_NAME=ping1 pipenv run python pingn.py
+             $APP_NAME=ping3 $PORT=5003 $CHILD_URL=http://localhost:5002 $CHILD_NAME=ping2 pipenv run python pingn.py
+```
 
 ### let's have fun
 
