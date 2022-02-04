@@ -21,9 +21,9 @@ ROOT_PING=1 APP_NAME=ping1 PORT=5001                                            
 ### powershell
 
 ```ps1
-$env:ROOT_PING=1; $env:APP_NAME="ping1"; $env:PORT=5001;                                                                 pipenv run python pingn.py
-                  $env:APP_NAME="ping2"; $env:PORT=5002 $env:CHILD_URL="http://localhost:5001"; $env:CHILD_NAME="ping1"; pipenv run python pingn.py
-                  $env:APP_NAME="ping3"; $env:PORT=5003 $env:CHILD_URL="http://localhost:5002"; $env:CHILD_NAME="ping2"; pipenv run python pingn.py
+$env:ROOT_PING=1; $env:APP_NAME="ping1"; $env:PORT=5001;                                                                  pipenv run python pingn.py
+                  $env:APP_NAME="ping2"; $env:PORT=5002; $env:CHILD_URL="http://localhost:5001"; $env:CHILD_NAME="ping1"; pipenv run python pingn.py
+                  $env:APP_NAME="ping3"; $env:PORT=5003; $env:CHILD_URL="http://localhost:5002"; $env:CHILD_NAME="ping2"; pipenv run python pingn.py
 ```
 
 ### let's have fun
