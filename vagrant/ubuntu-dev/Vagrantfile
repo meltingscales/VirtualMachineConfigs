@@ -29,26 +29,10 @@ Vagrant.configure("2") do |config|
   # fish shell
   config.vm.provision "shell", path: "../scripts/install-fish.sh"
 
+  # tools i NEED to live
+  config.vm.provision "shell", path: "../scripts/install-necessary-tools.sh"
+
   config.vm.provision "shell", inline: <<-SHELL
-
-    apt install -y python3-pip #why is this not installed by default?!
-    python3 -m pip install pipenv
-
-    echo "Go grab a coffee, this may take a while..."
-    apt install -y ubuntu-desktop #takes forever :p
-    echo "You can run 'startx' to start desktop, or reboot."
-
-    apt install -y snap gitk
-    
-    sudo snap install bashtop
-    sudo snap install --classic code
-    sudo snap install --classic gradle
-    sudo snap install --classic powershell
-
-    apt install -y gcc make perl ruby maven
-    
-    sudo snap install go --classic # we need this as we must be using at least go v1.14.1 ... apt-get gives us an older version >:(
-    gem install mdless
     apt install -y apt-transport-https
     apt install -y software-properties-common wget
     apt install -y tasksel
@@ -63,7 +47,12 @@ Vagrant.configure("2") do |config|
     apt install -y virtualbox-guest-additions-iso
     
     apt install -y vagrant
+  SHELL
 
+  config.vm.provision "shell", inline: <<-SHELL
+    echo "Go grab a coffee, this may take a while..."
+    apt install -y ubuntu-desktop #takes forever :p
+    echo "You can run 'startx' to start desktop, or reboot."
   SHELL
 
   # jb toolbox
