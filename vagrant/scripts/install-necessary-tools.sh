@@ -5,6 +5,8 @@ apt install asciinema
 apt install -y python3-pip #why is this not installed by default?!
 python3 -m pip install pipenv
 
+apt install -y firefox chromium-browser
+
 apt install -y snap gitk
 sudo snap install bashtop
 sudo snap install --classic code
