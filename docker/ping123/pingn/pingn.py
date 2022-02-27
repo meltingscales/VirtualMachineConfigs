@@ -1,3 +1,5 @@
+import logging
+
 from pingutil import get_config_item
 from flask import jsonify
 import urllib.request
@@ -10,6 +12,13 @@ app = ms.create_app()
 
 # Are we the root ping that depends on nothing?
 IS_ROOT_PING = get_config_item(app, 'ROOT_PING', False)
+
+if isinstance(IS_ROOT_PING, str):
+    IS_ROOT_PING = int(IS_ROOT_PING)
+    if IS_ROOT_PING == 1:
+        IS_ROOT_PING = True
+    else:
+        IS_ROOT_PING = False
 
 if not IS_ROOT_PING:
     CHILD_URL = get_config_item(app, 'CHILD_URL')
@@ -47,6 +56,8 @@ def pingn():
 if __name__ == '__main__':
     h = get_config_item(app, 'HOST', '0.0.0.0')
     p = get_config_item(app, 'PORT')
+
+    logging.info("Starting pingn for {}".format(APP_NAME))
 
     app.run(host=h,
             port=p)
