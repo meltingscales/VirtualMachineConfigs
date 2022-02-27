@@ -1,13 +1,15 @@
 # useful commands
 
-### start minikube
+## Minikube
+
+### Start
 
     minikube start --driver=docker
     minikube start
 
 ## Rancher 
 
-### Create new Rancher container
+### Create new
 
     docker run --detach \
         --restart=unless-stopped \
@@ -16,12 +18,12 @@
         --name rancher \
         rancher/rancher:latest
 
-### Start existing Rancher
+### Restart existing 
 
-    docker start --detach \
-        --restart=unless-stopped \
-        -p 80:81 -p 443:444 \
-        --privileged \
-        --name rancher \
-        rancher/rancher:latest
+    docker start rancher
+
     echo "now go visit https://localhost:443/"
+
+### Get da creds
+
+    docker logs rancher 2>&1 | grep "Bootstrap Password:"
