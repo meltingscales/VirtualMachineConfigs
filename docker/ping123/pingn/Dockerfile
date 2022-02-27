@@ -3,7 +3,7 @@ FROM python:3.9.10-slim-buster
 RUN pip install pipenv
 
 RUN apt update
-RUN apt install iputils-ping curl
+RUN apt install -y iputils-ping curl
 
 WORKDIR /app
 
