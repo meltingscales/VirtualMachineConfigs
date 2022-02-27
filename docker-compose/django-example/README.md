@@ -4,4 +4,14 @@
 
 run dis shitttt boyee
 
-    sudo docker-compose run web django-admin startproject djangocomposeexample .
+    sudo docker-compose up
+
+go to <https://localhost:8000/>
+
+## make migrations
+
+    sudo docker-compose run web python manage.py makemigrations
+
+## migrate
+
+    sudo docker-compose run web python manage.py migrate
