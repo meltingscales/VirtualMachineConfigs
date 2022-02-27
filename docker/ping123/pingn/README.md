@@ -40,26 +40,18 @@ $env:ROOT_PING=1; $env:APP_NAME="ping1"; $env:PORT=5001;                        
 
     docker build ./ --tag henryfbp/pingn:latest
 
-
 ### Test local docker image
 
-TODO change this
+    docker run --name ping1 --hostname ping1 --publish 81:5000 --env ROOT_PING=1 --env APP_NAME=ping1                                                                 --env PORT=5000 --detach henryfbp/pingn:latest
+    docker run --name ping2 --hostname ping1 --publish 82:5000 --env ROOT_PING=0 --env APP_NAME=ping2 --env CHILD_URL=http://localhost:5001 --env CHILD_NAME=ping1    --env PORT=5000 --detach henryfbp/pingn:latest
 
-First, ensure ping1 is running at <http://localhost:80/>. Then run the below commands.
-
-    docker run --detach --env CHILD_URL="http://localhost:80" --publish 81:5001 henryfbp/ping2:latest
-    echo "Visit http://localhost:81/ping2"
+    echo "Visit http://localhost:82/ping2"
 
 ### upload to docker hub (only if you're henryfbp)
 
     docker login
         (le creds)
     docker push henryfbp/pingn
-
-### Test local docker image TODO FIX IT
-
-    docker run --detach --publish 80:5000 henryfbp/ping1:latest
-    echo "Visit http://localhost:80/ping1"
 
 ### delete image
 
