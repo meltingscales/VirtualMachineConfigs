@@ -2,6 +2,8 @@ FROM python:3.9.10-slim-buster
 
 RUN pip install pipenv
 
+RUN apt update
+RUN apt install iputils-ping curl
 
 WORKDIR /app
 
@@ -10,5 +12,5 @@ COPY Pipfile.lock .
 RUN pipenv install
 
 COPY . .
-EXPOSE 5001
-CMD ["pipenv", "run", "python", "ping2.py"]
+EXPOSE 5000
+CMD ["pipenv", "run", "python", "pingn.py"]
