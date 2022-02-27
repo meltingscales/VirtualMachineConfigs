@@ -18,6 +18,8 @@
         --name rancher \
         rancher/rancher:latest
 
+    echo "now go visit https://localhost:443/"
+
 ### Restart existing 
 
     docker start rancher
