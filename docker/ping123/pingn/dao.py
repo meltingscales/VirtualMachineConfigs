@@ -79,5 +79,17 @@ class DAO:
             cursor.execute('CREATE DATABASE {}'.format(self.database))
         cursor.close()
 
+    def ensure_table_exists(self):
+        cursor = self.connection.cursor()
+
+        cursor.execute('''
+        CREATE TABLE [IF NOT EXISTS] logs (
+            id      serial PRIMARY KEY,
+            msg     VARCHAR(1000)       NOT NULL,
+            date    TIMESTAMP           NOT NULL
+        );''')
+
+        cursor.close()
+
     def logEvent(self) -> None:
         cursor = self.connection.cursor()
