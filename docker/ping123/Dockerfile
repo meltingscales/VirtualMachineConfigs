@@ -11,6 +11,6 @@ COPY Pipfile .
 COPY Pipfile.lock .
 RUN pipenv install
 
-COPY . .
+COPY ./pingn/ .
 EXPOSE 5000
-CMD ["pipenv", "run", "python", "pingn.py"]
+CMD ["pipenv", "run", "python", "-m", "pingn"]
