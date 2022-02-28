@@ -22,6 +22,7 @@ if isinstance(IS_ROOT_PING, str):
         IS_ROOT_PING = False
 
 if not IS_ROOT_PING:
+    print("This is a child ping server.")
     CHILD_URL = get_config_item(app, 'CHILD_URL')
     CHILD_NAME = get_config_item(app, 'CHILD_NAME')
     CHILD_ENDPOINT = "/{0}".format(CHILD_NAME)
@@ -32,14 +33,17 @@ else:
 APP_NAME = get_config_item(app, 'APP_NAME')
 APP_ENDPOINT = "/{0}".format(APP_NAME)
 
-daDAO = None
+daDAO: DAO = None
 if get_config_item(app, 'PSQL_HOST', None):
+    print("We are also using PostgreSQL for logging.")
     daDAO = DAO.instance()
 
 
 @app.route("/")
 def index():
     return jsonify({"message": "go to " + APP_ENDPOINT})
+    if daDAO:
+        daDAO
 
 
 @app.route(APP_ENDPOINT)

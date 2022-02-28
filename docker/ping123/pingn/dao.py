@@ -30,8 +30,9 @@ class Singleton:  # stolen from https://stackoverflow.com/questions/31875/is-the
         try:
             return self._instance
         except AttributeError:
-            self._instance = self._decorated()
-            return self._instance
+            pass
+        self._instance = self._decorated()
+        return self._instance
 
     def __call__(self):
         raise TypeError('Singletons must be accessed through `instance()`.')
@@ -52,6 +53,16 @@ class DAO:
         self.connection = psycopg2.connect(
             host=self.host,
             port=self.port,
+            database='postgres',
+            user=self.user,
+            password=self.password)
+        self.connection.autocommit = True
+        self.ensure_database_exists()
+        self.connection.close()
+
+        self.connection = psycopg2.connect(
+            host=self.host,
+            port=self.port,
             database=self.database,
             user=self.user,
             password=self.password)
@@ -61,12 +72,12 @@ class DAO:
     def ensure_database_exists(self):
         cursor = self.connection.cursor()
 
-        cursor.execute("SELECT 1 FROM pg_catalog.pg_database WHERE datname = '{db}'".format(db=self.database))
+        cursor.execute("SELECT 1 FROM pg_catalog.pg_database WHERE datname = '{}'".format(self.database))
         exists = cursor.fetchone()
         if not exists:
-            cursor.execute('CREATE DATABASE {db}'.format(db=self.database))
+            print("Database {} does not exist. Creating.".format(self.database))
+            cursor.execute('CREATE DATABASE {}'.format(self.database))
         cursor.close()
-
 
     def logEvent(self) -> None:
         cursor = self.connection.cursor()

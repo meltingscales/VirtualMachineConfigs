@@ -13,17 +13,17 @@ To make 3 servers (may need to run in separate terminals), run in BASH (not fish
 ### bash
 
 ```sh
-ROOT_PING=1 APP_NAME=ping1 PORT=5001                                                  pipenv run python pingn.py
-            APP_NAME=ping2 PORT=5002 CHILD_URL=http://localhost:5001 CHILD_NAME=ping1 pipenv run python pingn.py
-            APP_NAME=ping3 PORT=5003 CHILD_URL=http://localhost:5002 CHILD_NAME=ping2 pipenv run python pingn.py
+ROOT_PING=1 APP_NAME=ping1 PORT=5001                                                  PSQL_HOST=pingnpg pipenv run python -m pingn
+            APP_NAME=ping2 PORT=5002 CHILD_URL=http://localhost:5001 CHILD_NAME=ping1                   pipenv run python -m pingn
+            APP_NAME=ping3 PORT=5003 CHILD_URL=http://localhost:5002 CHILD_NAME=ping2                   pipenv run python -m pingn
 ```
 
 ### powershell
 
 ```ps1
-$env:ROOT_PING=1; $env:APP_NAME="ping1"; $env:PORT=5001;                                                                  pipenv run python pingn.py
-                  $env:APP_NAME="ping2"; $env:PORT=5002; $env:CHILD_URL="http://localhost:5001"; $env:CHILD_NAME="ping1"; pipenv run python pingn.py
-                  $env:APP_NAME="ping3"; $env:PORT=5003; $env:CHILD_URL="http://localhost:5002"; $env:CHILD_NAME="ping2"; pipenv run python pingn.py
+$env:ROOT_PING=1; $env:APP_NAME="ping1"; $env:PORT=5001;                                                                  pipenv run python -m pingn
+                  $env:APP_NAME="ping2"; $env:PORT=5002; $env:CHILD_URL="http://localhost:5001"; $env:CHILD_NAME="ping1"; pipenv run python -m pingn
+                  $env:APP_NAME="ping3"; $env:PORT=5003; $env:CHILD_URL="http://localhost:5002"; $env:CHILD_NAME="ping2"; pipenv run python -m pingn
 ```
 
 ### let's have fun
@@ -42,6 +42,8 @@ $env:ROOT_PING=1; $env:APP_NAME="ping1"; $env:PORT=5001;                        
 
 ### Test local docker image
 
+Note you can remove `--detach` or run `docker logs <CONTAINER>` to get logs.
+
     docker rm pingnpostgres ping1 ping2 ping3 ping4 -f
     docker network rm pingnnet
 
@@ -49,7 +51,7 @@ $env:ROOT_PING=1; $env:APP_NAME="ping1"; $env:PORT=5001;                        
     docker network create pingnnet
 
     docker run --name pingnpg       --hostname pingnpg  --publish 5432:5432 --env POSTGRES_PASSWORD=postgres postgres --detach
-    docker run --name ping1         --hostname ping1    --publish 81:5000   --env ROOT_PING=1 --env APP_NAME=ping1                                                          --env PORT=5000 --env  --detach henryfbp/pingn:latest
+    docker run --name ping1         --hostname ping1    --publish 81:5000   --env ROOT_PING=1 --env APP_NAME=ping1                                                          --env PORT=5000 --env PSQL_HOST=pingnpg --detach henryfbp/pingn:latest
     docker run --name ping2         --hostname ping2    --publish 82:5000   --env ROOT_PING=0 --env APP_NAME=ping2 --env CHILD_URL=http://ping1:5000 --env CHILD_NAME=ping1 --env PORT=5000 --detach henryfbp/pingn:latest
     docker run --name ping3         --hostname ping3    --publish 83:5000   --env ROOT_PING=0 --env APP_NAME=ping3 --env CHILD_URL=http://ping2:5000 --env CHILD_NAME=ping2 --env PORT=5000 --detach henryfbp/pingn:latest
     docker run --name ping4         --hostname ping4    --publish 84:5000   --env ROOT_PING=0 --env APP_NAME=ping4 --env CHILD_URL=http://ping3:5000 --env CHILD_NAME=ping3 --env PORT=5000 --detach henryfbp/pingn:latest
