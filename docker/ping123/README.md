@@ -10,6 +10,12 @@ To make 3 servers (may need to run in separate terminals), run in BASH (not fish
 
     pipenv install
 
+## test db
+
+    psql -h localhost -U postgres pingn 
+        \dt+
+    SELECT * FROM logs;
+
 ### bash
 
 ```shell

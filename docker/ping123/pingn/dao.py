@@ -29,8 +29,9 @@ class DAO:
             database=self.database,
             user=self.user,
             password=self.password)
+        self.connection.autocommit = True
 
-        self.ensure_database_exists()
+        self.ensure_table_exists()
 
     def ensure_database_exists(self):
         cursor = self.connection.cursor()
@@ -42,18 +43,23 @@ class DAO:
             cursor.execute('CREATE DATABASE {}'.format(self.database))
         else:
             self.app.logger.info("Database {} already exists.".format(self.database))
+
+        self.connection.commit()
         cursor.close()
 
     def ensure_table_exists(self):
         cursor = self.connection.cursor()
 
+        self.app.logger.info("ensuring 'logs' db exists.".format(self.database))
+
         cursor.execute('''
-        CREATE TABLE [IF NOT EXISTS] logs (
+        CREATE TABLE IF NOT EXISTS logs (
             id      serial PRIMARY KEY,
             msg     VARCHAR(1000)       NOT NULL,
             date    TIMESTAMP           NOT NULL
         );''')
 
+        self.connection.commit()
         cursor.close()
 
     def logEvent(self, event: str) -> None:

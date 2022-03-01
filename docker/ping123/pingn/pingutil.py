@@ -17,7 +17,7 @@ def get_config_item_as_bool(app: Flask, name, default: Any = None) -> bool:
     return ret
 
 
-def get_config_item(app: Flask, name, default: Any = None) -> str:
+def get_config_item(app: Flask, name, default: Any = None, allow_empty=False) -> str:
     result = None
     # prefer env vars for item
     result = os.environ.get(name, None)
@@ -31,7 +31,7 @@ def get_config_item(app: Flask, name, default: Any = None) -> str:
         app.logger.info(f"Using {name} from app.config: " + result)
         return result
 
-    if default is None:
+    if (not allow_empty) and (not default):
         # check if it's empty
         raise ValueError(f"You must set '{name}' in config.yml or env vars!"
                          f"HALTING! This service depends on {name}!")
