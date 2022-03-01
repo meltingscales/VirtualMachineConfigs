@@ -91,5 +91,11 @@ class DAO:
 
         cursor.close()
 
-    def logEvent(self) -> None:
+    def logEvent(self, event:str) -> None:
         cursor = self.connection.cursor()
+
+        cursor.execute('''
+            INSERT INTO TABLE logs (msg, date) VALUES('{}', NOW())
+        '''.format(event))
+
+        cursor.close()
