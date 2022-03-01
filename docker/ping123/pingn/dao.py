@@ -54,17 +54,21 @@ class DAO:
 
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS logs (
-            id      serial PRIMARY KEY,
-            msg     VARCHAR(1000)       NOT NULL,
-            date    TIMESTAMP           NOT NULL
+            id          serial PRIMARY KEY,
+            category    VARCHAR(100)        NOT NULL,
+            msg         VARCHAR(1000)       NOT NULL,
+            date        TIMESTAMP           NOT NULL
         );''')
 
         self.connection.commit()
         cursor.close()
 
-    def logEvent(self, event: str) -> None:
+    def logEvent(self, category='default', event: str = None) -> None:
         cursor = self.connection.cursor()
 
-        cursor.execute('''INSERT INTO logs(msg, date) VALUES(%s, current_timestamp);''', [str(event)])
+        cursor.execute(
+            '''INSERT INTO logs(msg, category, date)
+                VALUES(%s, %s, current_timestamp);''',
+            [str(event), str(category)])
 
         cursor.close()

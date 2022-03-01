@@ -56,6 +56,9 @@ def pingn():
 
         result.update({f"{CHILD_NAME}_result": data})
 
+    if dao:
+        dao.logEvent(str(result))
+
     return jsonify(result)
 
 
