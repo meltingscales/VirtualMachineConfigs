@@ -61,15 +61,24 @@ docker network create pingnnet
 
 docker run --name pingnpg       --hostname pingnpg  --publish 5432:5432 --env POSTGRES_PASSWORD=postgres --detach postgres 
 docker run --name ping1         --hostname ping1    --publish 81:5000   --env ROOT_PING=1 --env APP_NAME=ping1                                                          --env PORT=5000 --env PSQL_HOST=pingnpg --detach henryfbp/pingn:latest
-docker run --name ping2         --hostname ping2    --publish 82:5000   --env ROOT_PING=0 --env APP_NAME=ping2 --env CHILD_URL=http://ping1:5000 --env CHILD_NAME=ping1 --env PORT=5000 --detach henryfbp/pingn:latest
-docker run --name ping3         --hostname ping3    --publish 83:5000   --env ROOT_PING=0 --env APP_NAME=ping3 --env CHILD_URL=http://ping2:5000 --env CHILD_NAME=ping2 --env PORT=5000 --detach henryfbp/pingn:latest
-docker run --name ping4         --hostname ping4    --publish 84:5000   --env ROOT_PING=0 --env APP_NAME=ping4 --env CHILD_URL=http://ping3:5000 --env CHILD_NAME=ping3 --env PORT=5000 --detach henryfbp/pingn:latest
+docker run --name ping2         --hostname ping2    --publish 82:5000   --env ROOT_PING=0 --env APP_NAME=ping2 --env CHILD_URL=http://ping1:5000 --env CHILD_NAME=ping1 --env PORT=5000 --env PSQL_HOST=pingnpg --detach henryfbp/pingn:latest
+docker run --name ping3         --hostname ping3    --publish 83:5000   --env ROOT_PING=0 --env APP_NAME=ping3 --env CHILD_URL=http://ping2:5000 --env CHILD_NAME=ping2 --env PORT=5000 --env PSQL_HOST=pingnpg --detach henryfbp/pingn:latest
+docker run --name ping4         --hostname ping4    --publish 84:5000   --env ROOT_PING=0 --env APP_NAME=ping4 --env CHILD_URL=http://ping3:5000 --env CHILD_NAME=ping3 --env PORT=5000 --env PSQL_HOST=pingnpg --detach henryfbp/pingn:latest
 
 docker network connect pingnnet pingnpg
 docker network connect pingnnet ping1
 docker network connect pingnnet ping2
 docker network connect pingnnet ping3
 docker network connect pingnnet ping4
+
+sleep 5
+
+# they may need to be restarted as they could not connect to pingnpg before being connected to the network
+docker start ping1 ping2 ping3 ping4
+
+sleep 2
+
+docker ps
 
 echo "Visit http://localhost:84/ping4"
 ```
