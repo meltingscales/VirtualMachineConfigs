@@ -5,7 +5,6 @@ name = "pypi"
 
 [packages]
 flask = "*"
-py-ms = "*"
 psycopg2-binary = "*"
 
 [dev-packages]

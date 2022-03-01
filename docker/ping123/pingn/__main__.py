@@ -1,49 +1,41 @@
+import json
 import logging
+import urllib.request
+
+from flask import jsonify, Flask
 
 from pingn.dao import DAO
-from pingn.pingutil import get_config_item
-from flask import jsonify
-import urllib.request
-import json
+from pingn.pingutil import get_config_item, get_config_item_as_bool
 
-from pyms.flask.app import Microservice
-
-ms = Microservice(path=__file__)
-app = ms.create_app()
+app = Flask('pingn')
+app.logger.setLevel(logging.INFO)
 
 # Are we the root ping that depends on nothing?
-IS_ROOT_PING = get_config_item(app, 'ROOT_PING', False)
-
-if isinstance(IS_ROOT_PING, str):
-    IS_ROOT_PING = int(IS_ROOT_PING)
-    if IS_ROOT_PING == 1:
-        IS_ROOT_PING = True
-    else:
-        IS_ROOT_PING = False
+IS_ROOT_PING = get_config_item_as_bool(app, 'ROOT_PING', False)
 
 if not IS_ROOT_PING:
-    print("This is a child ping server.")
+    app.logger.info("This is a child ping server.")
     CHILD_URL = get_config_item(app, 'CHILD_URL')
     CHILD_NAME = get_config_item(app, 'CHILD_NAME')
     CHILD_ENDPOINT = "/{0}".format(CHILD_NAME)
     CHILD_URL_ENDPOINT = CHILD_URL + CHILD_ENDPOINT
 else:
-    print("This is a root ping server.")
+    app.logger.info("This is a root ping server.")
 
 APP_NAME = get_config_item(app, 'APP_NAME')
 APP_ENDPOINT = "/{0}".format(APP_NAME)
 
-daDAO: DAO = None
+dao: DAO = None
 if get_config_item(app, 'PSQL_HOST', None):
-    print("We are also using PostgreSQL for logging.")
-    daDAO = DAO.instance()
+    app.logger.info("We are also using PostgreSQL for logging.")
+    dao = DAO(app, get_config_item(app, 'PSQL_HOST'))
 
 
 @app.route("/")
 def index():
+    if dao:
+        dao.logEvent('got index hit!')
     return jsonify({"message": "go to " + APP_ENDPOINT})
-    if daDAO:
-        daDAO
 
 
 @app.route(APP_ENDPOINT)
@@ -52,7 +44,7 @@ def pingn():
 
     # If we depend on something, query it
     if not IS_ROOT_PING:
-        print(f"send GET to child: {CHILD_URL_ENDPOINT}")
+        app.logger.info(f"send GET to child: {CHILD_URL_ENDPOINT}")
         data = {}
         with urllib.request.urlopen(CHILD_URL_ENDPOINT) as url:
             data = json.loads(url.read().decode())
@@ -66,7 +58,8 @@ if __name__ == '__main__':
     h = get_config_item(app, 'HOST', '0.0.0.0')
     p = get_config_item(app, 'PORT')
 
-    logging.info("Starting pingn for {}".format(APP_NAME))
+    app.logger.info("Starting pingn for {}".format(APP_NAME))
 
     app.run(host=h,
-            port=p)
+            port=p,
+            debug=True)
