@@ -33,18 +33,21 @@ if get_config_item(app, 'PSQL_HOST', None):
     if get_config_item(app, 'PSQL_PORT', allow_empty=True):
         kw['PSQL_PORT'] = get_config_item(app, 'PSQL_PORT')
 
-    dao = DAO(app, get_config_item(app, 'PSQL_HOST'))
+    # if adasdfasdf:
+    #       kw[asdfasdf] = 'asdfasdfasdf' etc etc
+
+    dao = DAO(app, apphost=APP_NAME, host=get_config_item(app, 'PSQL_HOST', **kw))
 
 
 @app.route("/")
 def index():
     if dao:
-        dao.logEvent('got index hit!')
+        dao.log_event('index', 'got index hit!')
     return jsonify({"message": "go to " + APP_ENDPOINT})
 
 
 @app.route(APP_ENDPOINT)
-def pingn():
+def api():
     result = {"message": "hello from " + APP_NAME}
 
     # If we depend on something, query it
@@ -57,7 +60,7 @@ def pingn():
         result.update({f"{CHILD_NAME}_result": data})
 
     if dao:
-        dao.logEvent(str(result))
+        dao.log_event('api', str(result))
 
     return jsonify(result)
 

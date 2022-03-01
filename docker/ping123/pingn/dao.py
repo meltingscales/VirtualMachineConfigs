@@ -3,8 +3,15 @@ from flask import Flask
 
 
 class DAO:
-    def __init__(self, app: Flask, host='localhost', port=5432, database='pingn', user='postgres', password='postgres'):
+    def __init__(self, app: Flask,
+                 apphost='localhost',
+                 host='localhost',
+                 port=5432,
+                 database='pingn',
+                 user='postgres',
+                 password='postgres'):
         self.app = app
+        self.apphost = apphost
         self.host = host
         self.port = port
         self.database = database
@@ -55,6 +62,7 @@ class DAO:
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS logs (
             id          serial PRIMARY KEY,
+            host        VARCHAR(100)        NOT NULL,
             category    VARCHAR(100)        NOT NULL,
             msg         VARCHAR(1000)       NOT NULL,
             date        TIMESTAMP           NOT NULL
@@ -63,12 +71,12 @@ class DAO:
         self.connection.commit()
         cursor.close()
 
-    def logEvent(self, category='default', event: str = None) -> None:
+    def log_event(self, category='default', event: str = None) -> None:
         cursor = self.connection.cursor()
 
         cursor.execute(
-            '''INSERT INTO logs(msg, category, date)
-                VALUES(%s, %s, current_timestamp);''',
-            [str(event), str(category)])
+            '''INSERT INTO logs(host, category, msg, date)
+                VALUES(%s, %s, %s, current_timestamp);''',
+            [self.apphost, str(category), str(event)])
 
         cursor.close()
