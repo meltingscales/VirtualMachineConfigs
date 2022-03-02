@@ -67,7 +67,7 @@ def api():
 
 if __name__ == '__main__':
     h = get_config_item(app, 'HOST', '0.0.0.0')
-    p = get_config_item(app, 'PORT')
+    p = get_config_item(app, 'PORT', '5000')
 
     app.logger.info("Starting pingn for {}".format(APP_NAME))
 

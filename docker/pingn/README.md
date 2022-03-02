@@ -48,6 +48,12 @@ $env:ROOT_PING=1; $env:APP_NAME="ping1"; $env:PORT=5001;                        
 
     docker build ./ --tag henryfbp/pingn:latest
 
+### upload to docker hub (only if you're henryfbp)
+
+    docker login
+        (le creds)
+    docker push henryfbp/pingn
+
 ### Test local docker image
 
 Note you can remove `--detach` or run `docker logs <CONTAINER>` to get logs.
@@ -82,12 +88,6 @@ docker ps
 
 echo "Visit http://localhost:84/ping4"
 ```
-
-### upload to docker hub (only if you're henryfbp)
-
-    docker login
-        (le creds)
-    docker push henryfbp/pingn
 
 ### delete image
 

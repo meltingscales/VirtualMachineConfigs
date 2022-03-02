@@ -9,12 +9,12 @@ def get_config_item_as_bool(app: Flask, name, default: Any = None, allow_empty: 
 
     if isinstance(ret, str):
         ret = int(ret)
-        if ret == 1:
+        if ret is 1:
             ret = True
         else:
             ret = False
 
-    if ret == None:
+    if ret is None:
         ret = False
 
     return ret
@@ -36,7 +36,7 @@ def get_config_item(app: Flask, name, default: Any = None, allow_empty=False) ->
 
     if (not allow_empty) and (not default):
         # check if it's empty
-        raise ValueError(f"You must set '{name}' in config.yml or env vars!"
+        raise ValueError(f"You must set '{name}' in config.yml or env vars!\n"
                          f"HALTING! This service depends on {name}!")
     else:
         return default
