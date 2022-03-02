@@ -4,8 +4,8 @@ from typing import Any
 from flask import Flask
 
 
-def get_config_item_as_bool(app: Flask, name, default: Any = None) -> bool:
-    ret = get_config_item(app, name, default)
+def get_config_item_as_bool(app: Flask, name, default: Any = None, allow_empty: bool = True) -> bool:
+    ret = get_config_item(app, name, default, allow_empty)
 
     if isinstance(ret, str):
         ret = int(ret)
@@ -13,6 +13,9 @@ def get_config_item_as_bool(app: Flask, name, default: Any = None) -> bool:
             ret = True
         else:
             ret = False
+
+    if ret == None:
+        ret = False
 
     return ret
 

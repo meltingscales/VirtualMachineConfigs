@@ -26,7 +26,7 @@ APP_NAME = get_config_item(app, 'APP_NAME')
 APP_ENDPOINT = "/{0}".format(APP_NAME)
 
 dao: DAO = None
-if get_config_item(app, 'PSQL_HOST', None):
+if get_config_item(app, 'PSQL_HOST', None, allow_empty=True):
     app.logger.info("We are also using PostgreSQL for logging.")
 
     kw = {}
