@@ -72,6 +72,8 @@ pingnInstances:
         value: "1"
       - name: APP_NAME
         value: "ping1"
+      - name: PSQL_HOST
+        value: "postgres"
   - name: ping2
     env:
       - name: APP_NAME

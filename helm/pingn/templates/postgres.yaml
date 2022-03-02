@@ -20,6 +20,7 @@ spec:
       labels:
         {{- include "pingn.selectorLabels" . | nindent 8 }}
         app: postgres
+        base-app: {{ include "pingn.fullname" . }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
