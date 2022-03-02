@@ -4,8 +4,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "{{ include "pingn.fullname" $ }}-{{ .name }}"
+  name: "{{ .name }}"
   labels:
+    base-app: {{ include "pingn.fullname" $ }}
+    app: {{ .name }}
     {{- include "pingn.labels" $ | nindent 4 }}
 spec:
   {{- if not $top.Values.autoscaling.enabled }}
