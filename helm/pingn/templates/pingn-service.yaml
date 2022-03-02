@@ -1,5 +1,5 @@
 {{ $top := . }}
-{{ range .Values.pings }}
+{{ range .Values.pingnInstances }}
 
 apiVersion: v1
 kind: Service

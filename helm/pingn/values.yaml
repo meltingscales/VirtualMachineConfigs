@@ -57,6 +57,7 @@ ingress:
   #      - chart-example.local
 
 postgres:
+  port: "5432"
   image:
     repository: "postgres"
     tag: "latest"
