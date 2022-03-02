@@ -4,7 +4,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "pingn.fullname" $ }}
+  name: "{{ include "pingn.fullname" $ }}-{{ .name }}"
   labels:
     {{- include "pingn.labels" $ | nindent 4 }}
 spec:
@@ -38,20 +38,12 @@ spec:
           imagePullPolicy: {{ $top.Values.image.pullPolicy }}
           env:
             {{- if .env }}
-              {{- toYaml .env | nindent 12 -}}
+              {{- toYaml .env | nindent 12 }}
             {{- end }}
           ports:
             - name: http
               containerPort: 80
               protocol: TCP
-#          livenessProbe:
-#            httpGet:
-#              path: /
-#              port: http
-#          readinessProbe:
-#            httpGet:
-#              path: /
-#              port: http
           resources:
             {{- toYaml $top.Values.resources | nindent 12 }}
       {{- with $top.Values.nodeSelector }}

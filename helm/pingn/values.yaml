@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: henryfbp/pingn
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
@@ -60,11 +60,19 @@ pings:
   - name: ping1
     env:
       - name: ROOT_PING
-        value: 1
+        value: "1"
+      - name: APP_NAME
+        value: "ping1"
   - name: ping2
     env:
       - name: ROOT_PING
-        value: 0
+        value: "0"
+      - name: APP_NAME
+        value: "ping2"
+      - name: CHILD_URL
+        value: "ping1"
+      - name: CHILD_NAME
+        value: "ping1"
 
 
 resources:
