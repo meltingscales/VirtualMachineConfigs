@@ -1,1 +1,5 @@
-helm upgrade pingn ./pingn/ --install
+# pingn Helm chart
+
+## deploy
+
+    helm upgrade pingn ./pingn/ --install

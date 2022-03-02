@@ -42,7 +42,7 @@ service:
 
 ingress:
   enabled: true
-  className: ""
+  className: "nginx"
   annotations: { }
   # kubernetes.io/ingress.class: nginx
   # kubernetes.io/tls-acme: "true"
@@ -56,10 +56,15 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+postgres:
+  image:
+    repository: "postgres"
+    tag: "latest"
+
 pingn:
   port: "80"
 
-pings:
+pingnInstances:
   - name: ping1
     env:
       - name: ROOT_PING

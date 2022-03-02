@@ -1,5 +1,5 @@
 {{ $top := . }}
-{{ range .Values.pings }}
+{{ range .Values.pingnInstances }}
 
 apiVersion: apps/v1
 kind: Deployment
@@ -38,6 +38,10 @@ spec:
             {{- toYaml $top.Values.securityContext | nindent 12 }}
           image: "{{ $top.Values.image.repository }}:{{ $top.Values.image.tag | default $top.Chart.AppVersion }}"
           imagePullPolicy: {{ $top.Values.image.pullPolicy }}
+          livenessProbe:
+             httpGet:
+               path: /
+               port: http
           env:
             - name: PORT
               value: "{{ $top.Values.pingn.port }}"
