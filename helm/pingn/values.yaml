@@ -56,6 +56,9 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+pingn:
+  port: 5000
+
 pings:
   - name: ping1
     env:

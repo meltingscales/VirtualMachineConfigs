@@ -1,13 +1,31 @@
 {{ $top := . }}
 {{ range .Values.pings }}
 
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ .name }}"
+  labels:
+    {{- include "pingn.labels" $ | nindent 4 }}
+spec:
+  type: {{ $top.Values.service.type }}
+  ports:
+    - port: {{ $top.Values.pingn.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    base-app: {{ include "pingn.fullname" $ }}
+    app: {{ .name }}
+
+
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: "{{ .name }}"
   labels:
-    base-app: {{ include "pingn.fullname" $ }}
-    app: {{ .name }}
     {{- include "pingn.labels" $ | nindent 4 }}
 spec:
   {{- if not $top.Values.autoscaling.enabled }}
@@ -23,6 +41,8 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
+        base-app: {{ include "pingn.fullname" $ }}
+        app: {{ .name }}
         {{- include "pingn.selectorLabels" $ | nindent 8 }}
     spec:
       {{- with $top.Values.imagePullSecrets }}
@@ -44,7 +64,7 @@ spec:
             {{- end }}
           ports:
             - name: http
-              containerPort: 80
+              containerPort: {{ $top.Values.pingn.port }}
               protocol: TCP
           resources:
             {{- toYaml $top.Values.resources | nindent 12 }}
