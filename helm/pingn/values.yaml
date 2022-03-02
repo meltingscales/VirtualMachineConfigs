@@ -29,7 +29,7 @@ podSecurityContext: { }
 # fsGroup: 2000
 
 securityContext: { }
-  # capabilities:
+# capabilities:
 #   drop:
 #   - ALL
 # readOnlyRootFilesystem: true
@@ -57,7 +57,7 @@ ingress:
   #      - chart-example.local
 
 pingn:
-  port: 5000
+  port: "80"
 
 pings:
   - name: ping1
@@ -68,14 +68,28 @@ pings:
         value: "ping1"
   - name: ping2
     env:
-      - name: ROOT_PING
-        value: "0"
       - name: APP_NAME
         value: "ping2"
       - name: CHILD_URL
-        value: "ping1"
+        value: "http://ping1"
       - name: CHILD_NAME
         value: "ping1"
+  - name: ping3
+    env:
+      - name: APP_NAME
+        value: "ping3"
+      - name: CHILD_URL
+        value: "http://ping2"
+      - name: CHILD_NAME
+        value: "ping2"
+  - name: ping4
+    env:
+      - name: APP_NAME
+        value: "ping4"
+      - name: CHILD_URL
+        value: "http://ping3"
+      - name: CHILD_NAME
+        value: "ping3"
 
 
 resources:

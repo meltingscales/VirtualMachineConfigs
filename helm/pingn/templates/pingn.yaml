@@ -1,26 +1,6 @@
 {{ $top := . }}
 {{ range .Values.pings }}
 
-apiVersion: v1
-kind: Service
-metadata:
-  name: "{{ .name }}"
-  labels:
-    {{- include "pingn.labels" $ | nindent 4 }}
-spec:
-  type: {{ $top.Values.service.type }}
-  ports:
-    - port: {{ $top.Values.pingn.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
-  selector:
-    base-app: {{ include "pingn.fullname" $ }}
-    app: {{ .name }}
-
-
----
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -59,6 +39,8 @@ spec:
           image: "{{ $top.Values.image.repository }}:{{ $top.Values.image.tag | default $top.Chart.AppVersion }}"
           imagePullPolicy: {{ $top.Values.image.pullPolicy }}
           env:
+            - name: PORT
+              value: "{{ $top.Values.pingn.port }}"
             {{- if .env }}
               {{- toYaml .env | nindent 12 }}
             {{- end }}

@@ -1,0 +1,23 @@
+{{ $top := . }}
+{{ range .Values.pings }}
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ .name }}"
+  labels:
+    {{- include "pingn.labels" $ | nindent 4 }}
+spec:
+  type: {{ $top.Values.service.type }}
+  ports:
+    - port: {{ $top.Values.pingn.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    base-app: {{ include "pingn.fullname" $ }}
+    app: {{ .name }}
+
+---
+
+{{- end }} {{/* end range */}}
