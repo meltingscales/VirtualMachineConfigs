@@ -43,7 +43,13 @@ if get_config_item(app, 'PSQL_HOST', None, allow_empty=True):
 def index():
     if dao:
         dao.log_event('index', 'got index hit!')
-    return jsonify({"message": "go to " + APP_ENDPOINT})
+
+    ret = {"message": "go to " + APP_ENDPOINT}
+
+    if IS_ROOT_PING:
+        ret['extra'] = 'also...we are a root ping server :3c'
+
+    return jsonify(ret)
 
 
 @app.route(APP_ENDPOINT)
@@ -58,6 +64,8 @@ def api():
             data = json.loads(url.read().decode())
 
         result.update({f"{CHILD_NAME}_result": data})
+    else:
+        result['extra'] = 'also...we are a root ping server :3c'
 
     if dao:
         dao.log_event('api', str(result))

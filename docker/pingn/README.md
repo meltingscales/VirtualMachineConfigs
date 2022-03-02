@@ -47,11 +47,6 @@ $env:ROOT_PING=1; $env:APP_NAME="ping1"; $env:PORT=5001;                        
 ## Build docker image
 
     docker build ./ --tag henryfbp/pingn:latest
-
-### upload to docker hub (only if you're henryfbp)
-
-    docker login
-        (le creds)
     docker push henryfbp/pingn
 
 ### Test local docker image
@@ -77,7 +72,7 @@ docker network connect pingnnet ping2
 docker network connect pingnnet ping3
 docker network connect pingnnet ping4
 
-sleep 5
+sleep 10
 
 # they may need to be restarted as they could not connect to pingnpg before being connected to the network
 docker start ping1 ping2 ping3 ping4
