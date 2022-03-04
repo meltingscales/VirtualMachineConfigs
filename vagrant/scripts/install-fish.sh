@@ -7,7 +7,7 @@ echo 'vagrant' | chsh vagrant -s /usr/bin/fish
 
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install > omf-install.fish
 chmod +x omf-install.fish
-sudo -u $NONROOT_USER fish -c "./omf-install.fish --noninteractive --yes || echo 'omf install either failed or omf is already installed.'"
+sudo -u $NONROOT_USER fish -c "./omf-install.fish --noninteractive --yes; or echo 'omf install either failed or omf is already installed.'"
 
 rm ./omf-install.fish
 
