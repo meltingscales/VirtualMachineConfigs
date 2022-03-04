@@ -1,9 +1,14 @@
 #!/usr/bin/env bash
 
-apt install asciinema
+sudo add-apt-repository --yes ppa:deadsnakes/ppa
+sudo apt update
+
+apt install -y asciinema
+
+apt install -y python3.10
 
 apt install -y python3-pip #why is this not installed by default?!
-python3 -m pip install pipenv
+python3 -m pip install pipenv poetry
 
 apt install -y firefox chromium-browser
 
