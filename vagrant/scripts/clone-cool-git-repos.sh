@@ -17,7 +17,7 @@ git clone https://github.com/WebGoat/WebGoat
 git clone https://github.com/bkimminich/juice-shop
 git clone https://github.com/joaomatosf/jexboss
 
-if [ ! -f ~/.ssh/id_rsa ]; then
+if [ ! -f /home/$NONROOT_USER/.ssh/id_rsa ]; then
 	echo "You must create an SSH key, and you should then import it into Git! Not cloning personal repos using SSH."
 	git clone https://github.com/HenryFBP/hackthebox
 	git clone https://github.com/HenryFBP/autohackthebox
