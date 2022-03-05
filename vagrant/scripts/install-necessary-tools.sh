@@ -6,11 +6,11 @@ sudo apt update
 apt install -y asciinema
 
 # apt install -y python3.9-full
-
-# curl https://bootstrap.pypa.io/get-pip.py | python3.9
 # python3.9 -m pip install pipenv poetry
-
 # apt install -y python3.9-pip #why is this not installed by default?!
+
+curl https://bootstrap.pypa.io/get-pip.py | python3
+python3 -m pip install pipenv poetry
 
 
 apt install -y firefox chromium-browser
