@@ -26,6 +26,12 @@ Vagrant.configure("2") do |config|
     apt-get update
   SHELL
   
+  config.vm.provision "shell", inline: <<-SHELL
+    echo "Go grab a coffee, this may take a while..."
+    apt install -y ubuntu-desktop #takes forever :p
+    echo "You can run 'startx' to start desktop, or reboot."
+  SHELL
+
   # fish shell
   config.vm.provision "shell", path: "../scripts/install-fish.sh"
 
@@ -47,12 +53,6 @@ Vagrant.configure("2") do |config|
     apt install -y virtualbox-guest-additions-iso
     
     apt install -y vagrant
-  SHELL
-
-  config.vm.provision "shell", inline: <<-SHELL
-    echo "Go grab a coffee, this may take a while..."
-    apt install -y ubuntu-desktop #takes forever :p
-    echo "You can run 'startx' to start desktop, or reboot."
   SHELL
 
   # jb toolbox
