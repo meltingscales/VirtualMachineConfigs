@@ -51,8 +51,8 @@ end
 WEWLAD
 
 # can replace this with whatever theme you want...
-sudo -u $NONROOT_USER fish -c "omf install batman"
-sudo -u $NONROOT_USER fish -c "omf theme batman"
+sudo -u $NONROOT_USER fish -c "omf install ays"
+sudo -u $NONROOT_USER fish -c "omf theme ays"
 
 apt-get install -y lynx gedit iftop
 
