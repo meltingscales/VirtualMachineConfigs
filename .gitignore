@@ -3,6 +3,7 @@
 *.db
 *.log
 secret.json
+*.secret.txt
 
 /java/**/out/
 
