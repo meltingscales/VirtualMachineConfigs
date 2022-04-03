@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-NONROOT_USER=vagrant
+# if not set
+if [ -z $NONROOT_USER ]; then
+	NONROOT_USER=vagrant
+fi
+
 GITFLAGS=--recurse-submodules
 
 sudo su $NONROOT_USER
@@ -11,13 +15,15 @@ mkdir -p Git
 
 pushd Git
 
-git clone https://github.com/philipperemy/tensorflow-1.4-billion-password-analysis
-git clone https://github.com/skyblueee/sqli-labs-php7
-git clone https://github.com/tuxotron/Audi_SQLi_lamp_container
-git clone https://github.com/WebGoat/WebGoat
-git clone https://github.com/bkimminich/juice-shop
-git clone https://github.com/joaomatosf/jexboss
+git clone $GITFLAGS https://github.com/philipperemy/tensorflow-1.4-billion-password-analysis
+git clone $GITFLAGS https://github.com/skyblueee/sqli-labs-php7
+git clone $GITFLAGS https://github.com/tuxotron/Audi_SQLi_lamp_container
+git clone $GITFLAGS https://github.com/WebGoat/WebGoat
+git clone $GITFLAGS https://github.com/bkimminich/juice-shop
+git clone $GITFLAGS https://github.com/joaomatosf/jexboss
 
+git clone $GITFLAGS git@github.com:HenryFBP/adventofcode
+git clone $GITFLAGS git@github.com:HenryFBP/examples
 git clone $GITFLAGS git@github.com:HenryFBP/hackthebox
 git clone $GITFLAGS git@github.com:HenryFBP/autohackthebox
 git clone $GITFLAGS git@github.com:HenryFBP/VirtualMachineConfigs
