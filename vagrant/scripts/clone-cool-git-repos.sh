@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 NONROOT_USER=vagrant
+GITFLAGS=--recurse-submodules
 
 sudo su $NONROOT_USER
 
@@ -17,19 +18,11 @@ git clone https://github.com/WebGoat/WebGoat
 git clone https://github.com/bkimminich/juice-shop
 git clone https://github.com/joaomatosf/jexboss
 
-if [ ! -f /home/$NONROOT_USER/.ssh/id_rsa ]; then
-	echo "You must create an SSH key, and you should then import it into Git! Not cloning personal repos using SSH."
-	git clone https://github.com/HenryFBP/hackthebox
-	git clone https://github.com/HenryFBP/autohackthebox
-	git clone https://github.com/HenryFBP/VirtualMachineConfigs
-	git clone https://github.com/HenryFBP/dotfiles
-
-else
-	git clone git@github.com:HenryFBP/hackthebox
-	git clone git@github.com:HenryFBP/autohackthebox
-	git clone git@github.com:HenryFBP/VirtualMachineConfigs
-	git clone git@github.com:HenryFBP/dotfiles
-fi
+git clone $GITFLAGS git@github.com:HenryFBP/hackthebox
+git clone $GITFLAGS git@github.com:HenryFBP/autohackthebox
+git clone $GITFLAGS git@github.com:HenryFBP/VirtualMachineConfigs
+git clone $GITFLAGS git@github.com:HenryFBP/dotfiles
+git clone $GITFLAGS git@github.com:HenryFBP/books
 
 
 # bwapp and docker script
