@@ -6,7 +6,7 @@ choco install -y GoogleChrome
 choco install -y vscode
 choco install -y notepadplusplus
 choco install -y git
-choco install -y atom
+# choco install -y atom
 choco install -y 7zip
 choco install -y tor
 choco install -y ghostscript
