@@ -11,10 +11,18 @@ Some of these boxes require these plugins.
 
 Install them with `vagrant plugin install <PLUGIN>` if you get an error message.
 
--   `vagrant plugin install vagrant-disksize` 
--   `vagrant plugin install vagrant-libvirt` (see <https://github.com/vagrant-libvirt/vagrant-libvirt>) and 
-    <https://github.com/hashicorp/vagrant/issues/7039>
-    -   I recommend using `virt-manager` to manage KVM VMs in a GUI. Similar to VirtualBox.
+    vagrant plugin install vagrant-disksize
+    vagrant plugin install vagrant-libvirt
+
+    # linux only (i think...) below
+    vagrant plugin install winrm  
+    vagrant plugin install winrm-fs  
+    vagrant plugin install winrm-elevated
+
+(see <https://github.com/vagrant-libvirt/vagrant-libvirt>) and  <https://github.com/hashicorp/vagrant/issues/7039> and <https://stackoverflow.com/questions/35016414/vagrant-up-fails-with-cannot-load-winrm>
+
+-   I recommend using `virt-manager` to manage KVM VMs in a GUI. Similar to VirtualBox.
+
 
 ## Running
 
@@ -33,3 +41,7 @@ Install them with `vagrant plugin install <PLUGIN>` if you get an error message.
 See <https://www.virtualbox.org/ticket/18536>.
 
 Run `scripts/fix-hyperv-issues.ps1` and then restart windows TWICE.
+
+### Debian 11 `Failed to load R0 module` error
+
+<https://www.virtualbox.org/ticket/20904?cversion=1>
