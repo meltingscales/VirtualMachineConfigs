@@ -48,4 +48,11 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", privileged: "true", powershell_elevated_interactive: "true",
                       path: "../scripts/install-eclipse.ps1"
 
+  config.vm.provision "shell", inline: <<-SHELL
+    choco install python --version=3.8.10
+    pip install pipenv
+    pip install poetry
+  SHELL
+
+
 end
