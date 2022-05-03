@@ -4,6 +4,7 @@ choco feature enable -n allowGlobalConfirmation
 
 choco install -y GoogleChrome
 choco install -y vscode
+choco install -y jetbrainstoolbox
 choco install -y notepadplusplus
 choco install -y git
 # choco install -y atom
