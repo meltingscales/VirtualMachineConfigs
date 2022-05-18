@@ -6,5 +6,5 @@
 
 # running
 
-    ./mvnw install
+    ./mvnw clean install
     java -jar target/*.jar
