@@ -1,4 +1,4 @@
-package net.henrypost.demo;
+package net.henrypost.demo.main;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
