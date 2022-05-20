@@ -1,10 +1,11 @@
-package net.henrypost.demo;
+package net.henrypost.demo.controller;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "/api")
-@SpringBootApplication
 public class SomeAPI {
 
     @GetMapping(path = "/", produces = "application/json")
