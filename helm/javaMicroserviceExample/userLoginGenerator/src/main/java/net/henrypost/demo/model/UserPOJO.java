@@ -1,4 +1,4 @@
-package net.henrypost.demo;
+package net.henrypost.demo.model;
 
 public class UserPOJO {
 

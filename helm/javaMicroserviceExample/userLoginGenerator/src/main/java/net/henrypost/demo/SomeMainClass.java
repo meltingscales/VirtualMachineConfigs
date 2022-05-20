@@ -7,6 +7,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import net.henrypost.demo.model.UserPOJO;
+
 @SpringBootApplication
 @EnableScheduling
 public class SomeMainClass {
