@@ -1,4 +1,4 @@
-:3c
+Contains a bunch of Helm examples and projects.
 
 ## issues
 

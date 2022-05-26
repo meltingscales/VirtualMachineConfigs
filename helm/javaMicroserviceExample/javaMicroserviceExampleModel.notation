@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.3/notation" xmlns:style="http://www.eclipse.org/papyrus/infra/gmfdiag/style" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_vaQd0N00Eeymb-n3OzunlA" type="PapyrusUMLComponentDiagram" name="Component Diagram" measurementUnit="Pixel">
+  <children xmi:type="notation:Shape" xmi:id="_zbb0Qd00Eeymb-n3OzunlA" type="Component_PackagedElementShape">
+    <children xmi:type="notation:DecorationNode" xmi:id="_zbb0Q900Eeymb-n3OzunlA" type="Component_NameLabel"/>
+    <children xmi:type="notation:DecorationNode" xmi:id="_zbb0RN00Eeymb-n3OzunlA" type="Component_FloatingNameLabel">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_zbb0Rd00Eeymb-n3OzunlA" y="15"/>
+    </children>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_zbb0Rt00Eeymb-n3OzunlA" type="Component_StructureCompartment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_zbb0R900Eeymb-n3OzunlA"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_zbb0SN00Eeymb-n3OzunlA"/>
+    </children>
+    <element xmi:type="uml:Component" href="javaMicroserviceExampleModel.uml#_zbb0QN00Eeymb-n3OzunlA"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_zbb0Qt00Eeymb-n3OzunlA" x="300" y="140" width="161" height="101"/>
+  </children>
+  <children xmi:type="notation:Shape" xmi:id="_1vik4d00Eeymb-n3OzunlA" type="Interface_ClassifierShape">
+    <children xmi:type="notation:DecorationNode" xmi:id="_1vik4900Eeymb-n3OzunlA" type="Interface_ClassifierNameLabel"/>
+    <children xmi:type="notation:DecorationNode" xmi:id="_1vik5N00Eeymb-n3OzunlA" type="Interface_ClassifierFloatingNameLabel">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_1vik5d00Eeymb-n3OzunlA" y="15"/>
+    </children>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_1vik5t00Eeymb-n3OzunlA" type="Interface_AttributeCompartment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_1vik5900Eeymb-n3OzunlA"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_1vik6N00Eeymb-n3OzunlA"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_1vik6d00Eeymb-n3OzunlA"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1vik6t00Eeymb-n3OzunlA"/>
+    </children>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_1vik6900Eeymb-n3OzunlA" type="Interface_OperationCompartment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_1vik7N00Eeymb-n3OzunlA"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_1vik7d00Eeymb-n3OzunlA"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_1vik7t00Eeymb-n3OzunlA"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1vik7900Eeymb-n3OzunlA"/>
+    </children>
+    <element xmi:type="uml:Interface" href="javaMicroserviceExampleModel.uml#_1vik4N00Eeymb-n3OzunlA"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1vik4t00Eeymb-n3OzunlA" x="560" y="300" width="101" height="41"/>
+  </children>
+  <styles xmi:type="notation:StringValueStyle" xmi:id="_vaQd0d00Eeymb-n3OzunlA" name="diagram_compatibility_version" stringValue="1.4.0"/>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_vaQd0t00Eeymb-n3OzunlA"/>
+  <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_vaQd0900Eeymb-n3OzunlA" diagramKindId="org.eclipse.papyrus.uml.diagram.component.root.package">
+    <owner xmi:type="uml:Model" href="javaMicroserviceExampleModel.uml#_vYm4AN00Eeymb-n3OzunlA"/>
+  </styles>
+  <element xmi:type="uml:Model" href="javaMicroserviceExampleModel.uml#_vYm4AN00Eeymb-n3OzunlA"/>
+</notation:Diagram>

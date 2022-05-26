@@ -9,3 +9,9 @@ todo:
 - userPurchaseGenerator
 - etc lmao
 - owo generator
+
+## architecture diagram
+
+[./javaMicroserviceExampleModel.di](./javaMicroserviceExampleModel.di)
+
+see https://www.eclipse.org/papyrus/
