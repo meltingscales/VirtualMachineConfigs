@@ -1,7 +1,11 @@
 package net.henrypost.demo;
 
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -12,24 +16,24 @@ import net.henrypost.demo.model.UserPOJO;
 @SpringBootApplication
 @EnableScheduling
 public class SomeMainClass {
+	@Autowired
+	Environment environment;
 
-	@Scheduled(cron = "*/5 * * * * *")
+	@Scheduled(cron = "*/5 * * * * *") // every 5 seconds
 	public void periodicallyCreateNewUser() throws Exception {
 
 		System.out.println("periodicallyCreateNewUser :3c");
 
+		String uri = environment.getProperty("target.url") +
+				environment.getProperty("target.endpoint");
+
 		String response = WebClient.builder().build()
 				.post()
-				.uri("http://localhost:8080/api/user/create")
+				.uri(uri)
 				.body(BodyInserters.fromValue(UserPOJO.newRandomUser()))
 				.retrieve()
 				.bodyToMono(String.class)
 				.block();
-
-		// .exchangeToMono((arg0) -> sysou)
-		// .retrieve()
-		// .bodyToMono(String.class)
-		// .block();
 
 		System.out.println(response);
 
@@ -42,7 +46,8 @@ public class SomeMainClass {
 
 		String response = WebClient.builder().build()
 				.get()
-				.uri("http://localhost:8080/api/someRandomStuff")
+				.uri("%s/api/someRandomStuff".formatted(
+						environment.getProperty("target.url")))
 				.retrieve()
 				.bodyToMono(String.class)
 				.block();
