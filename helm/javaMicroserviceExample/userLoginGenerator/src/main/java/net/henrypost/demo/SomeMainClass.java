@@ -21,16 +21,15 @@ public class SomeMainClass {
 		String response = WebClient.builder().build()
 				.post()
 				.uri("http://localhost:8080/api/user/create")
-				.body(BodyInserters.fromValue(new UserPOJO()))
+				.body(BodyInserters.fromValue(UserPOJO.newRandomUser()))
 				.retrieve()
 				.bodyToMono(String.class)
 				.block();
 
-
-				// .exchangeToMono((arg0) -> sysou)
-				// .retrieve()
-				// .bodyToMono(String.class)
-				// .block();
+		// .exchangeToMono((arg0) -> sysou)
+		// .retrieve()
+		// .bodyToMono(String.class)
+		// .block();
 
 		System.out.println(response);
 
@@ -51,7 +50,6 @@ public class SomeMainClass {
 		System.out.println(response);
 
 	}
-
 
 	public static void main(String[] args) {
 		SpringApplication.run(SomeMainClass.class, args);
