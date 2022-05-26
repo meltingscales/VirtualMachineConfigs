@@ -3,6 +3,11 @@
   <packageImport xmi:type="uml:PackageImport" xmi:id="_vcWIgN00Eeymb-n3OzunlA">
     <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
   </packageImport>
-  <packagedElement xmi:type="uml:Component" xmi:id="_zbb0QN00Eeymb-n3OzunlA" name="userLoginGenerator"/>
+  <packagedElement xmi:type="uml:Component" xmi:id="_zbb0QN00Eeymb-n3OzunlA" name="userLoginGenerator">
+    <packagedElement xmi:type="uml:Abstraction" xmi:id="_BJm0cN01Eeymb-n3OzunlA" name="create user" client="_zbb0QN00Eeymb-n3OzunlA" supplier="__zk1oN00Eeymb-n3OzunlA"/>
+  </packagedElement>
   <packagedElement xmi:type="uml:Interface" xmi:id="_1vik4N00Eeymb-n3OzunlA" name="UserDB"/>
+  <packagedElement xmi:type="uml:Component" xmi:id="__zk1oN00Eeymb-n3OzunlA" name="userService">
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_GkRtYN01Eeymb-n3OzunlA" client="__zk1oN00Eeymb-n3OzunlA" supplier="_1vik4N00Eeymb-n3OzunlA"/>
+  </packagedElement>
 </uml:Model>
