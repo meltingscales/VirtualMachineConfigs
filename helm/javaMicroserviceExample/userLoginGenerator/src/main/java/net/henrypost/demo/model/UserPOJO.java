@@ -3,11 +3,16 @@ package net.henrypost.demo.model;
 import java.util.Arrays;
 import java.util.Random;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class UserPOJO {
 
     public static final String[] names = "Henry Jill Jessica David".split(" ");
 
+    @JsonProperty("userAge")
     public int age;
+
+    @JsonProperty("userName")
     public String name;
 
     public UserPOJO() {

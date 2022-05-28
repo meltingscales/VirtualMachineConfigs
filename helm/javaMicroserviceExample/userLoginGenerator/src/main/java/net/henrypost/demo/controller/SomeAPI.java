@@ -1,9 +1,12 @@
 package net.henrypost.demo.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.validation.annotation.Validated;
@@ -18,6 +21,25 @@ import net.henrypost.demo.model.UserPOJO;
 @RestController
 @RequestMapping(path = "/api")
 public class SomeAPI {
+
+    @GetMapping(path = "/user/getRandom")
+    public ResponseEntity<List<UserPOJO>> getRandomUsers() {
+        
+        List<UserPOJO> users = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+            users.add(UserPOJO.newRandomUser());
+        }
+
+        //this sucks, this is what Jackson serialization eliminates
+        // String ret = "{";
+
+        // ret+= "userAge: "+users.get(0).age+","
+
+        return ResponseEntity
+                .ok()
+                .body(users);
+    }
 
     @PostMapping(path = "/user/create")
     public ResponseEntity<Map<?, ?>> createNewUser(
