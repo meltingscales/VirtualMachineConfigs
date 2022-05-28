@@ -1,17 +1,19 @@
-https://spring.io/guides/gs/spring-boot-kubernetes/
+# Example of a "complex" set of interconnected java microservices, deployed with Helm
 
-https://www.baeldung.com/spring-webflux-backpressure
+<https://spring.io/guides/gs/spring-boot-kubernetes/>
 
-todo:
-
-- userLoginGenerator
-- backend
-- userPurchaseGenerator
-- etc lmao
-- owo generator
+<https://www.baeldung.com/spring-webflux-backpressure>
 
 ## architecture diagram
 
 [./javaMicroserviceExampleModel.di](./javaMicroserviceExampleModel.di)
 
 see https://www.eclipse.org/papyrus/
+
+## todo
+
+- userLoginGenerator
+- backend
+- userPurchaseGenerator
+- etc lmao
+- owo generator
