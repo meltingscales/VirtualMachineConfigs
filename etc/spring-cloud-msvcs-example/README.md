@@ -5,9 +5,16 @@ taken from amigoscode with <3
 - <https://www.youtube.com/watch?v=p485kUNpPvE>
 - <https://github.com/amigoscode/microservices>
 
+## Running
+
+    todo lol
+
+2.  Manually create the `customer` database using PGAdmin
+
 ## docker (for le database)
 
     docker-compose up -d
+    # optional below
     docker-compose ps
     docker-compose logs -f
 

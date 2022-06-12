@@ -2,10 +2,13 @@ package net.henrypost.customer.service;
 
 import net.henrypost.customer.model.Customer;
 import net.henrypost.customer.model.CustomerRegistrationRequest;
+import net.henrypost.customer.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public record CustomerService() {
+public record CustomerService(
+        CustomerRepository customerRepository
+) {
     public void registerCustomer(CustomerRegistrationRequest customerRegistrationRequest) {
         Customer customer = Customer.builder()
                 .firstName(customerRegistrationRequest.firstName())
@@ -15,6 +18,8 @@ public record CustomerService() {
 
         //todo: valid email
         //todo: email unique
-        //todo: store customer
+
+        //store customer
+        customerRepository.save(customer);
     }
 }
