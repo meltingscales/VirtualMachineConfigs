@@ -1,4 +1,4 @@
-package com.mycompany.app;
+package net.henrypost.app;
 
 import static org.junit.Assert.assertTrue;
 
