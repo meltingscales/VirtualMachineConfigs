@@ -29,6 +29,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     echo "Go grab a coffee, this may take a while..."
     apt install -y ubuntu-desktop #takes forever :p
+    apt install -y xfce4 #lighter desktop
     echo "You can run 'startx' to start desktop, or reboot."
   SHELL
 
