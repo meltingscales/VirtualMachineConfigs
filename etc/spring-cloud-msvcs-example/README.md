@@ -24,4 +24,4 @@ Then visit <http://localhost:5050/> to view PGAdmin
 
 ### Invalid interpolation format
 
-Your `docker-compose` version is probably old. Update with a binary from https://github.com/docker/compose/releases
+Your `docker-compose` version is probably old. Update with a binary from <https://github.com/docker/compose/releases>

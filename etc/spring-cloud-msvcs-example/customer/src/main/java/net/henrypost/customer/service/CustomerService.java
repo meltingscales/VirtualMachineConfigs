@@ -6,11 +6,10 @@ import net.henrypost.customer.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public record CustomerService(
-        CustomerRepository customerRepository
-) {
+public record CustomerService(CustomerRepository customerRepository) {
     public void registerCustomer(CustomerRegistrationRequest customerRegistrationRequest) {
-        Customer customer = Customer.builder()
+        Customer customer = Customer
+                .builder()
                 .firstName(customerRegistrationRequest.firstName())
                 .lastName(customerRegistrationRequest.lastName())
                 .email(customerRegistrationRequest.email())
