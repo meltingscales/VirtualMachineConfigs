@@ -53,9 +53,11 @@ Vagrant.configure("2") do |config|
     sudo usermod -aG docker vagrant
 
     apt install -y openjdk-11-jdk
+    sudo snap install postman
     # apt install -y virtualbox-guest-additions-iso
     
     apt install -y vagrant
+
   SHELL
 
   # jb toolbox
