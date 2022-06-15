@@ -1,8 +1,8 @@
-package net.henrypost.customer.service;
+package net.henrypost.customer;
 
-import net.henrypost.customer.model.Customer;
-import net.henrypost.customer.model.CustomerRegistrationRequest;
-import net.henrypost.customer.repository.CustomerRepository;
+import net.henrypost.customer.Customer;
+import net.henrypost.customer.CustomerRegistrationRequest;
+import net.henrypost.customer.CustomerRepository;
 import org.springframework.stereotype.Service;
 
 @Service

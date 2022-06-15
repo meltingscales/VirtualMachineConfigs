@@ -1,4 +1,4 @@
-package net.henrypost.customer.model;
+package net.henrypost.customer;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

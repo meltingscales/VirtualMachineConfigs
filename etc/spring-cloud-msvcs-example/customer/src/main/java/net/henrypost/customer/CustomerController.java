@@ -1,8 +1,6 @@
-package net.henrypost.customer.controller;
+package net.henrypost.customer;
 
 import lombok.extern.slf4j.Slf4j;
-import net.henrypost.customer.model.CustomerRegistrationRequest;
-import net.henrypost.customer.service.CustomerService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

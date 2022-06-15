@@ -1,4 +1,4 @@
-package net.henrypost.customer.model;
+package net.henrypost.customer;
 
 public record CustomerRegistrationRequest(
         String firstName,
