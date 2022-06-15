@@ -1,13 +1,12 @@
 package net.henrypost.customer;
 
-import net.henrypost.customer.Customer;
-import net.henrypost.customer.CustomerRegistrationRequest;
-import net.henrypost.customer.CustomerRepository;
+import net.henrypost.customer.model.pojo.Customer;
+import net.henrypost.customer.model.rest.CustomerRegistrationRequest;
 import org.springframework.stereotype.Service;
 
 @Service
 public record CustomerService(CustomerRepository customerRepository) {
-    public void registerCustomer(CustomerRegistrationRequest customerRegistrationRequest) {
+    public Customer registerCustomer(CustomerRegistrationRequest customerRegistrationRequest) {
         Customer customer = Customer
                 .builder()
                 .firstName(customerRegistrationRequest.firstName())
@@ -20,5 +19,7 @@ public record CustomerService(CustomerRepository customerRepository) {
 
         //store customer
         customerRepository.save(customer);
+
+        return customer;
     }
 }
