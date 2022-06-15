@@ -13,8 +13,8 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   datasource:
     url: jdbc:postgresql://localhost:5432/customer
-    username: 'amigoscode'
-    password: 'password'
+    username: '${DB_USER}'
+    password: '${DB_PASS}'
   sql:
     init:
       platform: postgres

@@ -7,7 +7,11 @@ taken from amigoscode with <3
 
 ## Running
 
-    todo lol
+    # apply environment variables
+    source DEV.env
+
+    # build and run
+    mvn spring-boot:run
 
 2.  Manually create the `customer` database using PGAdmin
 
