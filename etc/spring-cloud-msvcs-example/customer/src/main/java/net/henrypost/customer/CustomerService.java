@@ -2,11 +2,12 @@ package net.henrypost.customer;
 
 import net.henrypost.customer.model.pojo.Customer;
 import net.henrypost.customer.model.rest.CustomerRegistrationRequest;
-import org.springframework.stereotype.Service;
+ import org.springframework.stereotype.Service;
 
 @Service
 public record CustomerService(CustomerRepository customerRepository) {
     public Customer registerCustomer(CustomerRegistrationRequest customerRegistrationRequest) {
+
         Customer customer = Customer
                 .builder()
                 .firstName(customerRegistrationRequest.firstName())
