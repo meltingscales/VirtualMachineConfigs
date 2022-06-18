@@ -1,7 +1,7 @@
 package net.henrypost.customer;
 
 import lombok.extern.slf4j.Slf4j;
-import net.henrypost.customer.model.pojo.Customer;
+import net.henrypost.customer.model.jpa.Customer;
 import net.henrypost.customer.model.rest.CustomerRegistrationRequest;
 import net.henrypost.customer.model.rest.CustomerRegistrationResponse;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,9 +16,9 @@ public record CustomerController(CustomerService customerService) {
     @PostMapping
     public CustomerRegistrationResponse registerCustomer(@RequestBody CustomerRegistrationRequest customerRegistrationRequest) {
 
-        log.info("new customer registered {}", customerRegistrationRequest);
+        CustomerController.log.info("new customer registered {}", customerRegistrationRequest);
 
-        Customer c = customerService.registerCustomer(customerRegistrationRequest);
+        Customer c = this.customerService.registerCustomer(customerRegistrationRequest);
 
         return CustomerRegistrationResponse
                 .builder()

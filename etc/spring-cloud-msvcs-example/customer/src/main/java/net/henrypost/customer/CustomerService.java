@@ -1,6 +1,6 @@
 package net.henrypost.customer;
 
-import net.henrypost.customer.model.pojo.Customer;
+import net.henrypost.customer.model.jpa.Customer;
 import net.henrypost.customer.model.rest.CustomerRegistrationRequest;
  import org.springframework.stereotype.Service;
 
