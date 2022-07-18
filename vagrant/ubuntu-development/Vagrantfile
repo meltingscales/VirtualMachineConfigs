@@ -3,7 +3,7 @@
 
 VM_NAME = 'Ubuntu 21.04 Development'
 VM_RAM_MB = '8000'
-VM_CPUS = '4'
+VM_CPUS = '1'
 
 Vagrant.configure("2") do |config|
 
