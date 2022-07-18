@@ -8,7 +8,7 @@ class VagrantPlugins::ProviderVirtualBox::Action::Network
   end
 end
 
-VM_NAME = 'Kali Linux 2021.3.0'
+VM_NAME = 'Kali Linux Rolling Latest'
 VM_IP = '192.168.33.7'
 VM_RAM_MB='5000'
 VM_CPUS='1'
@@ -16,7 +16,7 @@ VM_CPUS='1'
 Vagrant.configure("2") do |config|
 
   config.vm.box = "kalilinux/rolling"
-  config.vm.box_version = "2021.3.0"
+  # config.vm.box_version = "2021.3.0"
 
   config.vm.define VM_NAME
   config.vm.network "private_network", ip: VM_IP # XXX Disable this line if the machine fails to provision on Windows
