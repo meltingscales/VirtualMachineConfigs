@@ -28,11 +28,11 @@ Vagrant.configure("2") do |config|
   
   config.vm.provision "shell", inline: <<-SHELL
     echo "Go grab a coffee, this may take a while..."
-    apt install -y xubuntu-desktop #lighter desktop
+    DEBIAN_FRONTEND=noninteractive apt install -y xubuntu-desktop #lighter desktop
     sleep 5
     echo "You can run 'startx' to start desktop, or reboot. Currently we only have xubuntu-desktop, but are installing ubuntu-desktop now..."
     echo "ubuntu-desktop takes even longer."
-    apt install -y ubuntu-desktop #takes forever :p
+    DEBIAN_FRONTEND=noninteractive apt install -y ubuntu-desktop #takes forever :p
   SHELL
 
   # fish shell
