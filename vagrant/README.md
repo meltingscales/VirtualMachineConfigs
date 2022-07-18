@@ -45,3 +45,13 @@ Run `scripts/fix-hyperv-issues.ps1` and then restart windows TWICE.
 ### Debian 11 `Failed to load R0 module` error
 
 <https://www.virtualbox.org/ticket/20904?cversion=1>
+
+### CPU hangs
+
+https://www.virtualbox.org/ticket/20131
+
+    vboxmanage modifyvm <VMNAME> --hpet on
+
+    give it 1 cpu
+
+https://www.reddit.com/r/virtualbox/comments/gxpjc9/pro_tip_if_youre_experiencing_random_freezes_on/
