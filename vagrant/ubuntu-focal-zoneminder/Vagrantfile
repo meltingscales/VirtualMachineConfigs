@@ -65,7 +65,34 @@ Vagrant.configure("2") do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
+    apt install gcc make perl
+    apt-get install -y ubuntu-desktop-minimal
+    echo 'try startx :)'
     apt-get install -y ubuntu-desktop
     echo 'https://www.youtube.com/watch?v=hUqMUhgytyc'
+
+
+    apt install mysql-server
+
+    add-apt-repository ppa:iconnor/zoneminder-1.36
+
+    apt install -yq zoneminder
+
+    systemctl enable zoneminder.service
+
+    systemctl start zoneminder.service
+
+    ps ax | grep zm
+
+    a2enconf zoneminder
+    a2enmod rewrite
+
+    ls -l /etc/apache2/conf-enabled/ | grep zoneminder
+
+    ls -l /etc/apache2/mods-enabled/
+
+    systemctl reload apache2
+
+    curl http://localhost/zm/
   SHELL
 end
