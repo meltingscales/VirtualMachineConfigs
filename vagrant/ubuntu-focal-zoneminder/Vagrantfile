@@ -36,5 +36,20 @@ Vagrant.configure("2") do |config|
     systemctl reload apache2
 
     curl http://localhost/zm/
+
+    # now, zoneminder should be installed...
+
+    # below this is how to find video devices
+
+    apt install v4l2-ctl
+    v4l2-ctl --list-devices
+
+    # This is necessary to give permissions to zoneminder (apache) to read /dev/video* devices
+    # https://forums.zoneminder.com/viewtopic.php?t=23361
+    adduser www-data video
+    usermod -a -G video www-data
+    sudo a2enmod cgi
+    systemctl reload apache2
+    # then reboot
   SHELL
 end
