@@ -53,3 +53,13 @@ linux stream webcam to rstp
 zoneminder v4l2
 
 vlc v4l2
+
+https://medium.com/@petehouston/streaming-webcam-to-http-using-vlc-dda7259176c9
+
+Turn on stream:
+
+    vlc v4l2:///dev/video0 --sout '#std{access=http,mux=mpjpeg,dst=0.0.0.0:8081}'
+
+Test stream locally:
+
+    vlc http://127.0.0.1:8081
