@@ -1,0 +1,24 @@
+Vagrant.configure("2") do |config|
+
+    config.vm.box = "bento/ubuntu-18.04"
+  
+    config.vm.provision "shell", inline: <<-SHELL
+        
+    echo "hello :)"
+
+    apt update
+    apt install -qy ubuntu-desktop
+
+    echo "run startx :)"
+
+    apt install -y alsa pulseaudio
+    cat /proc/cpuinfo | grep avx
+
+    # if grep didn't find "AVX"
+    if [ $? -ne 0 ]; then
+        echo "You need AVX CPU feature! halting!"
+        exit $?
+    fi
+
+    SHELL
+end
