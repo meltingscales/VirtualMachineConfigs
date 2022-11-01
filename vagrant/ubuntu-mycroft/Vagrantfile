@@ -1,31 +1,35 @@
 Vagrant.configure("2") do |config|
 
     config.vm.box = "bento/ubuntu-18.04"
-  
+    
+    # disable default shared folder
+    config.vm.synced_folder './', '/vagrant', disabled: true
+
     config.vm.provision "shell", inline: <<-SHELL
         
     echo "hello :)"
 
     apt update
     apt install -qy ubuntu-desktop
+    apt --fix-broken install -qy #WHY?! >:(
 
     echo "run startx :)"
 
     apt install -y alsa pulseaudio
-    cat /proc/cpuinfo | grep avx
 
+    cat /proc/cpuinfo | grep avx
     # if grep didn't find "AVX"
     if [ $? -ne 0 ]; then
         echo "You need AVX CPU feature! halting!"
         exit $?
     fi
 
-    mkdir -p ~/Git
+    sudo -H -u vagrant bash -c 'mkdir -p ~/Git'
         
-    pushd ~/Git
-        git clone https://github.com/MycroftAI/mycroft-core.git
+    pushd /home/vagrant/Git
+        sudo -H -u vagrant bash -c 'git clone https://github.com/MycroftAI/mycroft-core.git'
         echo "Done cloning Mycroft, go run ./dev_setup.sh -fm"
-        popd
+    popd
 
     SHELL
 end
