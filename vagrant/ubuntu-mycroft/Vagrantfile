@@ -32,5 +32,14 @@ Vagrant.configure("2") do |config|
             echo "Done cloning Mycroft, go run ./dev_setup.sh -fm"
         popd
 
+        if [ -d /opt/mycroft/skills ]; then
+            pushd /opt/mycroft/skills
+                sudo -H -u vagrant bash -c 'git clone https://github.com/HenryFBP/mycroft-minecroft-text-game'
+            popd
+        else
+            echo "WARNING: /opt/mycroft/skills does not exist, go run the setup for mycroft then run vagrant provision again."
+            sleep 10
+        fi
+
     SHELL
 end

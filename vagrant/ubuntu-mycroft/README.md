@@ -7,8 +7,13 @@ Meant to be used with <https://mycroft-ai.gitbook.io/docs/skill-development/intr
 
 Related project: (Minecraft game) <https://github.com/HenryFBP/mycroft-minecroft-text-game>
 
-## Setup
+## Setup (if it didnt automatically do it from `vagrant up`)
 
-    pushd /opt/mycroft/skills
-        git clone https://github.com/HenryFBP/mycroft-minecroft-text-game
+
+    pushd ~/Git
+        bash dev_setup.sh
     popd
+
+Then you can run `vagrant up --provsion` to clone the repo,
+
+and edit `/opt/mycroft/skills/mycroft-minecroft-text-game` with your favorite IDE. I like PyCharm.
