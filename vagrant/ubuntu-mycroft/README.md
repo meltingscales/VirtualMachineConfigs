@@ -4,7 +4,8 @@ https://mycroft-ai.gitbook.io/docs/using-mycroft-ai/get-mycroft/macos-and-window
 
 Meant to be used with <https://mycroft-ai.gitbook.io/docs/skill-development/introduction/your-first-skill>
 
-<https://github.com/HenryFBP/mycroft-minecroft-text-game>
+
+Related project: (Minecraft game) <https://github.com/HenryFBP/mycroft-minecroft-text-game>
 
 ## Setup
 
