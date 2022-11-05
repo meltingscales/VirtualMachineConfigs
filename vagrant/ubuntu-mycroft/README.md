@@ -11,7 +11,7 @@ Related project: (Minecraft game) <https://github.com/HenryFBP/mycroft-minecroft
 
 
     pushd ~/Git
-        bash dev_setup.sh
+        bash ./dev_setup.sh -fm
     popd
 
 Then you can run `vagrant up --provsion` to clone the repo,

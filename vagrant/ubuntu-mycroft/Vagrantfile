@@ -16,14 +16,6 @@ Vagrant.configure("2") do |config|
         
         echo "run startx :)"
 
-        # if ! command -v jetbrains-toolbox &> /dev/null
-        # then
-        #     echo "jetbrains-toolbox could not be found, downloading"
-        #     sudo -H -u vagrant bash -c 'todo, this is broken'
-        # else
-        #     echo "jetbrains toolbox already installed." 
-        # fi
-
         apt install -y alsa pulseaudio
 
         cat /proc/cpuinfo | grep avx
@@ -39,7 +31,7 @@ Vagrant.configure("2") do |config|
             
         pushd /home/vagrant/Git
             sudo -H -u vagrant bash -c 'git clone https://github.com/MycroftAI/mycroft-core.git'
-            echo "Done cloning Mycroft, go run ./dev_setup.sh -fm"
+            echo "Done cloning Mycroft, go run bash ./dev_setup.sh -fm"
         popd
 
         if [ -d /opt/mycroft/skills ]; then
@@ -52,4 +44,7 @@ Vagrant.configure("2") do |config|
         fi
 
     SHELL
+
+    config.vm.provision :shell, :path => "install-toolbox.sh"
+
 end
