@@ -10,9 +10,18 @@ Vagrant.configure("2") do |config|
 
         apt update
         apt install -qy ubuntu-desktop-minimal
-        # apt --fix-broken install -qy #WHY?! >:(
 
+        apt install -qy gitk
+        
         echo "run startx :)"
+
+        if ! command -v jetbrains-toolbox &> /dev/null
+        then
+            echo "jetbrains-toolbox could not be found, downloading"
+            sudo -H -u vagrant bash -c 'curl --silent https://gist.githubusercontent.com/jen20/218642f3c2cd0e2ce8b6b95ca59e0538/raw/ce378727c8531502b4156a2be37d6149b31710ee/install-jetbrains-toolbox.sh | bash'
+        else
+            echo "jetbrains toolbox already installed." 
+        fi
 
         apt install -y alsa pulseaudio
 
