@@ -7,11 +7,12 @@ Meant to be used with <https://mycroft-ai.gitbook.io/docs/skill-development/intr
 
 Related project: (Minecraft game) <https://github.com/HenryFBP/mycroft-minecroft-text-game>
 
-## Setup (if it didnt automatically do it from `vagrant up`)
+## Setup
 
 
-    pushd ~/Git
+    pushd ~/Git/mycroft-core/
         bash ./dev_setup.sh -fm
+        # Answer "Y" to all of the questions
     popd
 
 Then you can run `vagrant up --provsion` to clone the repo,
