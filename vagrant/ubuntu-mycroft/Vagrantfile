@@ -12,6 +12,7 @@ Vagrant.configure("2") do |config|
         apt install -qy ubuntu-desktop-minimal
 
         apt install -qy gitk
+        snap install code --classic
         
         echo "run startx :)"
 
