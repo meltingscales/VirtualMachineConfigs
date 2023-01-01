@@ -18,4 +18,5 @@ docker-machine create `
 # ssh-keygen
 # cat ~/.ssh/id_rsa.pub
 # <put it into DigitalOcean>
-docker-machine scp -r ./gitlab-runner-files/ root@runner-node:~/gitlab-runner-files
+# Alternatively, if this fails, just append your SSH Public Key to /root/.ssh/authorized_keys
+docker-machine scp --recursive --delta ./gitlab-runner-files/ root@runner-node:~/gitlab-runner-files/
