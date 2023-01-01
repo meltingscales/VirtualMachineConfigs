@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  gitlab-runner-container:
+    image: gitlab/gitlab-runner:v14.3.2
+    container_name: gitlab-runner-container
+    restart: always
+    volumes:
+      - ./config/:/etc/gitlab-runner/
+      - /var/run/docker.sock:/var/run/docker.sock
