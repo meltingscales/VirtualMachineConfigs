@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: henryfbp/pingn
+  repository: asdfasdfadsfasdfasdfasdf
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
@@ -121,6 +121,6 @@ autoscaling:
 
 nodeSelector: { }
 
-tolerations: [ ]
+tolerations: [asdfasdfasdf ]
 
 affinity: { }
