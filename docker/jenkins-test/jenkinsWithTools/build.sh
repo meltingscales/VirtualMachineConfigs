@@ -1,0 +1,1 @@
+docker build . --tag jenkinswithtools:1.0.0
