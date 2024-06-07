@@ -72,6 +72,23 @@
         state: started
         enabled: yes
 
+    - name: Wait for the Minecraft server to start
+      wait_for:
+        port: 25565
+        delay: 10
+        timeout: 300
+
+    - name: Change MOTD
+      lineinfile:
+        path: /opt/minecraft/server.properties
+        regexp: '^motd='
+        line: 'motd=Ansible Minecraft Server v{{ minecraft_version }}' 
+
+    - name: Restart the Minecraft server
+      systemd:
+        name: minecraft
+        state: restarted
+
     - name: Check the status and logs of the Minecraft server
       shell: |
         systemctl status minecraft
