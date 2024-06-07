@@ -6,6 +6,8 @@
     # modpack server zip
     modpack_server_zip_url: "https://mediafilez.forgecdn.net/files/3565/687/SkyFactory-4_Server_4_2_4.zip"
 
+    modpack_server_zip_file: "SkyFactory-4_Server_4_2_4.zip"
+
     # the version of the modpack
     modpack_version: "4.2.4"
 
@@ -50,18 +52,18 @@
         group: minecraft
         mode: '0755'
 
-    - name: Download Skyfactory 4 modpack
+    - name: Download modpack
       get_url:
         url: "{{ modpack_server_zip_url }}"
-        dest: /opt/minecraft/{{ minecraft_folder_name }}/SkyFactory_4.zip
+        dest: "/opt/minecraft/{{ minecraft_folder_name }}/{{ modpack_server_zip_file }}"
         mode: '0755'
 
-    - name: Extract Skyfactory 4 modpack with unzip
+    - name: Extract modpack with unzip
       shell: |
         cd "/opt/minecraft/{{ minecraft_folder_name }}"
         if [ ! -f ./ServerStart.sh ]; then
-          echo "Extracting SkyFactory 4 server..."
-          unzip SkyFactory_4.zip
+          echo "Extracting server modpack..."
+          unzip "{{ modpack_server_zip_file }}"
         else
           echo "Server already extracted. Skipping."
         fi
