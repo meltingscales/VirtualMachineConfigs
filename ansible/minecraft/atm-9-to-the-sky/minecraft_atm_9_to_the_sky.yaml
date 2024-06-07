@@ -4,18 +4,19 @@
   become: yes
   vars:
     # modpack server zip
-    modpack_server_zip_url: "https://mediafilez.forgecdn.net/files/3565/687/SkyFactory-4_Server_4_2_4.zip"
+    modpack_server_zip_url: "https://mediafilez.forgecdn.net/files/5399/299/server-1.0.1.zip"
 
-    modpack_server_zip_file: "SkyFactory-4_Server_4_2_4.zip"
+    # the name of the modpack server zip file
+    modpack_server_zip_file: "atm-9-to-the-sky-server-1.0.1.zip"
 
     # the version of the modpack
-    modpack_version: "4.2.4"
+    modpack_version: "1.0.1"
 
     # the folder name for the Minecraft server
-    minecraft_folder_name: "skyfactory_4"
+    minecraft_folder_name: "atm-9-to-the-sky"
 
     # the name of the systemd service
-    minecraft_service_name: "minecraft-skyfactory-4"
+    minecraft_service_name: "minecraft-atm-9-to-the-sky"
 
     
   tasks:
@@ -29,15 +30,16 @@
         name: unzip
         state: present
 
-    - name: Ensure Java 8 is installed
+    - name: Ensure Java 17 is installed
       apt:
-        name: openjdk-8-jre
+        name: openjdk-17-jre
         state: present
 
-    - name: Ensure Java 8 is the default Java
+    - name: Ensure Java 17 is the default Java
       alternatives:
         name: java
-        path: /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+        path: /usr/lib/jvm/java-17-openjdk-amd64/bin/java
+
 
     - name: Create minecraft user
       user:
@@ -61,22 +63,40 @@
     - name: Extract modpack with unzip
       shell: |
         cd "/opt/minecraft/{{ minecraft_folder_name }}"
-        if [ ! -f ./ServerStart.sh ]; then
+        if [ ! -f ./startserver.sh ]; then
           echo "Extracting server modpack..."
           unzip "{{ modpack_server_zip_file }}"
         else
           echo "Server already extracted. Skipping."
         fi
 
-    - name: Run bundled script to install server
-      command: "/bin/bash /opt/minecraft/{{minecraft_folder_name}}/Install.sh"
-      args:
-        chdir: "/opt/minecraft/{{minecraft_folder_name}}"
+    - name: "Flatten folder structure"
+      shell: |
+        cd "/opt/minecraft/{{ minecraft_folder_name }}"
+        mv ./server-1.0.1/* ./
+        rm -r ./server-1.0.1/ || true
 
     - name: Accept EULA
       copy:
         dest: "/opt/minecraft/{{minecraft_folder_name}}/eula.txt"
         content: "eula=true"
+
+    - name: Run server install script
+      command: "java -jar forge-1.20.1-47.2.20-installer.jar --installServer"
+      args:
+        chdir: "/opt/minecraft/{{minecraft_folder_name}}"
+
+    - name: Create required files
+      file:
+        path: "/opt/minecraft/{{minecraft_folder_name}}/user_jvm_args.txt"
+        state: touch
+        mode: '0755'
+
+    - name: Create required files
+      file:
+        path: "/opt/minecraft/{{minecraft_folder_name}}/libraries/net/minecraftforge/forge/1.20.1-47.2.20/unix_args.txt"
+        state: touch
+        mode: '0755'
 
     - name: Create a systemd service for Minecraft
       copy:
@@ -89,7 +109,7 @@
           [Service]
           User=minecraft
           WorkingDirectory=/opt/minecraft/{{minecraft_folder_name}}
-          ExecStart=/bin/bash /opt/minecraft/{{minecraft_folder_name}}/ServerStart.sh
+          ExecStart=java -Xms2G -Xmx4G -jar forge-1.16.5-36.1.0.jar nogui
           Restart=on-failure
 
           [Install]
