@@ -9,6 +9,9 @@
     minecraft_server_url: "https://piston-data.mojang.com/v1/objects/145ff0858209bcfc164859ba735d4199aafa1eea/server.jar"
     minecraft_version: "1.20.6"
 
+    minecraft_folder_name: "vanilla"
+    minecraft_service_name: "minecraft-vanilla"
+
   tasks:
 
     - name: Update apt cache
@@ -32,7 +35,7 @@
 
     - name: Create a directory for the Minecraft server
       file:
-        path: /opt/minecraft
+        path: /opt/minecraft/{{ minecraft_folder_name }}
         state: directory
         owner: minecraft
         group: minecraft
@@ -41,17 +44,17 @@
     - name: Download Minecraft server jar
       get_url:
         url: "{{ minecraft_server_url }}"
-        dest: /opt/minecraft/minecraft_server.jar
+        dest: "/opt/minecraft/{{ minecraft_folder_name }}/minecraft_server.jar"
         mode: '0755'
 
     - name: Accept EULA
       copy:
-        dest: /opt/minecraft/eula.txt
+        dest: /opt/minecraft/{{minecraft_folder_name}}/eula.txt
         content: "eula=true"
 
     - name: Create a systemd service for Minecraft
       copy:
-        dest: /etc/systemd/system/minecraft.service
+        dest: /etc/systemd/system/{{ minecraft_service_name }}.service
         content: |
           [Unit]
           Description=Minecraft Server
@@ -59,16 +62,16 @@
 
           [Service]
           User=minecraft
-          WorkingDirectory=/opt/minecraft
+          WorkingDirectory=/opt/minecraft/{{ minecraft_folder_name }}
           ExecStart=/usr/bin/java {{java_mem_flags}} -jar minecraft_server.jar nogui
           Restart=on-failure
 
           [Install]
           WantedBy=multi-user.target
 
-    - name: Start and enable the Minecraft server
+    - name: Start and enable the Minecraft service
       systemd:
-        name: minecraft
+        name: "{{minecraft_service_name}}"
         state: started
         enabled: yes
 
@@ -80,19 +83,19 @@
 
     - name: Change MOTD
       lineinfile:
-        path: /opt/minecraft/server.properties
+        path: /opt/minecraft/{{ minecraft_folder_name }}/server.properties
         regexp: '^motd='
         line: 'motd=Ansible Minecraft Server v{{ minecraft_version }}' 
 
-    - name: Restart the Minecraft server
+    - name: Restart the Minecraft service to apply server.properties changes
       systemd:
-        name: minecraft
+        name: "{{minecraft_service_name}}"
         state: restarted
 
     - name: Check the status and logs of the Minecraft server
       shell: |
-        systemctl status minecraft
-        journalctl -u minecraft
+        systemctl status {{minecraft_service_name}}
+        journalctl -u {{minecraft_service_name}}
       register: minecraft_status
 
     - name: Connect to TCP port 25565 to verify the Minecraft server is running
