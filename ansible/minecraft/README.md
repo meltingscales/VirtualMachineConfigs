@@ -2,7 +2,7 @@
 
 ## Testing locally
 
-    vagrant up
+    vagrant up --provision
     vagrant ssh
     systemctl status minecraft
     journalctl -u minecraft.service
