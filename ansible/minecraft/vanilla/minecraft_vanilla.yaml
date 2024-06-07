@@ -4,23 +4,26 @@
   become: yes
   vars:
     java_mem_flags: "-Xms1G -Xmx2G"
-    minecraft_server_url: "https://piston-data.mojang.com/v1/objects/145ff0858209bcfc164859ba735d4199aafa1eea/server.jar"
+
     # you can find the latest server jar URL at https://www.minecraft.net/en-us/download/server
+    minecraft_server_url: "https://piston-data.mojang.com/v1/objects/145ff0858209bcfc164859ba735d4199aafa1eea/server.jar"
+    minecraft_version: "1.20.6"
+    
   tasks:
 
     - name: Update apt cache
       apt:
         update_cache: yes
 
-    - name: Ensure Java 17 is installed
+    - name: Ensure Java 21 is installed
       apt:
-        name: openjdk-17-jre
+        name: openjdk-21-jre
         state: present
 
-    - name: Ensure Java 17 is the default Java
+    - name: Ensure Java 21 is the default Java
       alternatives:
         name: java
-        path: /usr/lib/jvm/java-17-openjdk-amd64/bin/java
+        path: /usr/lib/jvm/java-21-openjdk-amd64/bin/java
 
     - name: Create minecraft user
       user:
