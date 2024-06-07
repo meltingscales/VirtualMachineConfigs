@@ -1,0 +1,82 @@
+---
+- name: Set up Minecraft server
+  hosts: all
+  become: yes
+  vars:
+    java_mem_flags: "-Xms1G -Xmx2G"
+    minecraft_server_url: "https://piston-data.mojang.com/v1/objects/145ff0858209bcfc164859ba735d4199aafa1eea/server.jar"
+    # you can find the latest server jar URL at https://www.minecraft.net/en-us/download/server
+  tasks:
+
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Ensure Java 17 is installed
+      apt:
+        name: openjdk-17-jre
+        state: present
+
+    - name: Ensure Java 17 is the default Java
+      alternatives:
+        name: java
+        path: /usr/lib/jvm/java-17-openjdk-amd64/bin/java
+
+    - name: Create minecraft user
+      user:
+        name: minecraft
+        state: present
+
+    - name: Create a directory for the Minecraft server
+      file:
+        path: /opt/minecraft
+        state: directory
+        owner: minecraft
+        group: minecraft
+        mode: '0755'
+
+    - name: Download Minecraft server jar
+      get_url:
+        url: "{{ minecraft_server_url }}"
+        dest: /opt/minecraft/minecraft_server.jar
+        mode: '0755'
+
+    - name: Accept EULA
+      copy:
+        dest: /opt/minecraft/eula.txt
+        content: "eula=true"
+
+    - name: Create a systemd service for Minecraft
+      copy:
+        dest: /etc/systemd/system/minecraft.service
+        content: |
+          [Unit]
+          Description=Minecraft Server
+          After=network.target
+
+          [Service]
+          User=minecraft
+          WorkingDirectory=/opt/minecraft
+          ExecStart=/usr/bin/java {{java_mem_flags}} -jar minecraft_server.jar nogui
+          Restart=on-failure
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Start and enable the Minecraft server
+      systemd:
+        name: minecraft
+        state: started
+        enabled: yes
+
+    - name: Check the status and logs of the Minecraft server
+      shell: |
+        systemctl status minecraft
+        journalctl -u minecraft
+      register: minecraft_status
+
+    - name: Connect to TCP port 25565 to verify the Minecraft server is running
+      wait_for:
+        host: "{{ ansible_host }}"
+        port: 25565
+        timeout: 60
