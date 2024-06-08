@@ -11,6 +11,6 @@
 
 1. Clone this repo
 2. `cd` to the desired server folder
-3. Run `ansible-playbook minecraft_<version>.yml`
-4. Run `systemctl status minecraft`
+3. Run `ansible-playbook <minecraft_version>.yml`
+4. Run `systemctl status <minecraft_service_name>`
 5. Visit `<ip>:25565` with minecraft.
