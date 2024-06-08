@@ -1,6 +1,6 @@
 ---
 - name: Set up modded Minecraft server
-  hosts: all
+  hosts: localhost
   become: yes
   vars:
     # modpack server zip
