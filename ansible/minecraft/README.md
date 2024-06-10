@@ -1,7 +1,10 @@
 # Ansible minecraft
 
+These are config files for Ansible that let you provision Minecraft servers quickly and easily.
+
 ## Requirements
 
+Playing: Use Prism Launcher to play Minecraft. Or FTB Launcher/CurseForge, but Prism is recommended.
 Local testing: Linux OS, Virtualbox, Vagrant, Ansible
 Deploying: Linux OS, Ansible
 
