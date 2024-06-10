@@ -1,6 +1,6 @@
 ---
 - name: Set up Vanilla Minecraft server
-  hosts: localhost
+  hosts: localhost:all
   become: yes
   vars:
     java_mem_flags: "-Xms1G -Xmx2G"
