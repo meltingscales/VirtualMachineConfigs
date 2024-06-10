@@ -1,5 +1,10 @@
 # Ansible minecraft
 
+## Requirements
+
+Local testing: Linux OS, Virtualbox, Vagrant, Ansible
+Deploying: Linux OS, Ansible
+
 ## Testing locally
 
     vagrant up --provision
