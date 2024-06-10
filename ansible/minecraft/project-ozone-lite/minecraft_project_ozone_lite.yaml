@@ -4,25 +4,24 @@
   become: yes
   vars:
     # modpack server zip
-    modpack_server_zip_url: "https://mediafilez.forgecdn.net/files/5399/299/server-1.0.1.zip"
+    modpack_server_zip_url: "https://mediafilez.forgecdn.net/files/2522/475/PO%20Lite%20Server%20v.1.3.6.zip"
 
-    # the name of the modpack server zip file
-    modpack_server_zip_file: "atm-9-to-the-sky-server-1.0.1.zip"
+    modpack_server_zip_file: "ProjectOzoneLitev1.3.6.zip"
 
     # the version of the modpack
-    modpack_version: "1.0.1"
+    modpack_version: "1.3.6"
 
-    # forge installer filename
-    forge_installer_filename: "forge-1.20.1-47.2.20-installer.jar"
+    # the name of the modpack
+    modpack_name: "Project Ozone Lite"
 
-    # forge filename
-    forge_filename: "forge-1.16.5-36.1.0.jar"
-    
     # the folder name for the Minecraft server
-    minecraft_folder_name: "atm-9-to-the-sky"
+    minecraft_folder_name: "project_ozone_lite"
 
     # the name of the systemd service
-    minecraft_service_name: "minecraft-atm-9-to-the-sky"
+    minecraft_service_name: "minecraft-project-ozone-lite"
+
+    # forge filename
+    forge_filename: "forge-1.10.2-12.18.3.2511-universal.jar"
 
     
   tasks:
@@ -36,16 +35,15 @@
         name: unzip
         state: present
 
-    - name: Ensure Java 17 is installed
+    - name: Ensure Java 8 is installed
       apt:
-        name: openjdk-17-jre
+        name: openjdk-8-jre
         state: present
 
-    - name: Ensure Java 17 is the default Java
+    - name: Ensure Java 8 is the default Java
       alternatives:
         name: java
-        path: /usr/lib/jvm/java-17-openjdk-amd64/bin/java
-
+        path: /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
 
     - name: Create minecraft user
       user:
@@ -77,41 +75,15 @@
           echo "Server already extracted. Skipping."
         fi
 
-    - name: "Flatten folder structure"
-      shell: |
-        $FOLDER=./server-1.0.1
-
-        cd "/opt/minecraft/{{ minecraft_folder_name }}"
-
-        if [ -d $FOLDER ]; then
-          echo "Flattening folder structure..."
-          mv $FOLDER/* ./
-          rm -r $FOLDER || true
-        else
-          echo "Folder structure already flattened. Skipping."
-        fi
+    # - name: Run bundled script to install server
+    #   command: "/bin/bash /opt/minecraft/{{minecraft_folder_name}}/Install.sh"
+    #   args:
+    #     chdir: "/opt/minecraft/{{minecraft_folder_name}}"
 
     - name: Accept EULA
       copy:
         dest: "/opt/minecraft/{{minecraft_folder_name}}/eula.txt"
         content: "eula=true"
-
-    - name: Run server install script
-      command: "java -jar {{forge_installer_filename}} --installServer"
-      args:
-        chdir: "/opt/minecraft/{{minecraft_folder_name}}"
-
-    - name: Create required files
-      file:
-        path: "/opt/minecraft/{{minecraft_folder_name}}/user_jvm_args.txt"
-        state: touch
-        mode: '0755'
-
-    - name: Create required files
-      file:
-        path: "/opt/minecraft/{{minecraft_folder_name}}/libraries/net/minecraftforge/forge/1.20.1-47.2.20/unix_args.txt"
-        state: touch
-        mode: '0755'
 
     - name: Create a systemd service for Minecraft
       copy:
@@ -124,7 +96,7 @@
           [Service]
           User=minecraft
           WorkingDirectory=/opt/minecraft/{{minecraft_folder_name}}
-          ExecStart=java -Xms2G -Xmx4G -jar {{forge_filename}} nogui
+          ExecStart=java -Xmx4G -Xms2G -jar {{forge_filename}} nogui
           Restart=on-failure
 
           [Install]
@@ -149,6 +121,12 @@
         port: 25565
         delay: 10
         timeout: 300
+
+    - name: Change MOTD
+      lineinfile:
+        path: /opt/minecraft/{{ minecraft_folder_name }}/server.properties
+        regexp: '^motd='
+        line: 'motd=Ansible Minecraft Server {{ modpack_name }} v{{ modpack_version }}' 
 
     - name: Restart the Minecraft server
       systemd:

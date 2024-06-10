@@ -8,6 +8,9 @@
 
     modpack_server_zip_file: "SkyFactory-4_Server_4_2_4.zip"
 
+    # the name of the modpack
+    modpack_name: "SkyFactory 4"
+
     # the version of the modpack
     modpack_version: "4.2.4"
 
@@ -61,9 +64,10 @@
     - name: Extract modpack with unzip
       shell: |
         cd "/opt/minecraft/{{ minecraft_folder_name }}"
-        if [ ! -f ./ServerStart.sh ]; then
+        if [ ! -f ./already_extracted ]; then
           echo "Extracting server modpack..."
           unzip "{{ modpack_server_zip_file }}"
+          touch ./already_extracted
         else
           echo "Server already extracted. Skipping."
         fi
@@ -119,6 +123,13 @@
       systemd:
         name: "{{minecraft_service_name}}"
         state: restarted
+
+    - name: Change MOTD
+      lineinfile:
+        path: /opt/minecraft/{{ minecraft_folder_name }}/server.properties
+        regexp: '^motd='
+        line: 'motd=Ansible Minecraft Server {{modpack_name}} v{{ modpack_version }}' 
+
 
     - name: Check the status and logs of the Minecraft server
       shell: |
