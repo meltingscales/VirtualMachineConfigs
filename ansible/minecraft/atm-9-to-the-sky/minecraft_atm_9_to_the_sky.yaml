@@ -4,20 +4,23 @@
   become: yes
   vars:
     # modpack server zip
-    modpack_server_zip_url: "https://mediafilez.forgecdn.net/files/5399/299/server-1.0.1.zip"
+    modpack_server_zip_url: "https://mediafilez.forgecdn.net/files/5410/874/server-1.0.3.zip"
 
     # the name of the modpack server zip file
-    modpack_server_zip_file: "atm-9-to-the-sky-server-1.0.1.zip"
+    modpack_server_zip_file: "atm-9-to-the-sky-server-1.0.3.zip"
+
+    # the name of the nested server folder in the zip
+    nested_server_folder_name: "server-1.0.3"
 
     # the version of the modpack
-    modpack_version: "1.0.1"
+    modpack_version: "1.0.3"
+
+    # java mem flags
+    java_mem_flags: "-Xms4G -Xmx8G"
 
     # forge installer filename
     forge_installer_filename: "forge-1.20.1-47.2.20-installer.jar"
 
-    # forge filename
-    forge_filename: "forge-1.16.5-36.1.0.jar"
-    
     # the folder name for the Minecraft server
     minecraft_folder_name: "atm-9-to-the-sky"
 
@@ -79,17 +82,19 @@
 
     - name: "Flatten folder structure"
       shell: |
-        $FOLDER=./server-1.0.1
-
-        cd "/opt/minecraft/{{ minecraft_folder_name }}"
+        FOLDER=/opt/minecraft/{{ minecraft_folder_name }}/{{nested_server_folder_name}}
 
         if [ -d $FOLDER ]; then
-          echo "Flattening folder structure..."
+          echo "Flattening folder structure of $FOLDER as it exists..."
           mv $FOLDER/* ./
-          rm -r $FOLDER || true
+
+          echo "Deleting folder $FOLDER as it's no longer needed..."
+          rm -r $FOLDER
         else
-          echo "Folder structure already flattened. Skipping."
+          echo "Folder structure $FOLDER is already flattened or does not exist. Skipping."
         fi
+      args: 
+        chdir: "/opt/minecraft/{{ minecraft_folder_name }}"
 
     - name: Accept EULA
       copy:
@@ -97,21 +102,15 @@
         content: "eula=true"
 
     - name: Run server install script
-      command: "java -jar {{forge_installer_filename}} --installServer"
+      shell: |
+        if [ ! -f ./already_installed ]; then 
+          java -jar {{forge_installer_filename}} --installServer
+          touch ./already_installed
+        else
+          echo "Server already installed. Skipping."
+        fi
       args:
         chdir: "/opt/minecraft/{{minecraft_folder_name}}"
-
-    - name: Create required files
-      file:
-        path: "/opt/minecraft/{{minecraft_folder_name}}/user_jvm_args.txt"
-        state: touch
-        mode: '0755'
-
-    - name: Create required files
-      file:
-        path: "/opt/minecraft/{{minecraft_folder_name}}/libraries/net/minecraftforge/forge/1.20.1-47.2.20/unix_args.txt"
-        state: touch
-        mode: '0755'
 
     - name: Create a systemd service for Minecraft
       copy:
@@ -124,11 +123,17 @@
           [Service]
           User=minecraft
           WorkingDirectory=/opt/minecraft/{{minecraft_folder_name}}
-          ExecStart=java -Xms2G -Xmx4G -jar {{forge_filename}} nogui
+          ExecStart=/bin/bash /opt/minecraft/{{minecraft_folder_name}}/startserver.sh
           Restart=on-failure
 
           [Install]
           WantedBy=multi-user.target
+
+    - name: Set user JVM args
+      copy:
+        dest: "/opt/minecraft/{{minecraft_folder_name}}/user_jvm_args.txt"
+        content: |
+          {{java_mem_flags}}
 
     - name: Set permissions for the entire minecraft folder
       file:
@@ -138,7 +143,7 @@
         owner: minecraft
         group: minecraft
 
-    - name: Start and enable the Minecraft server
+    - name: Start and enable the Minecraft service
       systemd:
         name: "{{minecraft_service_name}}"
         state: started

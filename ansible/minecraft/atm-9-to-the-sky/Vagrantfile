@@ -15,8 +15,9 @@ Vagrant.configure("2") do |config|
     config.vm.network "forwarded_port", guest: 25565, host: 25565
 
     config.vm.provider "virtualbox" do |vb|
-      vb.memory = "4096"
-      vb.cpus = 2
+      # 8gb ram as this is a chonker of a modpack
+      vb.memory = "8192"
+      vb.cpus = 4
       # name the VM
       vb.name = "minecraft-atm-9-to-the-sky"
     end
