@@ -3,6 +3,9 @@ Vagrant.configure("2") do |config|
     # use 24.04 as it is the latest LTS version
     config.vm.box = "ubuntu/focal64"
     
+    # disable shared folders
+    config.vm.synced_folder ".", "/vagrant", disabled: true
+
     # name the VM
     config.vm.hostname = "minecraft-atm-9-to-the-sky"
 

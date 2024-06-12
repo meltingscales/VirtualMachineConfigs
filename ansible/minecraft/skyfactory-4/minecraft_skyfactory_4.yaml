@@ -119,17 +119,16 @@
         delay: 10
         timeout: 300
 
-    - name: Restart the Minecraft server
-      systemd:
-        name: "{{minecraft_service_name}}"
-        state: restarted
-
     - name: Change MOTD
       lineinfile:
         path: /opt/minecraft/{{ minecraft_folder_name }}/server.properties
         regexp: '^motd='
         line: 'motd=Ansible Minecraft Server {{modpack_name}} v{{ modpack_version }}' 
 
+    - name: Restart the Minecraft service to apply server.properties changes
+      systemd:
+        name: "{{minecraft_service_name}}"
+        state: restarted
 
     - name: Check the status and logs of the Minecraft server
       shell: |
