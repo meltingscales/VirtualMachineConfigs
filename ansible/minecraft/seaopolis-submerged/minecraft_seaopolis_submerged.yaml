@@ -72,15 +72,21 @@
           echo "Server already extracted. Skipping."
         fi
 
-    # - name: Run bundled script to install server
-    #   command: "/bin/bash /opt/minecraft/{{minecraft_folder_name}}/Install.sh"
-    #   args:
-    #     chdir: "/opt/minecraft/{{minecraft_folder_name}}"
+    - name: Run bundled script for the first time to install the server
+      command: "/bin/bash /opt/minecraft/{{minecraft_folder_name}}/start.sh"
+      args:
+        chdir: "/opt/minecraft/{{minecraft_folder_name}}"
 
     - name: Accept EULA
       copy:
         dest: "/opt/minecraft/{{minecraft_folder_name}}/eula.txt"
         content: "eula=true"
+
+    - name: Set user JVM args
+      copy:
+        dest: "/opt/minecraft/{{minecraft_folder_name}}/user_jvm_args.txt"
+        content: |
+          {{java_mem_flags}}
 
     - name: Create a systemd service for Minecraft
       copy:
