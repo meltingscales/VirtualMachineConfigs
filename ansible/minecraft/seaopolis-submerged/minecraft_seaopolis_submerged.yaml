@@ -1,0 +1,143 @@
+---
+- name: Set up modded Minecraft server
+  hosts: localhost:all
+  become: yes
+  vars:
+    # modpack server zip
+    modpack_server_zip_url: "https://mediafilez.forgecdn.net/files/5420/427/Submerged_server_pack.zip"
+
+    modpack_server_zip_file: "Submerged_server_pack.zip"
+
+    # the name of the modpack
+    modpack_name: "Seaopolis Submerged"
+
+    # the version of the modpack
+    modpack_version: "B7.0"
+
+    # the folder name for the Minecraft server
+    minecraft_folder_name: "seaopolis_submerged"
+
+    # the name of the systemd service
+    minecraft_service_name: "minecraft-seaopolis-submerged"
+
+    
+  tasks:
+
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install unzip
+      apt:
+        name: unzip
+        state: present
+
+    - name: Ensure Java 8 is installed
+      apt:
+        name: openjdk-8-jre
+        state: present
+
+    - name: Ensure Java 8 is the default Java
+      alternatives:
+        name: java
+        path: /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+
+    - name: Create minecraft user
+      user:
+        name: minecraft
+        state: present
+
+    - name: Create a directory for the Minecraft server
+      file:
+        path: "/opt/minecraft/{{ minecraft_folder_name }}"
+        state: directory
+        owner: minecraft
+        group: minecraft
+        mode: '0755'
+
+    - name: Download modpack
+      get_url:
+        url: "{{ modpack_server_zip_url }}"
+        dest: "/opt/minecraft/{{ minecraft_folder_name }}/{{ modpack_server_zip_file }}"
+        mode: '0755'
+
+    - name: Extract modpack with unzip
+      shell: |
+        cd "/opt/minecraft/{{ minecraft_folder_name }}"
+        if [ ! -f ./already_extracted ]; then
+          echo "Extracting server modpack..."
+          unzip "{{ modpack_server_zip_file }}"
+          touch ./already_extracted
+        else
+          echo "Server already extracted. Skipping."
+        fi
+
+    # - name: Run bundled script to install server
+    #   command: "/bin/bash /opt/minecraft/{{minecraft_folder_name}}/Install.sh"
+    #   args:
+    #     chdir: "/opt/minecraft/{{minecraft_folder_name}}"
+
+    - name: Accept EULA
+      copy:
+        dest: "/opt/minecraft/{{minecraft_folder_name}}/eula.txt"
+        content: "eula=true"
+
+    - name: Create a systemd service for Minecraft
+      copy:
+        dest: /etc/systemd/system/{{minecraft_service_name}}.service
+        content: |
+          [Unit]
+          Description=Minecraft Server
+          After=network.target
+
+          [Service]
+          User=minecraft
+          WorkingDirectory=/opt/minecraft/{{minecraft_folder_name}}
+          ExecStart=/bin/bash /opt/minecraft/{{minecraft_folder_name}}/start.sh
+          Restart=on-failure
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Set permissions for the entire minecraft folder
+      file:
+        path: "/opt/minecraft/"
+        state: directory
+        recurse: yes
+        owner: minecraft
+        group: minecraft
+
+    - name: Start and enable the Minecraft server
+      systemd:
+        name: "{{minecraft_service_name}}"
+        state: started
+        enabled: yes
+
+    - name: Wait for the Minecraft server to start
+      wait_for:
+        port: 25565
+        delay: 10
+        timeout: 300
+
+    - name: Change MOTD
+      lineinfile:
+        path: /opt/minecraft/{{ minecraft_folder_name }}/server.properties
+        regexp: '^motd='
+        line: 'motd=Ansible Minecraft Server {{modpack_name}} v{{ modpack_version }}' 
+
+    - name: Restart the Minecraft service to apply server.properties changes
+      systemd:
+        name: "{{minecraft_service_name}}"
+        state: restarted
+
+    - name: Check the status and logs of the Minecraft server
+      shell: |
+        systemctl status {{minecraft_service_name}}
+        journalctl -u {{minecraft_service_name}}
+      register: minecraft_status
+
+    - name: Connect to TCP port 25565 to verify the Minecraft server is running
+      wait_for:
+        host: "{{ ansible_host }}"
+        port: 25565
+        timeout: 300

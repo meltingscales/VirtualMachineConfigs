@@ -1,0 +1,26 @@
+Vagrant.configure("2") do |config|
+ 
+    # use 24.04 as it is the latest LTS version
+    config.vm.box = "ubuntu/focal64"
+    
+    # name the VM
+    config.vm.hostname = "minecraft-seaopolis-submerged"
+
+    config.vm.network "private_network", type: "dhcp"
+  
+    # forward the port 25565 to the host machine
+    config.vm.network "forwarded_port", guest: 25565, host: 25565
+
+    config.vm.provider "virtualbox" do |vb|
+      vb.memory = "4096"
+      vb.cpus = 2
+      # name the VM
+      vb.name = "minecraft-seaopolis-submerged"
+    end
+  
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = "minecraft_seaopolis_submerged.yaml"
+      ansible.verbose = "v"
+    end
+  end
+  
