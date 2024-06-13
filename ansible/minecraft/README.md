@@ -38,10 +38,11 @@ tail -f /opt/minecraft/*/logs/latest.log
 
 ## Deploying to a baremetal machine
 
-Note tha the baremetal machine must run Debian. Ubuntu works just fine.
+Note that the baremetal machine must run Debian. Ubuntu works just fine.
 
-1. Clone this repo
-2. `cd` to the desired server folder
-3. Run `ansible-playbook <minecraft_version>.yml`
-4. Run `systemctl status <minecraft_service_name>`
-5. Visit `<ip>:25565` with minecraft.
+1. [Install ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+2. Clone this repo
+3. `cd` to the desired server folder
+4. Run `ansible-playbook <minecraft_version>.yml`
+5. Run `systemctl status <minecraft_service_name>`
+6. Visit `<ip>:25565` with minecraft.
