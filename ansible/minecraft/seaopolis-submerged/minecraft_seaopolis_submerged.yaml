@@ -14,6 +14,9 @@
     # the version of the modpack
     modpack_version: "B7.0"
 
+    # java memory flags
+    java_mem_flags: "-Xms4G -Xmx8G"
+
     # the folder name for the Minecraft server
     minecraft_folder_name: "seaopolis_submerged"
 
@@ -32,15 +35,15 @@
         name: unzip
         state: present
 
-    - name: Ensure Java 8 is installed
+    - name: Ensure Java 17 is installed
       apt:
-        name: openjdk-8-jre
+        name: openjdk-17-jre
         state: present
 
-    - name: Ensure Java 8 is the default Java
+    - name: Ensure Java 17 is the default Java
       alternatives:
         name: java
-        path: /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+        path: /usr/lib/jvm/java-17-openjdk-amd64/bin/java
 
     - name: Create minecraft user
       user:
@@ -71,11 +74,6 @@
         else
           echo "Server already extracted. Skipping."
         fi
-
-    - name: Run bundled script for the first time to install the server
-      command: "/bin/bash /opt/minecraft/{{minecraft_folder_name}}/start.sh"
-      args:
-        chdir: "/opt/minecraft/{{minecraft_folder_name}}"
 
     - name: Accept EULA
       copy:

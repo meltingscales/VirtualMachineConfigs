@@ -1,6 +1,3 @@
 # Seaopolis: Submerged
 
-Working: TBD
-
-
-version: B7.0
+Working: Seems to fail to bind to port 25565. Maybe a problem with my windows laptop VM setup?

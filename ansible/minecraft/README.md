@@ -19,8 +19,8 @@ When you create and test a new modpack, just monitor the output from Ansible, as
 ## Requirements
 
 - Playing: Use Prism Launcher to play Minecraft. Or FTB Launcher/CurseForge, but Prism is recommended.
-- Local testing: Linux OS, Virtualbox, Vagrant, Ansible
-- Deploying: Linux OS, Ansible
+- Local testing: Debian Linux OS, Virtualbox, Vagrant, Ansible
+- Deploying: Debian Linux OS, Ansible
 
 ## Testing locally
 
@@ -43,6 +43,6 @@ Note that the baremetal machine must run Debian. Ubuntu works just fine.
 1. [Install ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 2. Clone this repo
 3. `cd` to the desired server folder
-4. Run `ansible-playbook <minecraft_version>.yml`
+4. Run `ansible-playbook <minecraft_version>.yaml`
 5. Run `systemctl status <minecraft_service_name>`
 6. Visit `<ip>:25565` with minecraft.
