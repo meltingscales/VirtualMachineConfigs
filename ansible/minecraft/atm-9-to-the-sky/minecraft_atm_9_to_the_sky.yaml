@@ -18,6 +18,9 @@
     # java mem flags
     java_mem_flags: "-Xms4G -Xmx8G"
 
+    # java bin path
+    java_bin_path: "/usr/lib/jvm/java-17-openjdk-amd64/bin/java"
+
     # forge installer filename
     forge_installer_filename: "forge-1.20.1-47.2.20-installer.jar"
 
@@ -47,7 +50,7 @@
     - name: Ensure Java 17 is the default Java
       alternatives:
         name: java
-        path: /usr/lib/jvm/java-17-openjdk-amd64/bin/java
+        path: "{{ java_bin_path }}"
 
 
     - name: Create minecraft user
@@ -104,7 +107,7 @@
     - name: Run server install script
       shell: |
         if [ ! -f ./already_installed ]; then 
-          java -jar {{forge_installer_filename}} --installServer
+          {{java_bin_path}} -jar {{forge_installer_filename}} --installServer
           touch ./already_installed
         else
           echo "Server already installed. Skipping."

@@ -4,6 +4,7 @@
   become: yes
   vars:
     java_mem_flags: "-Xms1G -Xmx2G"
+    java_bin_path: "/usr/lib/jvm/java-21-openjdk-amd64/bin/java"
 
     # you can find the latest server jar URL at https://www.minecraft.net/en-us/download/server
     minecraft_server_url: "https://piston-data.mojang.com/v1/objects/145ff0858209bcfc164859ba735d4199aafa1eea/server.jar"
@@ -26,7 +27,7 @@
     - name: Ensure Java 21 is the default Java
       alternatives:
         name: java
-        path: /usr/lib/jvm/java-21-openjdk-amd64/bin/java
+        path: "{{ java_bin_path }}"
 
     - name: Create minecraft user
       user:
@@ -63,7 +64,7 @@
           [Service]
           User=minecraft
           WorkingDirectory=/opt/minecraft/{{ minecraft_folder_name }}
-          ExecStart=/usr/bin/java {{java_mem_flags}} -jar minecraft_server.jar nogui
+          ExecStart={{java_bin_path}} {{java_mem_flags}} -jar minecraft_server.jar nogui
           Restart=on-failure
 
           [Install]

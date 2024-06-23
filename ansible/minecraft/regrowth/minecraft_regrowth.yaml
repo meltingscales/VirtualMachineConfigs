@@ -23,6 +23,9 @@
     # forge filename
     forge_filename: "forge-1.7.10-10.13.4.1614-1.7.10-universal.jar"
 
+    # java bin path
+    java_bin_path: "/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java"
+
     
   tasks:
 
@@ -43,7 +46,7 @@
     - name: Ensure Java 8 is the default Java
       alternatives:
         name: java
-        path: /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+        path: "{{ java_bin_path }}"
 
     - name: Create minecraft user
       user:
@@ -96,7 +99,7 @@
           [Service]
           User=minecraft
           WorkingDirectory=/opt/minecraft/{{minecraft_folder_name}}
-          ExecStart=java -Xmx4G -jar {{forge_filename}} nogui
+          ExecStart={{java_bin_path}} -Xmx4G -jar {{forge_filename}} nogui
           Restart=on-failure
 
           [Install]
