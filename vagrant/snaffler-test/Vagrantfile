@@ -1,0 +1,86 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+    # --- Domain Controller ---
+    config.vm.define :dc do |dc_config|
+      dc_config.vm.box = "gusztavvargadr/windows-server" # Replace with your Windows Server box
+      dc_config.vm.box_version = "2402.0.2503"
+      dc_config.vm.hostname = "dc"
+      dc_config.vm.network "private_network", ip: "192.168.56.10"
+      dc_config.vm.provision "shell", inline: <<-SHELL
+        # Set static IP (might be redundant with Vagrant network config, but good practice)
+        New-NetIPAddress -IPAddress 192.168.56.10 -PrefixLength 24 -InterfaceAlias "Ethernet" -DefaultGateway 192.168.56.1
+  
+        # Install AD DS and promote to Domain Controller
+        Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools
+        Install-ADDSForest -DomainName example.com -SafeModeAdministratorPassword (ConvertTo-SecureString "Password123!" -AsPlainText -Force)
+        Set-DnsClientServerAddress -ServerAddresses 127.0.0.1
+  
+        # Create a test user
+        New-ADUser -SamAccountName "testuser" -UserPrincipalName "testuser@example.com" -AccountPassword (ConvertTo-SecureString "Password123!" -AsPlainText -Force) -Enabled $true
+      SHELL
+    end
+    
+  
+    # --- Member Server (with SMB Share) ---
+    config.vm.define :member1 do |member1_config|
+      member1_config.vm.box = "gusztavvargadr/windows-server" # Replace with your Windows Server box
+      member1_config.vm.box_version = "2402.0.2503"
+      member1_config.vm.hostname = "member1"
+      member1_config.vm.network "private_network", ip: "192.168.56.11"
+      member1_config.vm.provision "shell", inline: <<-SHELL
+        # Set static IP
+        New-NetIPAddress -IPAddress 192.168.56.11 -PrefixLength 24 -InterfaceAlias "Ethernet" -DefaultGateway 192.168.56.1 -DnsServer 192.168.56.10
+  
+        # Join the domain
+        $Domain = "example.com"
+        $Password = ConvertTo-SecureString "Password123!" -AsPlainText -Force
+        $Credential = New-Object System.Management.Automation.PSCredential "administrator", $Password
+        Add-Computer -DomainName $Domain -Credential $Credential -Restart -Force
+  
+        # Create a directory for the share and some secret files
+        New-Item -ItemType Directory -Path "C:\\Share"
+        "This is a secret password: SuperSecret123" | Out-File "C:\\Share\\secret.txt"
+        "Another secret: API_KEY=abcdefg12345" | Out-File "C:\\Share\\internal_config.ini"
+  
+        # Create and configure the SMB share
+        New-SmbShare -Name "Secrets" -Path "C:\\Share" -FullAccess "example.com\\Domain Admins","example.com\\administrator" -ChangeAccess "example.com\\testuser" -ReadAccess "Authenticated Users"
+      SHELL
+      
+      member1_config.vm.depends_on :dc
+    end
+  
+    # --- Workstation ---
+    config.vm.define :workstation1 do |ws1_config|
+      ws1_config.vm.box = "gusztavvargadr/windows-server" # You might use a Windows 10/11 box if you have one
+      ws1_config.vm.box_version = "2402.0.2503"
+      ws1_config.vm.hostname = "workstation1"
+      ws1_config.vm.network "private_network", ip: "192.168.56.12"
+      ws1_config.vm.provision "shell", inline: <<-SHELL
+        # Set static IP
+        New-NetIPAddress -IPAddress 192.168.56.12 -PrefixLength 24 -InterfaceAlias "Ethernet" -DefaultGateway 192.168.56.1 -DnsServer 192.168.56.10
+  
+        # Join the domain
+        $Domain = "example.com"
+        $Password = ConvertTo-SecureString "Password123!" -AsPlainText -Force
+        $Credential = New-Object System.Management.Automation.PSCredential "administrator", $Password
+        Add-Computer -DomainName $Domain -Credential $Credential -Restart -Force
+      SHELL
+      ws1_config.vm.depends_on :dc
+    end
+  
+    # --- Attacker Machine (Linux) ---
+    config.vm.define :attacker do |attacker_config|
+      attacker_config.vm.box = "kali/kali-linux-default" # Or your preferred Linux box
+      attacker_config.vm.hostname = "attacker"
+      attacker_config.vm.network "private_network", ip: "192.168.56.20"
+      attacker_config.vm.provision "shell", inline: <<-SHELL
+        sudo apt update
+        sudo apt install -y smbclient # For accessing the share
+        # You can install Snaffler and BloodHound components here if needed
+        # For Snaffler, you might just scp the binary over later.
+        # For BloodHound, you'd typically install the GUI on your host or a separate VM.
+      SHELL
+    end
+  end
